@@ -18,11 +18,11 @@ On the other hand, for simple projects, I find such frameworks to be too much. A
 
 By contrast, JavaScript frameworks are _multiple_ and _ever-changing_. _Multiple_ in the sense that knowing React deeply may offer only general help in learning Angular or Vue.js, and vice versa: these frameworks solve similar problems, but in different ways. _Ever-changing_ in the sense that a new framework version may require app-level changes.
 
-As well, JavaScript frameworks are often _complete_ in the sense that they successfully hide much or all of the browser API. When I was doing full-time React development in the 2018-2020 timeframe, while I got quite comfortable with React, I later realized I didn't know much at all about how to do web development _without_ React. This is a separate learning.
+As well, JavaScript frameworks are often _complete_ and _opaque_ in the sense that they successfully hide much or all of the browser API. When I was doing full-time React development in the 2018-2020 timeframe, while I got quite comfortable with React, I later realized I didn't know much at all about how to do web development _without_ React. This is a separate learning.
 
-Given those concerns, for small-scale web development, one might simply use no framework at all. An examples of this is [pangram-checker](https://github.com/johnkerl/pangram-checker).
+Given those concerns, for small-scale web development, one might simply use no framework at all, sticking with HTML, CSS, and ES6. An examples of this is [pangram-checker](https://github.com/johnkerl/pangram-checker).
 
-But sometimes one wants _some_ application state, _some_ encapsulation. For [jsbee](https://github.com/johnkerl/jsbee) I wanted some reusable classes between my application and the browser API --- a mere thin sliver of logic, decorating the browser API rather than hiding it. Thus Sliver was born.
+But sometimes one wants _some_ application state, _some_ encapsulation, _some_ component reuse. For [jsbee](https://github.com/johnkerl/jsbee) I wanted some reusable classes between my application and the browser API --- a mere thin sliver of logic, decorating the browser API rather than hiding it. Thus Sliver was born.
 
 # Status
 

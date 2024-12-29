@@ -1,25 +1,19 @@
 "use strict";
 
 // ----------------------------------------------------------------
-// UTILITIES
-
-// TODO:
-// * assertor for non-null (e.g. get-element-by-id)
-
-function isInteger(text) {
-  // TODO: this accepts '3.4' and should not
-  return !isNaN(parseInt(text))
-}
-
-// ----------------------------------------------------------------
 // WIDGET CLASSES
 
-class BaseElement {
-  constructor() {
+// This wraps any DOM element, making it hideable and focusable.
+// This is just a keystroke-saver.
+class GenericElement {
+  constructor(
+    elementID,
+  ) {
+    this.underlying = document.getElementById(elementID)
   }
 
   makeVisible() {
-    // Null is best for show/hide of table rows/cells, vs/ "block" or "inline"
+    // Null is best for show/hide of table rows/cells, vs. "block" or "inline"
     this.underlying.style.display = null
   }
 
@@ -32,16 +26,8 @@ class BaseElement {
   }
 }
 
-class GenericElement extends BaseElement {
-  constructor(
-    elementID,
-  ) {
-    super()
-    this.underlying = document.getElementById(elementID)
-  }
-}
-
-class Slider extends BaseElement {
+// This is a standard slider, nominally for light-theme/dark-theme selector.
+class Slider extends GenericElement {
   constructor(
     sliderElementID,
     labelElementID,
@@ -88,8 +74,9 @@ class Slider extends BaseElement {
   }
 }
 
+// Uses local storage to remember the state of the slider. Nominally for
+// light-theme/dark-theme selector.
 class PersistentSlider extends Slider {
-  // Uses local storage to remember the state of the slider
 
   constructor(
     sliderElementID,
@@ -130,6 +117,8 @@ class PersistentSlider extends Slider {
   }
 }
 
+// Specialization of PersistentSlider for a light-theme/dark-theme slider.
+// Just a keystroke-saver.
 class LightDarkThemeSlider extends PersistentSlider {
   // Lightly decorates PersistentSlider by adding labels
   constructor(sliderElementID, labelElementID, lightenCallback, darkenCallback) {
@@ -144,7 +133,8 @@ class LightDarkThemeSlider extends PersistentSlider {
   }
 }
 
-class Button extends BaseElement {
+// Standard button, with an accessor for changing the button text.
+class Button extends GenericElement {
   constructor(
     elementID,
     text,
@@ -171,7 +161,8 @@ class Button extends BaseElement {
   }
 }
 
-class TextInput extends BaseElement {
+// Single-line text input.
+class TextInput extends GenericElement {
   // Single-line input element
   constructor(elementID, callback) {
     super()
@@ -197,22 +188,23 @@ class TextInput extends BaseElement {
   }
 }
 
-class TextSpan extends BaseElement {
-  // This is write-only
+// Non-editable text output.
+class TextSpan extends GenericElement {
   constructor(elementID, initialText) {
     super()
-
     // Browser-model element by composition
     this.underlying = document.getElementById(elementID)
     this.underlying.textContent = initialText
   }
+
   set(text) {
     this.underlying.textContent = text
   }
 }
 
-class IntRangeInput extends BaseElement {
-  // Int-selector with min/max caps, and protection against non-numeric user input
+// Int-selector with min/max caps, and protection against non-numeric user input.
+// There is optional peering: one element's value must be <= or >= its peer's value.
+class IntRangeInput extends GenericElement {
   constructor(elementID, defaultValue, minAllowable, maxAllowable, callback) {
     super()
 
@@ -277,7 +269,8 @@ class IntRangeInput extends BaseElement {
   }
 }
 
-class Dropdown extends BaseElement {
+// Dropdown element. At present, the value-list must be set within the calling HTML.
+class Dropdown extends GenericElement {
   constructor(elementID, callback) {
     super()
 
@@ -299,12 +292,12 @@ class Dropdown extends BaseElement {
   }
 }
 
+// A single button, controlling which of two elements are visible.
 class TwoElementSwitcher {
-  // A single button, controlling which of two elements are visible
   constructor(
     buttonElementID,
-    itemList1, // TODO: assert each extends BaseElement
-    itemList2, // TODO: assert each extends BaseElement
+    itemList1, // TODO: assert each extends GenericElement
+    itemList2, // TODO: assert each extends GenericElement
     itemList1ShownButtonText,
     itemList2ShownButtonText,
     appCallback,
@@ -349,4 +342,15 @@ class TwoElementSwitcher {
       obj.appCallback()
     }
   }
+}
+
+// ----------------------------------------------------------------
+// UTILITIES
+
+// TODO:
+// * assertor for non-null (e.g. get-element-by-id)
+
+function isInteger(text) {
+  // TODO: this accepts '3.4' and should not
+  return !isNaN(parseInt(text))
 }

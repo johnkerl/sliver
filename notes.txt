@@ -1,0 +1,16 @@
+TO DO:
+
+* Make text-input upper-casing an app callback
+* Use modules
+* How to encapsulate: include CSS as well? Needs to come from the app ...
+* Props more generally; button colors, minimally
+* Fix isInteger(3.4) b04k
+* Dropdown options specified within JS?
+* Lots of assertions
+* Better way to surface errors
+* Maybe fold in jko-toggler?
+
+Notes on React:
+
+* Props: immutable, owned by the parent component, passed down to children
+* State: mutable, owned by the component itself
