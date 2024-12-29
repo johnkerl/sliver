@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+<meta name="description" content="Sliver Example App 1" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" /> <!-- mobile-friendly -->
+<title>Sliver Example App 1</title>
+
+<style>
+
+  body {
+    /* Light mode */
+    color: black;
+    background-color: white;
+    /* Dark mode */
+    /*
+    color: white;
+    background-color: black;
+    */
+    font-family: Verdana, sans-serif;
+    font-size: 150%;
+    letter-spacing: 0.25px;
+    line-height: 125%;
+  }
+  h1 {
+    font-weight: bold;
+    color: #007700;
+    font-size: 110%;
+    text-align: center;
+    margin: 40px;
+  }
+  h2 {
+    font-weight: bold;
+    color: #007700;
+    font-size: 105%
+  }
+  h3 {
+    font-weight: bold;
+    color: #007700;
+    font-size: 100%
+  }
+
+  table {
+    border: 1px solid;
+    border-collapse: collapse;
+    border-color: #808080;
+  }
+
+  td {
+    border: 1px solid;
+    border-collapse: collapse;
+    border-color: #808080;
+    padding: 3px;
+  }
+
+  th {
+    border: 1px solid;
+    border-collapse: collapse;
+    border-color: #808080;
+    padding: 3px;
+  }
+
+  a:link {
+    color: #007700;
+  }
+  a:visited {
+    color: #007700;
+  }
+  a:active {
+    color: #007700;
+  }
+
+  input {
+    font-weight: bold;
+    color: black;
+  }
+
+  button {
+    font-weight: bold;
+    background-color: #e8e8e8;
+    border: 0;
+    padding: 4px;
+    border-radius: 4px;
+    margin: 4px;
+  }
+  button:hover {
+    font-weight: bold;
+    background-color: #d8d8d8;
+    border: 0;
+    padding: 4px;
+    border-radius: 4px;
+    margin: 4px;
+  }
+  button:active {
+    font-weight: bold;
+    background-color: #c0c0c0;
+    border: 0;
+    padding: 4px;
+    border-radius: 4px;
+    margin: 4px;
+  }
+
+  .boxed-text {
+    border: 1px solid black;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+  .center {
+    text-align: center;
+  }
+  .green {
+    color: #007700;
+  }
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 30px;
+    height: 17px;
+  }
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 13px;
+    width: 13px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  input:checked + .slider {
+    background-color: #2196F3;
+  }
+  input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+  input:checked + .slider:before {
+    -webkit-transform: translateX(13px);
+    -ms-transform: translateX(13px);
+    transform: translateX(13px);
+  }
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 17px;
+  }
+  .slider.round:before {
+    border-radius: 50%;
+  }
+
+</style>
+
+</head>
+
+<!-- ================================================================ -->
+<body>
+
+<h1><span class="boxed-text">sliver-app1</span></h1>
+
+<span>
+  <button class="green" id="sliver-app1-clear-text-input-1"> UNINIT </button>
+  <span> Your text: </span>
+  <input type=text placeholder="..." size=30 id="sliver-app1-text-input-1"></input>
+  <span> Reversed: </span>
+  <span id="sliver-app1-text-output-1" style="display:inline"> UNINIT </span>
+</span>
+
+<p/>
+
+<div>
+  <button class="green" id="sliver-app1-item-switch-button"> UNINIT </button>
+</div>
+
+<div id="sliver-app1-switch-item-1">
+  This is a table. Click the button above to see something else.
+  <table>
+    <tr> <th>A</th> <th>B</th> <th>C</th> </tr>
+    <tr> <td>1</td> <td>2</td> <td>3</td> </tr>
+    <tr> <td>4</td> <td>5</td> <td>6</td> </tr>
+  </table>
+</div>
+
+<div id="sliver-app1-switch-item-2">
+  This is just some text. Click the button above to see the table again.
+</div>
+
+
+<!-- ================================================================ -->
+<hr/>
+
+<div>
+  Source and documentation: <a href="https://github.com/johnkerl/sliver">https://github.com/johnkerl/sliver</a>
+</div>
+<p/>
+
+<div>
+  <label class="switch">
+    <input type="checkbox" id="sliver-app1-light-mode-dark-mode-toggle">
+    <span class="slider round"></span>
+  </label>
+  <span id="sliver-app1-light-mode-dark-mode-label">UNINIT</span>
+</div>
+<p/>
+
+<!-- ================================================================ -->
+<script src="https://johnkerl.org/sliver/classes.js">
+  // Note: self-closing doesn't work for the script tag:
+  //   <script src="./classes.js"/>
+  // -- browsers will not see the close.
+</script>
+
+<script>
+  'use strict';
+
+  // APPLICATION STATE
+
+  class App1 {
+
+    constructor() {
+
+      this.state = {
+        "logLevel": 1, // 0,1,2,3
+      }
+
+      this.setElementsAndCallbacks()
+      this.elements.textInput1.focus()
+    }
+
+    setElementsAndCallbacks() {
+      this.elements = {}
+
+      this.elements.textInput1 = new TextInput(
+        "sliver-app1-text-input-1",
+        (event) => {
+          this.logAt1("textInput1: <<" + event.target.value + ">>")
+          this.elements.textOutput1.set(event.target.value.split("").reverse().join(""))
+        }
+      )
+
+      this.elements.clearTextInput1Button = new Button(
+        "sliver-app1-clear-text-input-1",
+        "Clear",
+        (event) => {
+          this.logAt1("clearTextInput1Button click")
+          this.elements.textInput1.set("")
+        },
+      )
+
+      this.elements.textOutput1 = new TextSpan("sliver-app1-text-output-1", "")
+
+      this.elements.switcherButton = new TwoElementSwitcher(
+        "sliver-app1-item-switch-button",
+        [
+          new GenericElement("sliver-app1-switch-item-1"),
+        ],
+        [
+          new GenericElement("sliver-app1-switch-item-2"),
+        ],
+        "Label 1",
+        "Label 2",
+        () => {
+          this.logAt1("switcherButton click")
+        },
+      )
+
+      this.elements.lightDarkModeElement = new LightDarkModeSlider(
+        "sliver-app1-light-mode-dark-mode-toggle",
+        "sliver-app1-light-mode-dark-mode-label",
+        (event) => {
+          document.body.style.backgroundColor = "white"
+          document.body.style.color = "black"
+        },
+        (event) => {
+          document.body.style.backgroundColor = "black"
+          document.body.style.color = "white"
+        },
+      )
+
+    }
+
+    // ----------------------------------------------------------------
+    // LOGGING METHODS
+
+    logAt0(...args) {
+      this.logAt(0, ...args)
+    }
+
+    logAt1(...args) {
+      this.logAt(1, ...args)
+    }
+
+    logAt2(...args) {
+      this.logAt(2, ...args)
+    }
+
+    logAt3(...args) {
+      this.logAt(3, ...args)
+    }
+
+    logAt(level, ...args) {
+      if (this.state.logLevel >= level) {
+        console.log(...args)
+      }
+    }
+
+  }
+
+  // ----------------------------------------------------------------
+  const app = new App1()
+
+</script>
+<!-- ================================================================ -->
+</body>
+</html>
