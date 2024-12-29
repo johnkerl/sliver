@@ -344,6 +344,75 @@ class TwoElementSwitcher {
   }
 }
 
+class TwoButtonSwitcher {
+  constructor(
+    button1ElementID,
+    button2ElementID,
+    button1Text,
+    button2Text,
+    itemList1, // TODO: assert each extends GenericElement
+    itemList2, // TODO: assert each extends GenericElement
+    appCallback1,
+    appCallback2,
+  ) {
+    this.button1 = new Button(button1ElementID, button1Text, this.onClick1)
+    this.button2 = new Button(button2ElementID, button2Text, this.onClick2)
+    this.button1.parent = this
+    this.button2.parent = this
+    this.itemList1  = itemList1
+    this.itemList2  = itemList2
+    this.appCallback1 = appCallback1
+    this.appCallback2 = appCallback2
+    this.whichShown = 1
+    this.show1()
+  }
+
+  which() {
+    return this.whichShown
+  }
+
+  show1(event) {
+    this.whichShown = 1
+
+    this.itemList1.forEach((item) => item.makeVisible())
+    this.itemList2.forEach((item) => item.makeInvisible())
+
+    // XXX TEMP -- needs a callback
+    this.button1.underlying.style.backgroundColor = "#c0c0c0"
+    this.button2.underlying.style.backgroundColor = "#e8e8e8"
+    if (this.appCallback1 != null) {
+      this.appCallback1()
+    }
+  }
+
+  show2(event) {
+    this.whichShown = 2
+
+    this.itemList1.forEach((item) => item.makeInvisible())
+    this.itemList2.forEach((item) => item.makeVisible())
+
+    // XXX TEMP -- needs a callback
+    this.button1.underlying.style.backgroundColor = "#e8e8e8"
+    this.button2.underlying.style.backgroundColor = "#c0c0c0"
+    if (this.appCallback2 != null) {
+      this.appCallback2()
+    }
+  }
+
+  onClick1(event) {
+    // "this" is the Button; need to parent up to get the TwoElementSwitcher
+    let obj = this.parent
+    obj.show1(event)
+  }
+
+  onClick2(event) {
+    // "this" is the Button; need to parent up to get the TwoElementSwitcher
+    let obj = this.parent
+    obj.show2(event)
+  }
+
+}
+
 // ----------------------------------------------------------------
 // UTILITIES
 
