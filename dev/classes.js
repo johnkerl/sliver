@@ -5,7 +5,7 @@
 
 // This wraps any DOM element, making it hideable and focusable.
 // This is just a keystroke-saver.
-class GenericElement {
+export class GenericElement {
   constructor(
     elementID,
   ) {
@@ -27,7 +27,7 @@ class GenericElement {
 }
 
 // This is a standard slider, nominally for light-theme/dark-theme selector.
-class Slider extends GenericElement {
+export class Slider extends GenericElement {
   constructor(
     sliderElementID,
     labelElementID,
@@ -76,7 +76,7 @@ class Slider extends GenericElement {
 
 // Uses local storage to remember the state of the slider. Nominally for
 // light-theme/dark-theme selector.
-class PersistentSlider extends Slider {
+export class PersistentSlider extends Slider {
 
   constructor(
     sliderElementID,
@@ -119,7 +119,7 @@ class PersistentSlider extends Slider {
 
 // Specialization of PersistentSlider for a light-theme/dark-theme slider.
 // Just a keystroke-saver.
-class LightDarkThemeSlider extends PersistentSlider {
+export class LightDarkThemeSlider extends PersistentSlider {
   // Lightly decorates PersistentSlider by adding labels
   constructor(sliderElementID, labelElementID, lightenCallback, darkenCallback) {
     super(
@@ -134,7 +134,7 @@ class LightDarkThemeSlider extends PersistentSlider {
 }
 
 // Standard button, with an accessor for changing the button text.
-class Button extends GenericElement {
+export class Button extends GenericElement {
   constructor(
     elementID,
     text,
@@ -162,7 +162,7 @@ class Button extends GenericElement {
 }
 
 // Single-line text input.
-class TextInput extends GenericElement {
+export class TextInput extends GenericElement {
   // Single-line input element
   constructor(elementID, callback) {
     super()
@@ -189,7 +189,7 @@ class TextInput extends GenericElement {
 }
 
 // Non-editable text output.
-class TextSpan extends GenericElement {
+export class TextSpan extends GenericElement {
   constructor(elementID, initialText) {
     super()
     // Browser-model element by composition
@@ -204,7 +204,7 @@ class TextSpan extends GenericElement {
 
 // Int-selector with min/max caps, and protection against non-numeric user input.
 // There is optional peering: one element's value must be <= or >= its peer's value.
-class IntRangeInput extends GenericElement {
+export class IntRangeInput extends GenericElement {
   constructor(elementID, defaultValue, minAllowable, maxAllowable, callback) {
     super()
 
@@ -270,7 +270,7 @@ class IntRangeInput extends GenericElement {
 }
 
 // Dropdown element. At present, the value-list must be set within the calling HTML.
-class Dropdown extends GenericElement {
+export class Dropdown extends GenericElement {
   constructor(elementID, callback) {
     super()
 
@@ -293,7 +293,7 @@ class Dropdown extends GenericElement {
 }
 
 // A single button, controlling which of two elements are visible.
-class TwoElementSwitcher {
+export class TwoElementSwitcher {
   constructor(
     buttonElementID,
     itemList1, // TODO: assert each extends GenericElement
@@ -350,7 +350,7 @@ class TwoElementSwitcher {
 // TODO:
 // * assertor for non-null (e.g. get-element-by-id)
 
-function isInteger(text) {
+export function isInteger(text) {
   // TODO: this accepts '3.4' and should not
   return !isNaN(parseInt(text))
 }
