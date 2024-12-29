@@ -10,10 +10,10 @@
 <style>
 
   body {
-    /* Light mode */
+    /* Light theme */
     color: black;
     background-color: white;
-    /* Dark mode */
+    /* Dark theme */
     /*
     color: white;
     background-color: black;
@@ -213,10 +213,10 @@
 
 <div>
   <label class="switch">
-    <input type="checkbox" id="sliver-app1-light-mode-dark-mode-toggle">
+    <input type="checkbox" id="sliver-app1-light-theme-dark-theme-toggle">
     <span class="slider round"></span>
   </label>
-  <span id="sliver-app1-light-mode-dark-mode-label">UNINIT</span>
+  <span id="sliver-app1-light-theme-dark-theme-label">UNINIT</span>
 </div>
 <p/>
 
@@ -281,9 +281,9 @@
         },
       )
 
-      this.elements.lightDarkModeElement = new LightDarkModeSlider(
-        "sliver-app1-light-mode-dark-mode-toggle",
-        "sliver-app1-light-mode-dark-mode-label",
+      this.elements.lightDarkThemeElement = new LightDarkThemeSlider(
+        "sliver-app1-light-theme-dark-theme-toggle",
+        "sliver-app1-light-theme-dark-theme-label",
         (event) => {
           document.body.style.backgroundColor = "white"
           document.body.style.color = "black"

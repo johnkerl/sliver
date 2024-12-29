@@ -53,8 +53,8 @@ class Slider extends BaseElement {
     super()
 
     // Browser-model element by composition
-    // * Underlying unchecked = slider left = light mode
-    // * Underlying checked   = slider left = dark  mode
+    // * Underlying unchecked = slider left = light theme
+    // * Underlying checked   = slider left = dark  theme
     this.underlyingSlider = document.getElementById(sliderElementID)
     this.underlyingLabel  = document.getElementById(labelElementID)
     // This lets underlying-level callbacks invoke our methods
@@ -130,14 +130,14 @@ class PersistentSlider extends Slider {
   }
 }
 
-class LightDarkModeSlider extends PersistentSlider {
+class LightDarkThemeSlider extends PersistentSlider {
   // Lightly decorates PersistentSlider by adding labels
   constructor(sliderElementID, labelElementID, lightenCallback, darkenCallback) {
     super(
       sliderElementID,
       labelElementID,
-      "Switch to dark mode",
-      "Switch to light mode",
+      "Switch to dark theme",
+      "Switch to light theme",
       lightenCallback,
       darkenCallback,
     )
