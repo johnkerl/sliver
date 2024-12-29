@@ -9,6 +9,7 @@ TO DO:
 * Lots of assertions
 * Better way to surface errors
 * Maybe fold in jko-toggler?
+* Learn more about CSS -- sharpen how theming works
 
 Notes on React:
 
