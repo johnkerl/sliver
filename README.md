@@ -32,7 +32,6 @@ This was just a fun little holiday lark at the end of 2024.
 
 # Future work
 
-* Use ES6 modules with `export`
 * Allow more CSS props in widgets, e.g. button colors
 * More assertions
 * A better way to surface errors
