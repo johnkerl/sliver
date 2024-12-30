@@ -173,23 +173,23 @@
 <!-- ================================================================ -->
 <body>
 
-<h1><span class="boxed-text">sliver-app1</span></h1>
+<h1><span class="boxed-text">sliver-app-1</span></h1>
 
 <span>
-  <button class="green" id="sliver-app1-clear-text-input-1"> UNINIT </button>
+  <button class="green" id="sliver-app-1-clear-text-input-1"> UNINIT </button>
   <span> Your text: </span>
-  <input type=text placeholder="..." size=30 id="sliver-app1-text-input-1"></input>
+  <input type=text placeholder="..." size=30 id="sliver-app-1-text-input-1"></input>
   <span> Reversed: </span>
-  <span id="sliver-app1-text-output-1" style="display:inline"> UNINIT </span>
+  <span id="sliver-app-1-text-output-1" style="display:inline"> UNINIT </span>
 </span>
 
 <p/>
 
 <div>
-  <button class="green" id="sliver-app1-item-switch-button"> UNINIT </button>
+  <button class="green" id="sliver-app-1-item-switch-button"> UNINIT </button>
 </div>
 
-<div id="sliver-app1-switch-item-1">
+<div id="sliver-app-1-switch-item-1">
   This is a table. Click the button above to see something else.
   <table>
     <tr> <th>A</th> <th>B</th> <th>C</th> </tr>
@@ -198,7 +198,25 @@
   </table>
 </div>
 
-<div id="sliver-app1-switch-item-2">
+<div id="sliver-app-1-switch-item-2">
+  This is just some text. Click the button above to see the table again.
+</div>
+
+<div>
+  <button class="green" id="sliver-app-1-item-switch-button-1"> UNINIT </button>
+  <button class="green" id="sliver-app-1-item-switch-button-2"> UNINIT </button>
+</div>
+
+<div id="sliver-app-1-switch-item-1b">
+  This is a table. Click the button above to see something else.
+  <table>
+    <tr> <th>A</th> <th>B</th> <th>C</th> </tr>
+    <tr> <td>1</td> <td>2</td> <td>3</td> </tr>
+    <tr> <td>4</td> <td>5</td> <td>6</td> </tr>
+  </table>
+</div>
+
+<div id="sliver-app-1-switch-item-2b">
   This is just some text. Click the button above to see the table again.
 </div>
 
@@ -213,24 +231,29 @@
 
 <div>
   <label class="switch">
-    <input type="checkbox" id="sliver-app1-light-theme-dark-theme-toggle">
+    <input type="checkbox" id="sliver-app-1-light-theme-dark-theme-toggle">
     <span class="slider round"></span>
   </label>
-  <span id="sliver-app1-light-theme-dark-theme-label">UNINIT</span>
+  <span id="sliver-app-1-light-theme-dark-theme-label">UNINIT</span>
 </div>
 <p/>
 
 <!-- ================================================================ -->
-<script src="https://johnkerl.org/sliver/stable/classes.js">
-  // Note: self-closing doesn't work for the script tag:
-  //   <script src="whatever.js"/>
-  // -- browsers will not see the close.
-</script>
-
-<script>
+<script type=module>
   'use strict';
 
-  // APPLICATION STATE
+  import {
+    Button,
+    Dropdown,
+    GenericElement,
+    IntRangeInput,
+    LightDarkThemeSlider,
+    TextInput,
+    TextSpan,
+    OneButtonSwitcher,
+    TwoButtonSwitcher,
+    isInteger
+  } from "https://johnkerl.org/sliver/stable/classes.js"
 
   class App1 {
 
@@ -248,7 +271,7 @@
       this.elements = {}
 
       this.elements.textInput1 = new TextInput(
-        "sliver-app1-text-input-1",
+        "sliver-app-1-text-input-1",
         (event) => {
           this.logAt1("textInput1: <<" + event.target.value + ">>")
           this.elements.textOutput1.set(event.target.value.split("").reverse().join(""))
@@ -256,7 +279,7 @@
       )
 
       this.elements.clearTextInput1Button = new Button(
-        "sliver-app1-clear-text-input-1",
+        "sliver-app-1-clear-text-input-1",
         "Clear",
         (event) => {
           this.logAt1("clearTextInput1Button click")
@@ -265,15 +288,15 @@
         },
       )
 
-      this.elements.textOutput1 = new TextSpan("sliver-app1-text-output-1", "")
+      this.elements.textOutput1 = new TextSpan("sliver-app-1-text-output-1", "")
 
-      this.elements.switcherButton = new TwoElementSwitcher(
-        "sliver-app1-item-switch-button",
+      this.elements.switcherButton = new OneButtonSwitcher(
+        "sliver-app-1-item-switch-button",
         [
-          new GenericElement("sliver-app1-switch-item-1"),
+          new GenericElement("sliver-app-1-switch-item-1"),
         ],
         [
-          new GenericElement("sliver-app1-switch-item-2"),
+          new GenericElement("sliver-app-1-switch-item-2"),
         ],
         "Label 1",
         "Label 2",
@@ -282,9 +305,28 @@
         },
       )
 
+      this.elements.switcher = new TwoButtonSwitcher(
+        "sliver-app-1-item-switch-button-1",
+        "sliver-app-1-item-switch-button-2",
+        "Label 1",
+        "Label 2",
+        [
+          new GenericElement("sliver-app-1-switch-item-1b"),
+        ],
+        [
+          new GenericElement("sliver-app-1-switch-item-2b"),
+        ],
+        () => {
+          this.logAt1("switcherButton1 click")
+        },
+        () => {
+          this.logAt1("switcherButton2 click")
+        },
+      )
+
       this.elements.lightDarkThemeElement = new LightDarkThemeSlider(
-        "sliver-app1-light-theme-dark-theme-toggle",
-        "sliver-app1-light-theme-dark-theme-label",
+        "sliver-app-1-light-theme-dark-theme-toggle",
+        "sliver-app-1-light-theme-dark-theme-label",
         (event) => {
           document.body.style.backgroundColor = "white"
           document.body.style.color = "black"
