@@ -424,7 +424,7 @@ export function setErrorWidget(elementID) {
 
   element.style.display = "none"
   window.onerror = function(message, source, lineno, colno, error) {
-    let msg = 'Error: '+ message + "\nat " + source + ':' + lineno + ':' + colno
+    let msg = 'Error: "'+ message + '"at ' + source + ':' + lineno + ':' + colno
     console.error(msg)
     element.style.display = "block"
     element.textContent = msg
