@@ -415,6 +415,24 @@ export class TwoButtonSwitcher {
 
 }
 
+export function setErrorWidget(elementID) {
+  let element = document.getElementById(elementID)
+  if (element == null) {
+    console.log('Sliver: cannot find element "' + elementID + '" to set for showing error messages')
+    return false
+  }
+
+  element.style.display = "none"
+  window.onerror = function(message, source, lineno, colno, error) {
+    let msg = 'Error: '+ message + "\nat " + source + ':' + lineno + ':' + colno
+    console.error(msg)
+    element.style.display = "block"
+    element.textContent = msg
+    // Prevent the default error-handling behavior
+    return true;
+  }
+}
+
 // ----------------------------------------------------------------
 // UTILITIES
 

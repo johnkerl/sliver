@@ -6,7 +6,6 @@ TO DO:
 * Fix isInteger(3.4) b04k
 * Dropdown options specified within JS?
 * Lots of assertions
-* Better way to surface errors
 * Maybe fold in jko-toggler?
 * Learn more about CSS -- sharpen how theming works
 
