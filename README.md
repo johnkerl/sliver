@@ -1,6 +1,6 @@
 # sliver
 
-Sliver is a lightweight JavaScript framework.
+Sliver is a lightweight JavaScript library.
 
 # How to use it
 
