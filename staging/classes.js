@@ -321,6 +321,30 @@ export class Dropdown extends GenericElement {
   }
 }
 
+// Dropdown element, with state retained in browser-local storage.
+export class PersistentDropdown extends Dropdown {
+  constructor(elementID, callback) {
+    super(elementID, callback)
+
+    this.localStorageKey = document.URL + ":" + elementID + ":state"
+
+    // Restore previous state upon construction
+    let previousValue = localStorage.getItem(this.localStorageKey)
+    if (previousValue != null) {
+      this.underlying.value = previousValue
+    }
+
+    this.underlying.addEventListener("change", function(event) {
+      let obj = this.parent // Map from browser-level up to class-level
+      localStorage.setItem(obj.localStorageKey, event.target.value)
+    })
+  }
+
+  get() {
+    return this.underlying.value
+  }
+}
+
 // One button, controlling which of two elements are visible.
 export class OneButtonSwitcher {
   constructor(
@@ -487,10 +511,10 @@ export function setErrorWidget(elementID) {
 
   element.style.display = "none"
   window.onerror = function(message, source, lineno, colno, error) {
-    let msg = 'Error: "'+ message + '"at ' + source + ':' + lineno + ':' + colno
+    let msg = "Error at " + source + ':' + lineno + ':' + colno + ':<br/>"' + message + '"'
     console.error(msg)
     element.style.display = "block"
-    element.textContent = msg
+    element.innerHTML = msg
     // Prevent the default error-handling behavior
     return true;
   }
