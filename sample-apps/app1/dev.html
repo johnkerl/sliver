@@ -341,11 +341,11 @@ gravida quis.
     GenericElement,
     IntRangeInput,
     LightDarkThemeSlider,
+    NButtonSwitcher,
+    OneButtonSwitcher,
+    PersistentNButtonToggler,
     TextInput,
     TextSpan,
-    OneButtonSwitcher,
-    NButtonToggler,
-    NButtonSwitcher,
     isInteger,
     setErrorWidget,
   } from "http://127.0.0.1:9999/sliver/dev/classes.js"
@@ -427,7 +427,7 @@ gravida quis.
         "deselected", // CSS style
       )
 
-      this.elements.multiswitcher = new NButtonToggler(
+      this.elements.multiswitcher = new PersistentNButtonToggler(
         {
           "toggler-button-1": {
             "text": "Section 1",

@@ -597,7 +597,7 @@ export class NButtonToggler {
     this.setFromVisibilities()
   }
 
-  setFromVisibilities(buttonID) {
+  setFromVisibilities() {
     Object.entries(this.visibilities).forEach(([buttonID, visible]) => {
       if (visible) {
         this.showButtonContents(buttonID)
@@ -655,6 +655,46 @@ export class NButtonToggler {
 
 }
 
+// Same as NButtonToggler but uses browser-local storage to remember previous state.
+export class PersistentNButtonToggler extends NButtonToggler {
+  constructor(
+    // All arguments as in NButtonToggler:
+    elementsConfig,
+    expandAllConfig,
+    collapseAllConfig,
+    buttonSelectedStyle,
+    buttonDeselectedStyle,
+  ) {
+    super(elementsConfig, expandAllConfig, collapseAllConfig, buttonSelectedStyle, buttonDeselectedStyle)
+
+    let firstButtonID = Object.keys(elementsConfig)[0]
+    this.localStorageKey = document.URL + ":" + firstButtonID + ":state"
+    this.restoreFromLocalStorage()
+  }
+
+  restoreFromLocalStorage () {
+    if (localStorage == null) {
+      return
+    }
+    const value = localStorage.getItem(this.localStorageKey);
+    if (value == null) {
+      return
+    }
+    this.visibilities = JSON.parse(value)
+    this.setFromVisibilities()
+  }
+
+  showButtonContents(buttonID) {
+    super.showButtonContents(buttonID)
+    localStorage.setItem(this.localStorageKey, JSON.stringify(this.visibilities))
+  }
+
+  hideButtonContents(buttonID) {
+    super.hideButtonContents(buttonID)
+    localStorage.setItem(this.localStorageKey, JSON.stringify(this.visibilities))
+  }
+}
+
 // ----------------------------------------------------------------
 // FUNCTIONS
 
@@ -669,6 +709,7 @@ export function setErrorWidget(elementID) {
   window.onerror = function(message, source, lineno, colno, error) {
     let msg = "Error at " + source + ':' + lineno + ':' + colno + ':<br/>"' + message + '"'
     console.error(msg)
+    console.log(error.stack)
     element.style.display = "block"
     element.innerHTML = msg
     // Prevent the default error-handling behavior
