@@ -339,10 +339,6 @@ export class PersistentDropdown extends Dropdown {
       localStorage.setItem(obj.localStorageKey, event.target.value)
     })
   }
-
-  get() {
-    return this.underlying.value
-  }
 }
 
 // One button, controlling which of two elements are visible.
@@ -404,7 +400,7 @@ export class NButtonSwitcher {
       // * Keys: element ID
       // * Values: objects with:
       //   o Key: "text",        Value: button text
-      //   o Key: "items",       Value: array of objects inherting from GenericElement
+      //   o Key: "items",       Value: array of objects inheriting from GenericElement
       //   o Key: "appCallback", Value: application-level callback
     buttonSelectedStyle,
       // CSS class for selected button
@@ -499,6 +495,37 @@ export class NButtonSwitcher {
     if (this.appCallbacks[selectedButtonID] != null) {
       this.appCallbacks[selectedButtonID](event)
     }
+  }
+}
+
+// Same as NButtonSwitcher, with local-storage memory of previous state
+export class PersistentNButtonSwitcher extends NButtonSwitcher {
+  constructor(
+    elementsObject,
+    buttonSelectedStyle,
+    buttonDeselectedStyle,
+  ) {
+    super(elementsObject, buttonSelectedStyle, buttonDeselectedStyle)
+    let firstElementID = Object.keys(elementsObject)[0]
+    this.localStorageKey = document.URL + ":" + firstElementID + ":state"
+
+    // Restore previous state upon construction
+    let previousButtonIDSelected = localStorage.getItem(this.localStorageKey)
+    if (previousButtonIDSelected != null) {
+      this.whichButtonIDSelected = previousButtonIDSelected
+      this.show(null, previousButtonIDSelected)
+    }
+
+    // Set local storage when any of the buttons is selected
+    Object.entries(this.buttons).forEach(([buttonID, button]) => {
+      button.underlying.addEventListener(
+        "click",
+        (event) => {
+          // This is a closure over the buttonID
+          localStorage.setItem(this.localStorageKey, buttonID)
+        },
+      )
+    })
   }
 }
 
