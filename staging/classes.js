@@ -52,7 +52,7 @@ export class Slider extends GenericElement {
     this.toCheckedCallback   = toCheckedCallback
 
     this.underlyingSlider.addEventListener("change", function(e) {
-      let obj = this.parent // Map from browser-level up to class-level
+      const obj = this.parent // Map from browser-level up to class-level
       if (this.checked) { // Here, this is the underlying, and this.checked is the new state
         obj.toChecked(e)
       } else {
@@ -96,7 +96,7 @@ export class PersistentSlider extends Slider {
       toCheckedCallback,
     )
 
-    this.localStorageKey = document.URL + ":" + sliderElementID + ":checked"
+    this.localStorageKey = _localStorageKeyBase() + + ":" + sliderElementID + ":checked"
 
     // Restore previous state upon construction
     if (localStorage.getItem(this.localStorageKey) == "true") {
@@ -151,7 +151,7 @@ export class Button extends GenericElement {
     this.underlying.textContent = text
 
     this.underlying.addEventListener("click", function(event) {
-      let obj = this.parent // Map from browser-level up to class-level
+      const obj = this.parent // Map from browser-level up to class-level
       obj.callback(event)
     })
   }
@@ -175,7 +175,7 @@ export class TextInput extends GenericElement {
     this.callback = callback
 
     this.underlying.addEventListener("input", function(event) {
-      let obj = this.parent // Map from browser-level up to class-level
+      const obj = this.parent // Map from browser-level up to class-level
       obj.callback(event)
     })
   }
@@ -204,7 +204,7 @@ export class ConstrainedTextInput extends GenericElement {
     this.eventCallback = eventCallback
 
     this.underlying.addEventListener("input", function(event) {
-      let obj = this.parent // Map from browser-level up to class-level
+      const obj = this.parent // Map from browser-level up to class-level
       this.value = obj.constrainerCallback(this.value)
       obj.eventCallback(event)
     })
@@ -254,14 +254,14 @@ export class IntRangeInput extends GenericElement {
     this.callback = callback
 
     this.underlying.addEventListener("change", function(event) {
-      let obj = this.parent // Map from browser-level up to class-level
+      const obj = this.parent // Map from browser-level up to class-level
 
       // The up-and-down sliders won't let the user choose outside the widget's min/max.
       // But the user can still type "999" or "aaa" into the widget. Here we protect against this.
       if (!isInteger(event.target.value)) {
         obj.underlying.value = obj.defaultValue
       } else {
-        let requestedValue = Number(event.target.value)
+        const requestedValue = Number(event.target.value)
 
         // Check self-bounds
         if (requestedValue < obj.minAllowable) {
@@ -311,7 +311,7 @@ export class Dropdown extends GenericElement {
     this.callback = callback
 
     this.underlying.addEventListener("change", function(event) {
-      let obj = this.parent // Map from browser-level up to class-level
+      const obj = this.parent // Map from browser-level up to class-level
       obj.callback(event)
     })
   }
@@ -326,16 +326,16 @@ export class PersistentDropdown extends Dropdown {
   constructor(elementID, callback) {
     super(elementID, callback)
 
-    this.localStorageKey = document.URL + ":" + elementID + ":state"
+    this.localStorageKey = _localStorageKeyBase() + ":" + elementID + ":state"
 
     // Restore previous state upon construction
-    let previousValue = localStorage.getItem(this.localStorageKey)
+    const previousValue = localStorage.getItem(this.localStorageKey)
     if (previousValue != null) {
       this.underlying.value = previousValue
     }
 
     this.underlying.addEventListener("change", function(event) {
-      let obj = this.parent // Map from browser-level up to class-level
+      const obj = this.parent // Map from browser-level up to class-level
       localStorage.setItem(obj.localStorageKey, event.target.value)
     })
   }
@@ -381,7 +381,7 @@ export class OneButtonSwitcher {
 
   onClick(event) {
     // "this" is the Button; need to parent up to get the OneButtonSwitcher
-    let obj = this.parent
+    const obj = this.parent
     if (obj.whichShown == 1) {
       obj.show2()
     } else {
@@ -408,7 +408,7 @@ export class NButtonSwitcher {
       // CSS class for deselected button(s)
   ) {
     // Validate the first argument
-    let callerName = "NButtonSwitcher"
+    const callerName = "NButtonSwitcher"
     _assertIsNonEmptyMapObject(elementsConfig, callerName, "elementsConfig")
     // Validate the sub-objects.
     Object.entries(elementsConfig).forEach(([elementID, elementConfig]) => {
@@ -444,7 +444,7 @@ export class NButtonSwitcher {
     this.buttonDeselectedStyle = buttonDeselectedStyle
 
     // Select the first button by default. (This could be made another constructor argument.)
-    let firstElementID = Object.keys(elementsConfig)[0]
+    const firstElementID = Object.keys(elementsConfig)[0]
     this.whichButtonIDSelected = firstElementID
     this.show(null, firstElementID)
   }
@@ -492,11 +492,11 @@ export class PersistentNButtonSwitcher extends NButtonSwitcher {
     buttonDeselectedStyle,
   ) {
     super(elementsConfig, buttonSelectedStyle, buttonDeselectedStyle)
-    let firstElementID = Object.keys(elementsConfig)[0]
-    this.localStorageKey = document.URL + ":" + firstElementID + ":state"
+    const firstElementID = Object.keys(elementsConfig)[0]
+    this.localStorageKey = _localStorageKeyBase() + ":" + firstElementID + ":state"
 
     // Restore previous state upon construction
-    let previousButtonIDSelected = localStorage.getItem(this.localStorageKey)
+    const previousButtonIDSelected = localStorage.getItem(this.localStorageKey)
     if (previousButtonIDSelected != null) {
       this.whichButtonIDSelected = previousButtonIDSelected
       this.show(null, previousButtonIDSelected)
@@ -520,10 +520,21 @@ export class PersistentNButtonSwitcher extends NButtonSwitcher {
 export class NButtonToggler {
   constructor(
     elementsConfig,
-      // * Keys: button element ID
-      // * Values: objects with:
-      //   o Key: "text",        Value: button text
-      //   o Key: "items",       Value: array of objects inheriting from GenericElement
+      // Keys: button element ID
+      // Values: objects with:
+      // * Key: "text",        Value: button text
+      // * Key: "items",       Value: array of objects inheriting from GenericElement
+      //
+      // Example:
+      //  {
+      //    "toggler-button-1": {
+      //      "text": "Section 1",
+      //      "items": [ new GenericElement("toggler-section-1") ],
+      //    },
+      //    ...
+      //  }
+      //
+      // Please also see the sample app.
     expandAllConfig,
       // Single key-value pair: button elementID -> "text" key-value pair
     collapseAllConfig,
@@ -534,7 +545,7 @@ export class NButtonToggler {
       // CSS class for deselected button(s)
   ) {
     // Validate the arguments
-    let callerName = "NButtonToggler"
+    const callerName = "NButtonToggler"
 
     // Check shapes of config arguments.
     _assertIsMapObjectWithSubobjectKeys(elementsConfig, 1, null, ["text", "items"], callerName, "elementsConfig")
@@ -561,7 +572,7 @@ export class NButtonToggler {
     })
 
     // Expand-all button
-    let expandAllButtonElementID = Object.keys(expandAllConfig)[0]
+    const expandAllButtonElementID = Object.keys(expandAllConfig)[0]
     this.expandAllButton = new Button(
       expandAllButtonElementID,
       expandAllConfig[expandAllButtonElementID]["text"],
@@ -569,12 +580,12 @@ export class NButtonToggler {
         this.expandAll()
       },
     )
-    let eau = this.expandAllButton.underlying
+    const eau = this.expandAllButton.underlying
     eau.classList.remove(this.buttonSelectedStyle)
     eau.classList.add(this.buttonDeselectedStyle)
 
     // Collapse-all button
-    let collapseAllButtonElementID = Object.keys(collapseAllConfig)[0]
+    const collapseAllButtonElementID = Object.keys(collapseAllConfig)[0]
     this.collapseAllButton = new Button(
       collapseAllButtonElementID,
       collapseAllConfig[collapseAllButtonElementID]["text"],
@@ -582,7 +593,7 @@ export class NButtonToggler {
         this.collapseAll()
       },
     )
-    let cau = this.collapseAllButton.underlying
+    const cau = this.collapseAllButton.underlying
     cau.classList.remove(this.buttonSelectedStyle)
     cau.classList.add(this.buttonDeselectedStyle)
 
@@ -592,7 +603,7 @@ export class NButtonToggler {
       this.visibilities[buttonID] = false
     })
     // Select the first button by default. TODO: temporary
-    let firstButtonID = Object.keys(elementsConfig)[0]
+    const firstButtonID = Object.keys(elementsConfig)[0]
     this.visibilities[firstButtonID] = true
     this.setFromVisibilities()
   }
@@ -609,10 +620,10 @@ export class NButtonToggler {
 
   showButtonContents(buttonID) {
     // Controlled-widget styles
-    let itemList = this.itemLists[buttonID]
+    const itemList = this.itemLists[buttonID]
     itemList.forEach((item) => { item.makeVisible() })
     // Controller-button styles
-    let button = this.buttons[buttonID]
+    const button = this.buttons[buttonID]
     button.underlying.classList.add(this.buttonSelectedStyle)
     button.underlying.classList.remove(this.buttonDeselectedStyle)
     // Our memory
@@ -621,10 +632,10 @@ export class NButtonToggler {
 
   hideButtonContents(buttonID) {
     // Controlled-widget styles
-    let itemList = this.itemLists[buttonID]
+    const itemList = this.itemLists[buttonID]
     itemList.forEach((item) => { item.makeInvisible() })
     // Controller-button styles
-    let button = this.buttons[buttonID]
+    const button = this.buttons[buttonID]
     button.underlying.classList.remove(this.buttonSelectedStyle)
     button.underlying.classList.add(this.buttonDeselectedStyle)
     // Our memory
@@ -667,8 +678,8 @@ export class PersistentNButtonToggler extends NButtonToggler {
   ) {
     super(elementsConfig, expandAllConfig, collapseAllConfig, buttonSelectedStyle, buttonDeselectedStyle)
 
-    let firstButtonID = Object.keys(elementsConfig)[0]
-    this.localStorageKey = document.URL + ":" + firstButtonID + ":state"
+    const firstButtonID = Object.keys(elementsConfig)[0]
+    this.localStorageKey = _localStorageKeyBase() + ":" + firstButtonID + ":state"
     this.restoreFromLocalStorage()
   }
 
@@ -695,35 +706,63 @@ export class PersistentNButtonToggler extends NButtonToggler {
   }
 }
 
-// XXX URLs
+// Same as PersistentNButtonToggler but allows text like "?foo" in the URL
+// to specify which areas are visible. This makes togger-enabled pages bookmarkable.
+// If there are no query-strings in the URL, the local storage is consulted for
+// initial state, as in the parent class.
+export class URLAndPersistentNButtonToggler extends PersistentNButtonToggler {
+  constructor(
+    // All arguments as in NButtonToggler, except elementsConfig values can also have
+    // a "urlShorthand" key.
+    elementsConfig,
+      //
+      // Example:
+      //  {
+      //    "toggler-button-1": {
+      //      "text": "Section 1",
+      //      "items": [ new GenericElement("toggler-section-1") ],
+      //      "urlShorthand": "section1",
+      //    },
+      //    ...
+      //  }
+      //
+      // Please also see the sample app.
+    expandAllConfig,
+    collapseAllConfig,
+    buttonSelectedStyle,
+    buttonDeselectedStyle,
+  ) {
+    super(elementsConfig, expandAllConfig, collapseAllConfig, buttonSelectedStyle, buttonDeselectedStyle)
 
-//    // Find out what to expand/collapse:
-//    // * If specified in the URL, use that
-//    //   Example:
-//    //   o urlShorthands = {'about': 'toggleable_div_about'}
-//    //   o URL = https://nameofsite.org/nameofpage?about
-//    //   o Then expand the 'toggleable_div_about' div
-//    // * Else retrieve last-used from browser local storage
-//    const urlParams = new URLSearchParams(window.location.search);
-//
-//    let foundAny = false;
-//
-//    Object.keys(urlShorthands).forEach(urlShorthand => {
-//      if (urlParams.get(urlShorthand) != null) {
-//        this.collapseAll();
-//        const divName = urlShorthands[urlShorthand];
-//        if (divName != null) {
-//          foundAny = true;
-//          if (divName === 'all') {
-//            this.expandAll();
-//          } else if (divName === 'none') {
-//            this.collapseAll();
-//          } else {
-//            this.toggle(divName);
-//          }
-//        }
-//      }
-//    });
+    // Extract the urlShorthands column out of the elementsConfig.
+    let urlShorthands = {}
+    Object.entries(elementsConfig).forEach(([elementID, elementConfig]) => {
+      let urlShorthand = elementConfig["urlShorthand"]
+      if (urlShorthand != null) {
+        urlShorthands[urlShorthand] = elementID
+      }
+    })
+
+    const urlParams = new URLSearchParams(window.location.search);
+    let foundAny = false;
+    let visibilities = {...this.visibilities}
+    const availableButtonIDs = new Set(Object.keys(this.visibilities))
+
+    for (let key of urlParams.keys()) {
+      const desiredButtonID = urlShorthands[key]
+      if (desiredButtonID != null) {
+        visibilities[desiredButtonID] = true
+        foundAny = true
+      }
+    }
+
+    if (foundAny) {
+      this.visibilities = {...visibilities}
+      this.setFromVisibilities()
+    }
+  }
+}
+
 
 // ----------------------------------------------------------------
 // FUNCTIONS
@@ -833,9 +872,9 @@ function _arraysEqual(a, b) {
 
 function _assertIsMapObjectWithKeys(o, keys, callerName, thingName) {
   _assertIsMapObject(o, callerName, thingName)
-  const actualKeys = Object.keys(o).toSorted()
-  const expectedKeys = keys.toSorted()
-  if (!_arraysEqual(actualKeys, expectedKeys)) {
+  const actualKeys = new Set(Object.keys(o).toSorted())
+  const expectedKeys = new Set(keys.toSorted())
+  if (!expectedKeys.isSubsetOf(actualKeys)) {
     throw new Error(
       callerName
       + ': '
@@ -846,4 +885,10 @@ function _assertIsMapObjectWithKeys(o, keys, callerName, thingName) {
       + JSON.stringify(actualKeys)
     )
   }
+}
+
+// document.URL also works, but it may have query strings like https://site.org?foo=bar.
+// We want just the https://site.org bit.
+function _localStorageKeyBase() {
+  return window.location.origin + window.location.pathname
 }

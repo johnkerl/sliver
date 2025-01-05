@@ -74,6 +74,7 @@
   .error {
     color: red;
     background-color: white;
+    border: 1px solid gray;
     padding: 10px;
     margin: 10px;
   }
@@ -211,6 +212,8 @@
   <span id="error-text"> </span>
 </span>
 
+<!-- ================================================================ -->
+
 <span>
   <button class="green" id="clear-text-input-1"> Loading ... </button>
   <span> Your text: </span>
@@ -219,13 +222,12 @@
   <span id="text-output-1" style="display:inline"> Loading ... </span>
 </span>
 
+<p/>
+
 <!-- ================================================================ -->
 <hr/>
-<div>
-  <button class="red" id="make-an-error-happen-button"> Loading ... </button>
-</div>
 
-<p/>
+<button class="red" id="make-an-error-happen-button"> Loading ... </button>
 
 <!-- ================================================================ -->
 <hr/>
@@ -268,7 +270,68 @@
   This is just some text. Click the button above to see the table again.
 </div>
 
+<!-- ================================================================ -->
 <hr/>
+
+<button class="green" id="toggler-button-1"> Loading ... </button>
+<button class="green" id="toggler-button-2"> Loading ... </button>
+<button class="green" id="toggler-button-3"> Loading ... </button>
+<button id="toggler-button-expand-all"> Loading ... </button>
+<button id="toggler-button-collapse-all"> Loading ... </button>
+<p/>
+
+<div id="toggler-section-1">
+<b>Section 1</b>
+<p>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Diam sollicitudin tempor id eu
+nisl nunc mi ipsum faucibus. Sed vulputate mi sit amet mauris. Ut tellus
+elementum sagittis vitae et leo duis ut. Nunc sed blandit libero volutpat sed
+cras. Cursus in hac habitasse platea dictumst quisque. Amet dictum sit amet
+justo. In cursus turpis massa tincidunt. Vitae proin sagittis nisl rhoncus
+mattis rhoncus urna neque. Enim nunc faucibus a pellentesque sit amet. Vel orci
+porta non pulvinar neque laoreet. Facilisi nullam vehicula ipsum a. Mi bibendum
+neque egestas congue quisque egestas diam in arcu. Viverra mauris in aliquam
+sem fringilla ut morbi tincidunt augue.
+</p>
+</div>
+
+<div id="toggler-section-2">
+<b>Section 2</b>
+<p>
+Ipsum faucibus vitae aliquet nec ullamcorper sit amet risus nullam. Convallis
+posuere morbi leo urna molestie at elementum eu facilisis. Sit amet consectetur
+adipiscing elit. Augue mauris augue neque gravida. Vel pharetra vel turpis nunc
+eget lorem dolor sed viverra. Fermentum posuere urna nec tincidunt praesent
+semper. Sapien pellentesque habitant morbi tristique senectus et netus et.
+Consectetur adipiscing elit ut aliquam purus sit amet. Eget egestas purus
+viverra accumsan in nisl nisi. Ullamcorper morbi tincidunt ornare massa eget
+egestas. Massa enim nec dui nunc mattis. Orci eu lobortis elementum nibh. Sit
+amet mauris commodo quis. Aliquet risus feugiat in ante metus. Ornare arcu odio
+ut sem. Auctor elit sed vulputate mi sit amet mauris. Urna nec tincidunt
+praesent semper feugiat nibh sed pulvinar. Vitae tortor condimentum lacinia
+quis vel eros donec ac.
+</p>
+</div>
+
+<div id="toggler-section-3">
+<b>Section 3</b>
+<p>
+Nunc pulvinar sapien et ligula ullamcorper malesuada. Ante in nibh mauris
+cursus mattis molestie a iaculis at. Et ultrices neque ornare aenean euismod.
+Pharetra magna ac placerat vestibulum lectus mauris. Semper auctor neque vitae
+tempus quam pellentesque nec nam. Viverra suspendisse potenti nullam ac tortor
+vitae purus. Vel risus commodo viverra maecenas accumsan lacus vel facilisis
+volutpat. Dictum non consectetur a erat. Sit amet nisl suscipit adipiscing
+bibendum est ultricies. Ipsum consequat nisl vel pretium lectus. Sapien eget mi
+proin sed libero enim sed faucibus turpis. Faucibus a pellentesque sit amet
+porttitor eget dolor. Egestas dui id ornare arcu odio ut sem nulla pharetra.
+Nunc sed velit dignissim sodales ut eu sem integer. Porttitor lacus luctus
+accumsan tortor posuere ac. Id consectetur purus ut faucibus pulvinar. Bibendum
+est ultricies integer quis auctor elit sed vulputate mi. Magna sit amet purus
+gravida quis.
+</p>
+</div>
 
 <!-- ================================================================ -->
 <hr/>
@@ -297,10 +360,12 @@
     GenericElement,
     IntRangeInput,
     LightDarkThemeSlider,
+    NButtonSwitcher,
+    OneButtonSwitcher,
     TextInput,
     TextSpan,
-    OneButtonSwitcher,
-    NButtonSwitcher,
+    PersistentNButtonToggler,
+    URLAndPersistentNButtonToggler,
     isInteger,
     setErrorWidget,
   } from "https://johnkerl.org/sliver/staging/classes.js"
@@ -376,6 +441,38 @@
             "appCallback": (event) => {
               this.logAt1("switcherButton2 click")
             },
+          },
+        },
+        "selected",   // CSS style
+        "deselected", // CSS style
+      )
+
+      this.elements.multiswitcher = new URLAndPersistentNButtonToggler(
+        {
+          "toggler-button-1": {
+            "text": "Section 1",
+            "items": [ new GenericElement("toggler-section-1") ],
+            "urlShorthand": "section1",
+          },
+          "toggler-button-2": {
+            "text": "Section 2",
+            "items": [ new GenericElement("toggler-section-2") ],
+            "urlShorthand": "section2",
+          },
+          "toggler-button-3": {
+            "text": "Section 3",
+            "items": [ new GenericElement("toggler-section-3") ],
+            "urlShorthand": "section3",
+          },
+        },
+        {
+          "toggler-button-expand-all": {
+            "text": "Expand all",
+          },
+        },
+        {
+          "toggler-button-collapse-all": {
+            "text": "Collapse all",
           },
         },
         "selected",   // CSS style
