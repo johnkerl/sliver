@@ -440,7 +440,6 @@ export class NButtonSwitcher {
       this.itemLists[elementID] = elementObject["items"]
       this.appCallbacks[elementID] = elementObject["appCallback"]
     })
-    console.log("TIL", this.itemLists)
 
     this.buttonSelectedStyle = buttonSelectedStyle
     this.buttonDeselectedStyle = buttonDeselectedStyle
@@ -580,7 +579,6 @@ function _assertIsMapObjectWithKeys(o, keys, callerName, thingName) {
   _assertIsMapObject(o, callerName, thingName)
   const actualKeys = Object.keys(o).toSorted()
   const expectedKeys = keys.toSorted()
-  console.log("WTF", actualKeys, expectedKeys, actualKeys == expectedKeys)
   if (!_arraysEqual(actualKeys, expectedKeys)) {
     throw new Error(
       callerName
