@@ -74,6 +74,7 @@
   .error {
     color: red;
     background-color: white;
+    border: 1px solid gray;
     padding: 10px;
     margin: 10px;
   }
@@ -112,6 +113,11 @@
   }
   button.deselected {
     font-weight: normal;
+  }
+  button.transparent {
+    font-weight: normal;
+    border: 0;
+    background-color: transparent;
   }
 
   .boxed-text {
@@ -191,7 +197,22 @@
 
 <h1><span class="boxed-text">sliver-app-1</span></h1>
 
-<div id="error-content" class="error"></div>
+<!--
+  This is a self-contained widget for error-text and cancel/X button.
+  We use Sliver's setErrorWidget to route top-level errors here.
+-->
+<span id="error-container" class="error">
+  <button
+    class=transparent
+    onClick='
+      document.getElementById("error-container").style.display = "none";
+      document.getElementById("error-text").innerHTML = "";
+    '
+  > &times; </button>
+  <span id="error-text"> </span>
+</span>
+
+<!-- ================================================================ -->
 
 <span>
   <button class="green" id="clear-text-input-1"> Loading ... </button>
@@ -202,6 +223,11 @@
 </span>
 
 <p/>
+
+<!-- ================================================================ -->
+<hr/>
+
+<button class="red" id="make-an-error-happen-button"> Loading ... </button>
 
 <!-- ================================================================ -->
 <hr/>
@@ -219,12 +245,12 @@
   </table>
 </div>
 
-<!-- ================================================================ -->
-<hr/>
-
 <div id="switch-item-2">
   This is just some text. Click the button above to see the table again.
 </div>
+
+<!-- ================================================================ -->
+<hr/>
 
 <div>
   <button class="green" id="item-switch-button-1"> Loading ... </button>
@@ -232,7 +258,7 @@
 </div>
 
 <div id="switch-item-1b">
-  This is a table. Click the button above to see something else.
+  This is another table. Click the button above to see something else.
   <table>
     <tr> <th>D</th> <th>E</th> <th>F</th> </tr>
     <tr> <td>4</td> <td>5</td> <td>6</td> </tr>
@@ -311,13 +337,6 @@ gravida quis.
 <hr/>
 
 <div>
-  <button class="red" id="error-button"> Loading ... </button>
-</div>
-
-<!-- ================================================================ -->
-<hr/>
-
-<div>
   Source and documentation: <a href="https://github.com/johnkerl/sliver">https://github.com/johnkerl/sliver</a>
 </div>
 <p/>
@@ -350,7 +369,8 @@ gravida quis.
     setErrorWidget,
   } from "http://127.0.0.1:9999/sliver/dev/classes.js"
   // npx http-server ~/pub_http_internet -o -p 9999
-  setErrorWidget("error-content")
+
+  setErrorWidget("error-container", "error-text")
 
   class App1 {
 
@@ -463,7 +483,7 @@ gravida quis.
       )
 
       this.elements.clearTextInput1Button = new Button(
-        "error-button",
+        "make-an-error-happen-button",
         "Make an error happen",
         (event) => {
           throw new Error("This is an error message")

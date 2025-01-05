@@ -393,10 +393,10 @@ export class OneButtonSwitcher {
   }
 }
 
-// N buttons, controlling which elements are visible.
+// N buttons, controlling which element is visible.
 export class NButtonSwitcher {
   constructor(
-    elementsObject,
+    elementsConfig,
       // * Keys: element ID
       // * Values: objects with:
       //   o Key: "text",        Value: button text
@@ -409,14 +409,14 @@ export class NButtonSwitcher {
   ) {
     // Validate the first argument
     let callerName = "NButtonSwitcher"
-    _assertIsNonEmptyMapObject(elementsObject, callerName, "elementsObject")
+    _assertIsNonEmptyMapObject(elementsConfig, callerName, "elementsConfig")
     // Validate the sub-objects.
-    Object.entries(elementsObject).forEach(([elementID, elementObject]) => {
+    Object.entries(elementsConfig).forEach(([elementID, elementConfig]) => {
       _assertIsMapObjectWithKeys(
-        elementObject,
+        elementConfig,
         ["text", "items", "appCallback"],
         callerName,
-        "elementObject:" + elementID,
+        "elementConfig:" + elementID,
       )
     })
 
@@ -427,25 +427,24 @@ export class NButtonSwitcher {
     this.buttons = {}
     this.itemLists = {}
     this.appCallbacks = {}
-    Object.entries(elementsObject).forEach(([elementID, elementObject]) => {
+    Object.entries(elementsConfig).forEach(([elementID, elementConfig]) => {
       // This is a closure over the elementID
-      let button = new Button(
+      this.buttons[elementID] = new Button(
         elementID,
-        elementObject["text"],
+        elementConfig["text"],
         (event) => {
           this.show(event, elementID)
         },
       )
-      this.buttons[elementID] = button
-      this.itemLists[elementID] = elementObject["items"]
-      this.appCallbacks[elementID] = elementObject["appCallback"]
+      this.itemLists[elementID] = elementConfig["items"]
+      this.appCallbacks[elementID] = elementConfig["appCallback"]
     })
 
     this.buttonSelectedStyle = buttonSelectedStyle
     this.buttonDeselectedStyle = buttonDeselectedStyle
 
     // Select the first button by default. (This could be made another constructor argument.)
-    let firstElementID = Object.keys(elementsObject)[0]
+    let firstElementID = Object.keys(elementsConfig)[0]
     this.whichButtonIDSelected = firstElementID
     this.show(null, firstElementID)
   }
@@ -488,12 +487,12 @@ export class NButtonSwitcher {
 // Same as NButtonSwitcher, with local-storage memory of previous state
 export class PersistentNButtonSwitcher extends NButtonSwitcher {
   constructor(
-    elementsObject,
+    elementsConfig,
     buttonSelectedStyle,
     buttonDeselectedStyle,
   ) {
-    super(elementsObject, buttonSelectedStyle, buttonDeselectedStyle)
-    let firstElementID = Object.keys(elementsObject)[0]
+    super(elementsConfig, buttonSelectedStyle, buttonDeselectedStyle)
+    let firstElementID = Object.keys(elementsConfig)[0]
     this.localStorageKey = document.URL + ":" + firstElementID + ":state"
 
     // Restore previous state upon construction
@@ -516,19 +515,254 @@ export class PersistentNButtonSwitcher extends NButtonSwitcher {
   }
 }
 
-export function setErrorWidget(elementID) {
-  let element = document.getElementById(elementID)
-  if (element == null) {
-    console.log('Sliver: cannot find element "' + elementID + '" to set for showing error messages')
+// N buttons, controlling which elements are visible. Each element's visibility
+// is independently toggleable. There are also expand-all and collapse-all buttons.
+export class NButtonToggler {
+  constructor(
+    elementsConfig,
+      // * Keys: button element ID
+      // * Values: objects with:
+      //   o Key: "text",        Value: button text
+      //   o Key: "items",       Value: array of objects inheriting from GenericElement
+    expandAllConfig,
+      // Single key-value pair: button elementID -> "text" key-value pair
+    collapseAllConfig,
+      // Single key-value pair: button elementID -> "text" key-value pair
+    buttonSelectedStyle,
+      // CSS class for selected button
+    buttonDeselectedStyle,
+      // CSS class for deselected button(s)
+  ) {
+    // Validate the arguments
+    let callerName = "NButtonToggler"
+
+    // Check shapes of config arguments.
+    _assertIsMapObjectWithSubobjectKeys(elementsConfig, 1, null, ["text", "items"], callerName, "elementsConfig")
+    _assertIsMapObjectWithSubobjectKeys(expandAllConfig,   1, 1, ["text"], callerName, "expandAllConfig")
+    _assertIsMapObjectWithSubobjectKeys(collapseAllConfig, 1, 1, ["text"], callerName, "collapseAllConfig")
+
+    this.buttonSelectedStyle   = buttonSelectedStyle
+    this.buttonDeselectedStyle = buttonDeselectedStyle
+
+    // Instantiate the button objects, each with their callback closures.
+    // Remember the item-list each button controls.
+    this.buttons = {}
+    this.itemLists = {}
+    Object.entries(elementsConfig).forEach(([buttonID, elementConfig]) => {
+      // This is a closure over the buttonID
+      this.buttons[buttonID] = new Button(
+        buttonID,
+        elementConfig["text"],
+        (event) => {
+          this.toggleButtonContents(buttonID)
+        },
+      )
+      this.itemLists[buttonID] = elementConfig["items"]
+    })
+
+    // Expand-all button
+    let expandAllButtonElementID = Object.keys(expandAllConfig)[0]
+    this.expandAllButton = new Button(
+      expandAllButtonElementID,
+      expandAllConfig[expandAllButtonElementID]["text"],
+      () => {
+        this.expandAll()
+      },
+    )
+    let eau = this.expandAllButton.underlying
+    eau.classList.remove(this.buttonSelectedStyle)
+    eau.classList.add(this.buttonDeselectedStyle)
+
+    // Collapse-all button
+    let collapseAllButtonElementID = Object.keys(collapseAllConfig)[0]
+    this.collapseAllButton = new Button(
+      collapseAllButtonElementID,
+      collapseAllConfig[collapseAllButtonElementID]["text"],
+      () => {
+        this.collapseAll()
+      },
+    )
+    let cau = this.collapseAllButton.underlying
+    cau.classList.remove(this.buttonSelectedStyle)
+    cau.classList.add(this.buttonDeselectedStyle)
+
+    // TODO: from URL, and/or local storage
+    this.visibilities = {}
+    Object.entries(elementsConfig).forEach(([buttonID, elementConfig]) => {
+      this.visibilities[buttonID] = false
+    })
+    // Select the first button by default. TODO: temporary
+    let firstButtonID = Object.keys(elementsConfig)[0]
+    this.visibilities[firstButtonID] = true
+    this.setFromVisibilities()
+  }
+
+  setFromVisibilities() {
+    Object.entries(this.visibilities).forEach(([buttonID, visible]) => {
+      if (visible) {
+        this.showButtonContents(buttonID)
+      } else {
+        this.hideButtonContents(buttonID)
+      }
+    })
+  }
+
+  showButtonContents(buttonID) {
+    // Controlled-widget styles
+    let itemList = this.itemLists[buttonID]
+    itemList.forEach((item) => { item.makeVisible() })
+    // Controller-button styles
+    let button = this.buttons[buttonID]
+    button.underlying.classList.add(this.buttonSelectedStyle)
+    button.underlying.classList.remove(this.buttonDeselectedStyle)
+    // Our memory
+    this.visibilities[buttonID] = true
+  }
+
+  hideButtonContents(buttonID) {
+    // Controlled-widget styles
+    let itemList = this.itemLists[buttonID]
+    itemList.forEach((item) => { item.makeInvisible() })
+    // Controller-button styles
+    let button = this.buttons[buttonID]
+    button.underlying.classList.remove(this.buttonSelectedStyle)
+    button.underlying.classList.add(this.buttonDeselectedStyle)
+    // Our memory
+    this.visibilities[buttonID] = false
+  }
+
+  toggleButtonContents(buttonID) {
+    if (this.visibilities[buttonID] === true) {
+      this.hideButtonContents(buttonID)
+    } else if (this.visibilities[buttonID] === false) {
+      this.showButtonContents(buttonID)
+    } else {
+      throw new Error("Internal coding error detected")
+    }
+  }
+
+  expandAll() {
+    Object.keys(this.visibilities).forEach((buttonID) => {
+      this.showButtonContents(buttonID)
+    })
+  }
+
+  collapseAll() {
+    Object.keys(this.visibilities).forEach((buttonID) => {
+      this.hideButtonContents(buttonID)
+    })
+  }
+
+}
+
+// Same as NButtonToggler but uses browser-local storage to remember previous state.
+export class PersistentNButtonToggler extends NButtonToggler {
+  constructor(
+    // All arguments as in NButtonToggler:
+    elementsConfig,
+    expandAllConfig,
+    collapseAllConfig,
+    buttonSelectedStyle,
+    buttonDeselectedStyle,
+  ) {
+    super(elementsConfig, expandAllConfig, collapseAllConfig, buttonSelectedStyle, buttonDeselectedStyle)
+
+    let firstButtonID = Object.keys(elementsConfig)[0]
+    this.localStorageKey = document.URL + ":" + firstButtonID + ":state"
+    this.restoreFromLocalStorage()
+  }
+
+  restoreFromLocalStorage () {
+    if (localStorage == null) {
+      return
+    }
+    const value = localStorage.getItem(this.localStorageKey);
+    if (value == null) {
+      return
+    }
+    this.visibilities = JSON.parse(value)
+    this.setFromVisibilities()
+  }
+
+  showButtonContents(buttonID) {
+    super.showButtonContents(buttonID)
+    localStorage.setItem(this.localStorageKey, JSON.stringify(this.visibilities))
+  }
+
+  hideButtonContents(buttonID) {
+    super.hideButtonContents(buttonID)
+    localStorage.setItem(this.localStorageKey, JSON.stringify(this.visibilities))
+  }
+}
+
+// XXX URLs
+
+//    // Find out what to expand/collapse:
+//    // * If specified in the URL, use that
+//    //   Example:
+//    //   o urlShorthands = {'about': 'toggleable_div_about'}
+//    //   o URL = https://nameofsite.org/nameofpage?about
+//    //   o Then expand the 'toggleable_div_about' div
+//    // * Else retrieve last-used from browser local storage
+//    const urlParams = new URLSearchParams(window.location.search);
+//
+//    let foundAny = false;
+//
+//    Object.keys(urlShorthands).forEach(urlShorthand => {
+//      if (urlParams.get(urlShorthand) != null) {
+//        this.collapseAll();
+//        const divName = urlShorthands[urlShorthand];
+//        if (divName != null) {
+//          foundAny = true;
+//          if (divName === 'all') {
+//            this.expandAll();
+//          } else if (divName === 'none') {
+//            this.collapseAll();
+//          } else {
+//            this.toggle(divName);
+//          }
+//        }
+//      }
+//    });
+
+// ----------------------------------------------------------------
+// FUNCTIONS
+
+// The app should have a div (or span, your choice) with the specified
+// container ID. Within that there should be another div/span which is
+// where the error text will be written.
+//
+// This function does the following:
+// * Initially:
+//   o Makes the container invisible.
+//   o Makes the text empty.
+// * On error:
+//   o Makes the container visible.
+//   o Writes the error text to the specified element.
+// * Left up to the calling app:
+//   o Any CSS styling for the error-container
+//   o Any other widgets within the error-container, e.g. a button to clear them.
+export function setErrorWidget(containerElementID, textElementID) {
+  let containerElement = document.getElementById(containerElementID)
+  let textElement = document.getElementById(textElementID)
+  if (containerElement == null) {
+    console.log('Sliver: cannot find element "' + containerElementID + '" to set for showing error messages')
+    return false
+  }
+  if (textElement == null) {
+    console.log('Sliver: cannot find element "' + textElementID + '" to set for showing error messages')
     return false
   }
 
-  element.style.display = "none"
+  containerElement.style.display = "none"
+  textElement.innerHTML = ""
   window.onerror = function(message, source, lineno, colno, error) {
+    // This is a closure over containerElement and textElement.
     let msg = "Error at " + source + ':' + lineno + ':' + colno + ':<br/>"' + message + '"'
     console.error(msg)
-    element.style.display = "block"
-    element.innerHTML = msg
+    console.log(error.stack)
+    containerElement.style.display = "block"
+    textElement.innerHTML = msg
     // Prevent the default error-handling behavior
     return true;
   }
@@ -565,6 +799,28 @@ function _assertIsNonEmptyMapObject(o, callerName, thingName) {
   _assertIsMapObject(o, callerName, thingName)
   if (_objectLength(o) <= 0) {
     throw new Error(callerName + ": " + thingName + " is empty")
+  }
+}
+
+function _assertIsMapObjectWithSubobjectKeys(
+  o,
+  minLength, // maybe null
+  maxLength, // maybe null
+  expectedSubobjectKeys,
+  callerName,
+  thingName,
+) {
+  _assertIsNonEmptyMapObject(o, callerName, thingName)
+  Object.entries(o).forEach(([key, subobject]) => {
+    _assertIsMapObjectWithKeys(subobject, expectedSubobjectKeys, callerName, thingName + ":" + key)
+  })
+
+  let olen = _objectLength(o)
+  if (minLength != null && olen < minLength) {
+    throw new Error(callerName + ": " + thingName + " has length " + olen + "; expected >= ", minLength)
+  }
+  if (maxLength != null && olen > maxLength) {
+    throw new Error(callerName + ": " + thingName + " has length " + olen + "; expected <= ", maxLength)
   }
 }
 

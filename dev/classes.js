@@ -695,23 +695,74 @@ export class PersistentNButtonToggler extends NButtonToggler {
   }
 }
 
+// XXX URLs
+
+//    // Find out what to expand/collapse:
+//    // * If specified in the URL, use that
+//    //   Example:
+//    //   o urlShorthands = {'about': 'toggleable_div_about'}
+//    //   o URL = https://nameofsite.org/nameofpage?about
+//    //   o Then expand the 'toggleable_div_about' div
+//    // * Else retrieve last-used from browser local storage
+//    const urlParams = new URLSearchParams(window.location.search);
+//
+//    let foundAny = false;
+//
+//    Object.keys(urlShorthands).forEach(urlShorthand => {
+//      if (urlParams.get(urlShorthand) != null) {
+//        this.collapseAll();
+//        const divName = urlShorthands[urlShorthand];
+//        if (divName != null) {
+//          foundAny = true;
+//          if (divName === 'all') {
+//            this.expandAll();
+//          } else if (divName === 'none') {
+//            this.collapseAll();
+//          } else {
+//            this.toggle(divName);
+//          }
+//        }
+//      }
+//    });
+
 // ----------------------------------------------------------------
 // FUNCTIONS
 
-export function setErrorWidget(elementID) {
-  let element = document.getElementById(elementID)
-  if (element == null) {
-    console.log('Sliver: cannot find element "' + elementID + '" to set for showing error messages')
+// The app should have a div (or span, your choice) with the specified
+// container ID. Within that there should be another div/span which is
+// where the error text will be written.
+//
+// This function does the following:
+// * Initially:
+//   o Makes the container invisible.
+//   o Makes the text empty.
+// * On error:
+//   o Makes the container visible.
+//   o Writes the error text to the specified element.
+// * Left up to the calling app:
+//   o Any CSS styling for the error-container
+//   o Any other widgets within the error-container, e.g. a button to clear them.
+export function setErrorWidget(containerElementID, textElementID) {
+  let containerElement = document.getElementById(containerElementID)
+  let textElement = document.getElementById(textElementID)
+  if (containerElement == null) {
+    console.log('Sliver: cannot find element "' + containerElementID + '" to set for showing error messages')
+    return false
+  }
+  if (textElement == null) {
+    console.log('Sliver: cannot find element "' + textElementID + '" to set for showing error messages')
     return false
   }
 
-  element.style.display = "none"
+  containerElement.style.display = "none"
+  textElement.innerHTML = ""
   window.onerror = function(message, source, lineno, colno, error) {
+    // This is a closure over containerElement and textElement.
     let msg = "Error at " + source + ':' + lineno + ':' + colno + ':<br/>"' + message + '"'
     console.error(msg)
     console.log(error.stack)
-    element.style.display = "block"
-    element.innerHTML = msg
+    containerElement.style.display = "block"
+    textElement.innerHTML = msg
     // Prevent the default error-handling behavior
     return true;
   }
