@@ -393,10 +393,10 @@ export class OneButtonSwitcher {
   }
 }
 
-// N buttons, controlling which elements are visible.
+// N buttons, controlling which element is visible.
 export class NButtonSwitcher {
   constructor(
-    elementsObject,
+    elementsConfig,
       // * Keys: element ID
       // * Values: objects with:
       //   o Key: "text",        Value: button text
@@ -409,14 +409,14 @@ export class NButtonSwitcher {
   ) {
     // Validate the first argument
     let callerName = "NButtonSwitcher"
-    _assertIsNonEmptyMapObject(elementsObject, callerName, "elementsObject")
+    _assertIsNonEmptyMapObject(elementsConfig, callerName, "elementsConfig")
     // Validate the sub-objects.
-    Object.entries(elementsObject).forEach(([elementID, elementObject]) => {
+    Object.entries(elementsConfig).forEach(([elementID, elementConfig]) => {
       _assertIsMapObjectWithKeys(
-        elementObject,
+        elementConfig,
         ["text", "items", "appCallback"],
         callerName,
-        "elementObject:" + elementID,
+        "elementConfig:" + elementID,
       )
     })
 
@@ -427,25 +427,24 @@ export class NButtonSwitcher {
     this.buttons = {}
     this.itemLists = {}
     this.appCallbacks = {}
-    Object.entries(elementsObject).forEach(([elementID, elementObject]) => {
+    Object.entries(elementsConfig).forEach(([elementID, elementConfig]) => {
       // This is a closure over the elementID
-      let button = new Button(
+      this.buttons[elementID] = new Button(
         elementID,
-        elementObject["text"],
+        elementConfig["text"],
         (event) => {
           this.show(event, elementID)
         },
       )
-      this.buttons[elementID] = button
-      this.itemLists[elementID] = elementObject["items"]
-      this.appCallbacks[elementID] = elementObject["appCallback"]
+      this.itemLists[elementID] = elementConfig["items"]
+      this.appCallbacks[elementID] = elementConfig["appCallback"]
     })
 
     this.buttonSelectedStyle = buttonSelectedStyle
     this.buttonDeselectedStyle = buttonDeselectedStyle
 
     // Select the first button by default. (This could be made another constructor argument.)
-    let firstElementID = Object.keys(elementsObject)[0]
+    let firstElementID = Object.keys(elementsConfig)[0]
     this.whichButtonIDSelected = firstElementID
     this.show(null, firstElementID)
   }
@@ -488,12 +487,12 @@ export class NButtonSwitcher {
 // Same as NButtonSwitcher, with local-storage memory of previous state
 export class PersistentNButtonSwitcher extends NButtonSwitcher {
   constructor(
-    elementsObject,
+    elementsConfig,
     buttonSelectedStyle,
     buttonDeselectedStyle,
   ) {
-    super(elementsObject, buttonSelectedStyle, buttonDeselectedStyle)
-    let firstElementID = Object.keys(elementsObject)[0]
+    super(elementsConfig, buttonSelectedStyle, buttonDeselectedStyle)
+    let firstElementID = Object.keys(elementsConfig)[0]
     this.localStorageKey = document.URL + ":" + firstElementID + ":state"
 
     // Restore previous state upon construction
@@ -515,6 +514,149 @@ export class PersistentNButtonSwitcher extends NButtonSwitcher {
     })
   }
 }
+
+// N buttons, controlling which elements are visible. Each element's visibility
+// is independently toggleable. There are also expand-all and collapse-all buttons.
+export class NButtonToggler {
+  constructor(
+    elementsConfig,
+      // * Keys: button element ID
+      // * Values: objects with:
+      //   o Key: "text",        Value: button text
+      //   o Key: "items",       Value: array of objects inheriting from GenericElement
+    expandAllConfig,
+      // Single key-value pair: button elementID -> "text" key-value pair
+    collapseAllConfig,
+      // Single key-value pair: button elementID -> "text" key-value pair
+    buttonSelectedStyle,
+      // CSS class for selected button
+    buttonDeselectedStyle,
+      // CSS class for deselected button(s)
+  ) {
+    // Validate the arguments
+    let callerName = "NButtonToggler"
+
+    // Check shapes of config arguments.
+    _assertIsMapObjectWithSubobjectKeys(elementsConfig, 1, null, ["text", "items"], callerName, "elementsConfig")
+    _assertIsMapObjectWithSubobjectKeys(expandAllConfig,   1, 1, ["text"], callerName, "expandAllConfig")
+    _assertIsMapObjectWithSubobjectKeys(collapseAllConfig, 1, 1, ["text"], callerName, "collapseAllConfig")
+
+    this.buttonSelectedStyle   = buttonSelectedStyle
+    this.buttonDeselectedStyle = buttonDeselectedStyle
+
+    // Instantiate the button objects, each with their callback closures.
+    // Remember the item-list each button controls.
+    this.buttons = {}
+    this.itemLists = {}
+    Object.entries(elementsConfig).forEach(([buttonID, elementConfig]) => {
+      // This is a closure over the buttonID
+      this.buttons[buttonID] = new Button(
+        buttonID,
+        elementConfig["text"],
+        (event) => {
+          this.toggleButtonContents(buttonID)
+        },
+      )
+      this.itemLists[buttonID] = elementConfig["items"]
+    })
+
+    // Expand-all button
+    let expandAllButtonElementID = Object.keys(expandAllConfig)[0]
+    this.expandAllButton = new Button(
+      expandAllButtonElementID,
+      expandAllConfig[expandAllButtonElementID]["text"],
+      () => {
+        this.expandAll()
+      },
+    )
+    let eau = this.expandAllButton.underlying
+    eau.classList.remove(this.buttonSelectedStyle)
+    eau.classList.add(this.buttonDeselectedStyle)
+
+    // Collapse-all button
+    let collapseAllButtonElementID = Object.keys(collapseAllConfig)[0]
+    this.collapseAllButton = new Button(
+      collapseAllButtonElementID,
+      collapseAllConfig[collapseAllButtonElementID]["text"],
+      () => {
+        this.collapseAll()
+      },
+    )
+    let cau = this.collapseAllButton.underlying
+    cau.classList.remove(this.buttonSelectedStyle)
+    cau.classList.add(this.buttonDeselectedStyle)
+
+    // TODO: from URL, and/or local storage
+    this.visibilities = {}
+    Object.entries(elementsConfig).forEach(([buttonID, elementConfig]) => {
+      this.visibilities[buttonID] = false
+    })
+    // Select the first button by default. TODO: temporary
+    let firstButtonID = Object.keys(elementsConfig)[0]
+    this.visibilities[firstButtonID] = true
+    this.setFromVisibilities()
+  }
+
+  setFromVisibilities(buttonID) {
+    Object.entries(this.visibilities).forEach(([buttonID, visible]) => {
+      if (visible) {
+        this.showButtonContents(buttonID)
+      } else {
+        this.hideButtonContents(buttonID)
+      }
+    })
+  }
+
+  showButtonContents(buttonID) {
+    // Controlled-widget styles
+    let itemList = this.itemLists[buttonID]
+    itemList.forEach((item) => { item.makeVisible() })
+    // Controller-button styles
+    let button = this.buttons[buttonID]
+    button.underlying.classList.add(this.buttonSelectedStyle)
+    button.underlying.classList.remove(this.buttonDeselectedStyle)
+    // Our memory
+    this.visibilities[buttonID] = true
+  }
+
+  hideButtonContents(buttonID) {
+    // Controlled-widget styles
+    let itemList = this.itemLists[buttonID]
+    itemList.forEach((item) => { item.makeInvisible() })
+    // Controller-button styles
+    let button = this.buttons[buttonID]
+    button.underlying.classList.remove(this.buttonSelectedStyle)
+    button.underlying.classList.add(this.buttonDeselectedStyle)
+    // Our memory
+    this.visibilities[buttonID] = false
+  }
+
+  toggleButtonContents(buttonID) {
+    if (this.visibilities[buttonID] === true) {
+      this.hideButtonContents(buttonID)
+    } else if (this.visibilities[buttonID] === false) {
+      this.showButtonContents(buttonID)
+    } else {
+      throw new Error("Internal coding error detected")
+    }
+  }
+
+  expandAll() {
+    Object.keys(this.visibilities).forEach((buttonID) => {
+      this.showButtonContents(buttonID)
+    })
+  }
+
+  collapseAll() {
+    Object.keys(this.visibilities).forEach((buttonID) => {
+      this.hideButtonContents(buttonID)
+    })
+  }
+
+}
+
+// ----------------------------------------------------------------
+// FUNCTIONS
 
 export function setErrorWidget(elementID) {
   let element = document.getElementById(elementID)
@@ -565,6 +707,28 @@ function _assertIsNonEmptyMapObject(o, callerName, thingName) {
   _assertIsMapObject(o, callerName, thingName)
   if (_objectLength(o) <= 0) {
     throw new Error(callerName + ": " + thingName + " is empty")
+  }
+}
+
+function _assertIsMapObjectWithSubobjectKeys(
+  o,
+  minLength, // maybe null
+  maxLength, // maybe null
+  expectedSubobjectKeys,
+  callerName,
+  thingName,
+) {
+  _assertIsNonEmptyMapObject(o, callerName, thingName)
+  Object.entries(o).forEach(([key, subobject]) => {
+    _assertIsMapObjectWithKeys(subobject, expectedSubobjectKeys, callerName, thingName + ":" + key)
+  })
+
+  let olen = _objectLength(o)
+  if (minLength != null && olen < minLength) {
+    throw new Error(callerName + ": " + thingName + " has length " + olen + "; expected >= ", minLength)
+  }
+  if (maxLength != null && olen > maxLength) {
+    throw new Error(callerName + ": " + thingName + " has length " + olen + "; expected <= ", maxLength)
   }
 }
 
