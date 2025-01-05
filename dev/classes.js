@@ -597,12 +597,11 @@ export class NButtonToggler {
     cau.classList.remove(this.buttonSelectedStyle)
     cau.classList.add(this.buttonDeselectedStyle)
 
-    // TODO: from URL, and/or local storage
     this.visibilities = {}
     Object.entries(elementsConfig).forEach(([buttonID, elementConfig]) => {
       this.visibilities[buttonID] = false
     })
-    // Select the first button by default. TODO: temporary
+    // Select the first button by default.
     const firstButtonID = Object.keys(elementsConfig)[0]
     this.visibilities[firstButtonID] = true
     this.setFromVisibilities()
@@ -691,7 +690,19 @@ export class PersistentNButtonToggler extends NButtonToggler {
     if (value == null) {
       return
     }
-    this.visibilities = JSON.parse(value)
+
+    // This needs some checking in case new buttons were added/removed since
+    // the last save to local storage.
+    const savedVisibilities = JSON.parse(value)
+
+    let newVisibilities = {...this.visibilities}
+    Object.entries(this.visibilities).forEach(([elementID, currentVisibility]) => {
+      if (savedVisibilities[elementID] != null) {
+        newVisibilities[elementID] = savedVisibilities[elementID]
+      }
+    })
+
+    this.visibilities = newVisibilities
     this.setFromVisibilities()
   }
 
