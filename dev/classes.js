@@ -408,26 +408,16 @@ export class NButtonSwitcher {
       // CSS class for deselected button(s)
   ) {
     // Validate the first argument
-
-    // First validate the base object. Note that JS says true for arrays here, so this is
-    // not a perfect check.
-    if (!elementsObject instanceof Object) {
-      throw new Error("NButtonSwitcher: elementsObject is not an object")
-    }
-    if (elementsObject.length <= 0) {
-      throw new Error("NButtonSwitcher: elementsObject is empty")
-    }
+    let callerName = "NButtonSwitcher"
+    _assertIsNonEmptyMapObject(elementsObject, callerName, "elementsObject")
     // Validate the sub-objects.
     Object.entries(elementsObject).forEach(([elementID, elementObject]) => {
-      if (typeof(elementID) != "string") {
-        throw new Error("NButtonSwitcher: elementsObject keys are not all strings")
-      }
-      if (elementObject["text"] == undefined
-        || elementObject["items"] == undefined
-        || elementObject["appCallback"] == undefined
-      ) {
-        throw new Error('NButtonSwitcher: elementsObject values must have keys "text", "items", "appCallback"')
-      }
+      _assertIsMapObjectWithKeys(
+        elementObject,
+        ["text", "items", "appCallback"],
+        callerName,
+        "elementObject:" + elementID,
+      )
     })
 
     // Now:
@@ -439,20 +429,18 @@ export class NButtonSwitcher {
     this.appCallbacks = {}
     Object.entries(elementsObject).forEach(([elementID, elementObject]) => {
       // This is a closure over the elementID
-      let text = elementObject["text"]
-      let itemList = elementObject["items"]
-      let appCallback = elementObject["appCallback"]
       let button = new Button(
         elementID,
-        text,
+        elementObject["text"],
         (event) => {
           this.show(event, elementID)
         },
       )
       this.buttons[elementID] = button
-      this.itemLists[elementID] = itemList
-      this.appCallbacks[elementID] = appCallback
+      this.itemLists[elementID] = elementObject["items"]
+      this.appCallbacks[elementID] = elementObject["appCallback"]
     })
+    console.log("TIL", this.itemLists)
 
     this.buttonSelectedStyle = buttonSelectedStyle
     this.buttonDeselectedStyle = buttonDeselectedStyle
@@ -550,10 +538,58 @@ export function setErrorWidget(elementID) {
 // ----------------------------------------------------------------
 // UTILITIES
 
-// TODO:
-// * assertor for non-null (e.g. get-element-by-id)
-
 export function isInteger(text) {
   // TODO: this accepts '3.4' and should not
   return !isNaN(parseInt(text))
+}
+
+// ----------------------------------------------------------------
+// INTERNALS
+
+// TODO:
+// * assertor for non-null (e.g. get-element-by-id)
+
+function _assertIsMapObject(o, callerName, thingName) {
+  if (!o instanceof Object) {
+    throw new Error(callerName + ": " + thingName + " is not a object")
+  }
+  if (o instanceof Array) {
+    throw new Error(callerName + ": " + thingName + " is an array, not a non-array object")
+  }
+}
+
+function _objectLength(o) {
+  return Object.keys(o).length
+}
+
+function _assertIsNonEmptyMapObject(o, callerName, thingName) {
+  _assertIsMapObject(o, callerName, thingName)
+  if (_objectLength(o) <= 0) {
+    throw new Error(callerName + ": " + thingName + " is empty")
+  }
+}
+
+function _arraysEqual(a, b) {
+  if (a.length !== b.length) {
+    return false
+  }
+  return a.every((element, index) => element === b[index]);
+}
+
+function _assertIsMapObjectWithKeys(o, keys, callerName, thingName) {
+  _assertIsMapObject(o, callerName, thingName)
+  const actualKeys = Object.keys(o).toSorted()
+  const expectedKeys = keys.toSorted()
+  console.log("WTF", actualKeys, expectedKeys, actualKeys == expectedKeys)
+  if (!_arraysEqual(actualKeys, expectedKeys)) {
+    throw new Error(
+      callerName
+      + ': '
+      + thingName
+      + ' must have keys "'
+      + JSON.stringify(expectedKeys)
+      + '"; got "'
+      + JSON.stringify(actualKeys)
+    )
+  }
 }
