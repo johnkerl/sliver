@@ -203,6 +203,7 @@
 
 <p/>
 
+<!-- ================================================================ -->
 <hr/>
 
 <div>
@@ -218,6 +219,7 @@
   </table>
 </div>
 
+<!-- ================================================================ -->
 <hr/>
 
 <div id="switch-item-2">
@@ -242,6 +244,7 @@
   This is just some text. Click the button above to see the table again.
 </div>
 
+<!-- ================================================================ -->
 <hr/>
 
 <div>
@@ -278,7 +281,7 @@
     TextInput,
     TextSpan,
     OneButtonSwitcher,
-    TwoButtonSwitcher,
+    NButtonSwitcher,
     isInteger,
     setErrorWidget,
   } from "http://127.0.0.1:9999/sliver/dev/classes.js"
@@ -335,22 +338,26 @@
         },
       )
 
-      this.elements.switcher = new TwoButtonSwitcher(
-        "item-switch-button-1",
-        "item-switch-button-2",
-        "Label 1",
-        "Label 2",
-        [
-          new GenericElement("switch-item-1b"),
-        ],
-        [
-          new GenericElement("switch-item-2b"),
-        ],
-        (button1, button2) => {
-          this.logAt1("switcherButton1 click")
-        },
-        (button1, button2) => {
-          this.logAt1("switcherButton2 click")
+      this.elements.switcher = new NButtonSwitcher(
+        {
+          "item-switch-button-1": {
+            "text": "Label 1",
+            "items": [
+              new GenericElement("switch-item-1b"),
+            ],
+            "appCallback": (event) => {
+              this.logAt1("switcherButton1 click")
+            },
+          },
+          "item-switch-button-2": {
+            "text": "Label 2",
+            "items": [
+              new GenericElement("switch-item-2b"),
+            ],
+            "appCallback": (event) => {
+              this.logAt1("switcherButton2 click")
+            },
+          },
         },
         "selected",   // CSS style
         "deselected", // CSS style
