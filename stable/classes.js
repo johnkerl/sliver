@@ -344,84 +344,109 @@ export class OneButtonSwitcher {
   }
 }
 
-// Two buttons, controlling which of two elements are visible.
-// This should take N buttons really.
-export class TwoButtonSwitcher {
+// N buttons, controlling which elements are visible.
+export class NButtonSwitcher {
   constructor(
-    // TODO: make this N-element.
-    // First arg which is a dict: button i element ID -> array of text, item-list, app callback.
-    // Then selected-style & deselected-style args
-    button1ElementID,
-    button2ElementID,
-    button1Text,
-    button2Text,
-    itemList1, // TODO: assert each extends GenericElement
-    itemList2, // TODO: assert each extends GenericElement
-    appCallback1,
-    appCallback2,
+    elementsObject,
+      // * Keys: element ID
+      // * Values: objects with:
+      //   o Key: "text",        Value: button text
+      //   o Key: "items",       Value: array of objects inherting from GenericElement
+      //   o Key: "appCallback", Value: application-level callback
     buttonSelectedStyle,
+      // CSS class for selected button
     buttonDeselectedStyle,
+      // CSS class for deselected button(s)
   ) {
-    this.button1 = new Button(button1ElementID, button1Text, this.onClick1)
-    this.button2 = new Button(button2ElementID, button2Text, this.onClick2)
-    this.button1.parent = this
-    this.button2.parent = this
-    this.itemList1  = itemList1
-    this.itemList2  = itemList2
-    this.appCallback1 = appCallback1
-    this.appCallback2 = appCallback2
+    // Validate the first argument
+
+    // First validate the base object. Note that JS says true for arrays here, so this is
+    // not a perfect check.
+    if (!elementsObject instanceof Object) {
+      throw new Error("NButtonSwitcher: elementsObject is not an object")
+    }
+    if (elementsObject.length <= 0) {
+      throw new Error("NButtonSwitcher: elementsObject is empty")
+    }
+    // Validate the sub-objects.
+    Object.entries(elementsObject).forEach(([elementID, elementObject]) => {
+      if (typeof(elementID) != "string") {
+        throw new Error("NButtonSwitcher: elementsObject keys are not all strings")
+      }
+      if (elementObject["text"] == undefined
+        || elementObject["items"] == undefined
+        || elementObject["appCallback"] == undefined
+      ) {
+        throw new Error('NButtonSwitcher: elementsObject values must have keys "text", "items", "appCallback"')
+      }
+    })
+
+    // Now:
+    // * Instantiate the button objects, each with their callback closures
+    // * Remember the item-list each button controls
+    // * Remember the app-level callbacks for each button
+    this.buttons = {}
+    this.itemLists = {}
+    this.appCallbacks = {}
+    Object.entries(elementsObject).forEach(([elementID, elementObject]) => {
+      // This is a closure over the elementID
+      let text = elementObject["text"]
+      let itemList = elementObject["items"]
+      let appCallback = elementObject["appCallback"]
+      let button = new Button(
+        elementID,
+        text,
+        (event) => {
+          this.show(event, elementID)
+        },
+      )
+      this.buttons[elementID] = button
+      this.itemLists[elementID] = itemList
+      this.appCallbacks[elementID] = appCallback
+    })
+
     this.buttonSelectedStyle = buttonSelectedStyle
     this.buttonDeselectedStyle = buttonDeselectedStyle
-    this.whichShown = 1
-    this.show1()
+
+    // Select the first button by default. (This could be made another constructor argument.)
+    let firstElementID = Object.keys(elementsObject)[0]
+    this.whichButtonIDSelected = firstElementID
+    this.show(null, firstElementID)
   }
 
   which() {
-    return this.whichShown
+    return this.whichButtonIDSelected
   }
 
-  show1(event) {
-    this.whichShown = 1
+  show(event, selectedButtonID) {
+    // Remember this
+    this.whichButtonIDSelected = selectedButtonID
 
-    this.itemList1.forEach((item) => item.makeVisible())
-    this.itemList2.forEach((item) => item.makeInvisible())
+    // Set visibilities of controlled items
+    Object.entries(this.itemLists).forEach(([buttonID, itemList]) => {
+      if (buttonID == selectedButtonID) {
+        itemList.forEach((item) => item.makeVisible())
+      } else {
+        itemList.forEach((item) => item.makeInvisible())
+      }
+    })
 
-    if (this.appCallback1 != null) {
-      this.appCallback1()
-      this.button1.underlying.classList.add(this.buttonSelectedStyle)
-      this.button1.underlying.classList.remove(this.buttonDeselectedStyle)
-      this.button2.underlying.classList.add(this.buttonDeselectedStyle)
-      this.button2.underlying.classList.remove(this.buttonSelectedStyle)
+    // Update CSS styles for selected & deselected buttons
+    Object.entries(this.buttons).forEach(([buttonID, button]) => {
+      if (buttonID == selectedButtonID) {
+        button.underlying.classList.add(this.buttonSelectedStyle)
+        button.underlying.classList.remove(this.buttonDeselectedStyle)
+      } else {
+        button.underlying.classList.remove(this.buttonSelectedStyle)
+        button.underlying.classList.add(this.buttonDeselectedStyle)
+      }
+    })
+
+    // App-level callback, if any
+    if (this.appCallbacks[selectedButtonID] != null) {
+      this.appCallbacks[selectedButtonID](event)
     }
   }
-
-  show2(event) {
-    this.whichShown = 2
-
-    this.itemList1.forEach((item) => item.makeInvisible())
-    this.itemList2.forEach((item) => item.makeVisible())
-
-    if (this.appCallback2 != null) {
-      this.appCallback2()
-      this.button1.underlying.classList.add(this.buttonDeselectedStyle)
-      this.button2.underlying.classList.add(this.buttonSelectedStyle)
-      this.button1.underlying.classList.remove(this.buttonSelectedStyle)
-      this.button2.underlying.classList.remove(this.buttonDeselectedStyle)
-    }
-  }
-
-  onClick1(event) {
-    // "this" is the Button; need to parent up to get our class
-    let obj = this.parent
-    obj.show1(event)
-  }
-
-  onClick2(event) {
-    // "this" is the Button; need to parent up to get our class
-    let obj = this.parent
-    obj.show2(event)
-  }
-
 }
 
 export function setErrorWidget(elementID) {
