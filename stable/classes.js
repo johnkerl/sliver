@@ -176,12 +176,41 @@ export class TextInput extends GenericElement {
 
     this.underlying.addEventListener("input", function(event) {
       let obj = this.parent // Map from browser-level up to class-level
-      this.value = this.value.toUpperCase() // TODO: parameterize upper-casing or not
       obj.callback(event)
     })
   }
   set(text) {
-    this.underlying.value = text.toUpperCase() // TODO: parameterize upper-casing or not
+    this.underlying.value = text
+  }
+  get(text) {
+    return this.underlying.value
+  }
+}
+
+// Single-line text input, with constraint callback.
+export class ConstrainedTextInput extends GenericElement {
+  // Single-line input element.
+  // The constrainer callback lets the app modify the input: e.g. removing whitespace,
+  // removing special characters, upper-casing, lower-casing, etc.
+  constructor(elementID, constrainerCallback, eventCallback) {
+    super()
+
+    // Browser-model element by composition
+    this.underlying = document.getElementById(elementID)
+
+    // This lets underlying-level callbacks invoke our methods
+    this.underlying.parent = this
+    this.constrainerCallback = constrainerCallback
+    this.eventCallback = eventCallback
+
+    this.underlying.addEventListener("input", function(event) {
+      let obj = this.parent // Map from browser-level up to class-level
+      this.value = obj.constrainerCallback(this.value)
+      obj.eventCallback(event)
+    })
+  }
+  set(text) {
+    this.underlying.value = this.constrainerCallback(text)
   }
   get(text) {
     return this.underlying.value

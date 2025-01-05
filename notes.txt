@@ -1,6 +1,5 @@
 TO DO:
 
-* Make text-input upper-casing an app callback
 * How to encapsulate: include CSS as well? Needs to come from the app ...
 * Props more generally; button colors, minimally
 * Fix isInteger(3.4) b04k
