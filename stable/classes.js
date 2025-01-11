@@ -342,6 +342,7 @@ export class PersistentDropdown extends Dropdown {
 }
 
 // One button, controlling which of two elements are visible.
+// Nominal use is for hide/show.
 export class OneButtonSwitcher {
   constructor(
     buttonElementID,
@@ -349,7 +350,7 @@ export class OneButtonSwitcher {
     itemList2, // TODO: assert each extends GenericElement
     itemList1ShownButtonText,
     itemList2ShownButtonText,
-    appCallback,
+    callback,
   ) {
     this.button = new Button(buttonElementID, itemList1ShownButtonText, this.onClick)
     this.button.parent = this
@@ -357,7 +358,7 @@ export class OneButtonSwitcher {
     this.itemList2  = itemList2
     this.itemList1ShownButtonText = itemList1ShownButtonText
     this.itemList2ShownButtonText = itemList2ShownButtonText
-    this.appCallback = appCallback
+    this.callback = callback
     this.show1()
   }
 
@@ -387,8 +388,8 @@ export class OneButtonSwitcher {
     } else {
       obj.show1()
     }
-    if (obj.appCallback != null) {
-      obj.appCallback()
+    if (obj.callback != null) {
+      obj.callback()
     }
   }
 }
@@ -401,7 +402,7 @@ export class NButtonSwitcher {
       // * Values: objects with:
       //   o Key: "text",        Value: button text
       //   o Key: "items",       Value: array of objects inheriting from GenericElement
-      //   o Key: "appCallback", Value: application-level callback
+      //   o Key: "callback",    Value: application-level callback
     buttonSelectedStyle,
       // CSS class for selected button
     buttonDeselectedStyle,
@@ -409,16 +410,17 @@ export class NButtonSwitcher {
   ) {
     // Validate the first argument
     const callerName = "NButtonSwitcher"
-    _assertIsNonEmptyMapObject(elementsConfig, callerName, "elementsConfig")
-    // Validate the sub-objects.
-    Object.entries(elementsConfig).forEach(([elementID, elementConfig]) => {
-      _assertIsMapObjectWithKeys(
-        elementConfig,
-        ["text", "items", "appCallback"],
-        callerName,
-        "elementConfig:" + elementID,
-      )
-    })
+    _assertIsMapObjectWithSubobjectKeys(
+      elementsConfig,
+      1,
+      null,
+      ["text", "items", "callback"],
+      callerName,
+      "elementsConfig",
+    )
+
+    this.buttonSelectedStyle = buttonSelectedStyle
+    this.buttonDeselectedStyle = buttonDeselectedStyle
 
     // Now:
     // * Instantiate the button objects, each with their callback closures
@@ -426,7 +428,7 @@ export class NButtonSwitcher {
     // * Remember the app-level callbacks for each button
     this.buttons = {}
     this.itemLists = {}
-    this.appCallbacks = {}
+    this.callbacks = {}
     Object.entries(elementsConfig).forEach(([elementID, elementConfig]) => {
       // This is a closure over the elementID
       this.buttons[elementID] = new Button(
@@ -437,11 +439,8 @@ export class NButtonSwitcher {
         },
       )
       this.itemLists[elementID] = elementConfig["items"]
-      this.appCallbacks[elementID] = elementConfig["appCallback"]
+      this.callbacks[elementID] = elementConfig["callback"]
     })
-
-    this.buttonSelectedStyle = buttonSelectedStyle
-    this.buttonDeselectedStyle = buttonDeselectedStyle
 
     // Select the first button by default. (This could be made another constructor argument.)
     const firstElementID = Object.keys(elementsConfig)[0]
@@ -478,8 +477,8 @@ export class NButtonSwitcher {
     })
 
     // App-level callback, if any
-    if (this.appCallbacks[selectedButtonID] != null) {
-      this.appCallbacks[selectedButtonID](event)
+    if (this.callbacks[selectedButtonID] != null) {
+      this.callbacks[selectedButtonID](event)
     }
   }
 }
@@ -515,15 +514,17 @@ export class PersistentNButtonSwitcher extends NButtonSwitcher {
   }
 }
 
-// N buttons, controlling which elements are visible. Each element's visibility
-// is independently toggleable. There are also expand-all and collapse-all buttons.
+// N buttons, controlling which elements are visible. Like NButtonSwitcher,
+// except that there are also expand-all and collapse-all buttons, and
+// there is the ability to show none of the options.
 export class NButtonToggler {
   constructor(
     elementsConfig,
       // Keys: button element ID
       // Values: objects with:
-      // * Key: "text",        Value: button text
-      // * Key: "items",       Value: array of objects inheriting from GenericElement
+      // * Key: "text",      Value: button text
+      // * Key: "items",     Value: array of objects inheriting from GenericElement
+      // * Key: "callback",  Value: application-level callback
       //
       // Example:
       //  {
@@ -548,7 +549,7 @@ export class NButtonToggler {
     const callerName = "NButtonToggler"
 
     // Check shapes of config arguments.
-    _assertIsMapObjectWithSubobjectKeys(elementsConfig, 1, null, ["text", "items"], callerName, "elementsConfig")
+    _assertIsMapObjectWithSubobjectKeys(elementsConfig, 1, null, ["text", "items", "callback"], callerName, "elementsConfig")
     _assertIsMapObjectWithSubobjectKeys(expandAllConfig,   1, 1, ["text"], callerName, "expandAllConfig")
     _assertIsMapObjectWithSubobjectKeys(collapseAllConfig, 1, 1, ["text"], callerName, "collapseAllConfig")
 
@@ -565,7 +566,7 @@ export class NButtonToggler {
         buttonID,
         elementConfig["text"],
         (event) => {
-          this.toggleButtonContents(buttonID)
+          this.onClick(buttonID)
         },
       )
       this.itemLists[buttonID] = elementConfig["items"]
@@ -641,6 +642,31 @@ export class NButtonToggler {
     this.visibilities[buttonID] = false
   }
 
+  onClick(buttonID) {
+    // If all are selected: select the current one and deselect the others.
+    // If the current one is selected: deselect it and the others.
+    // If the current one is deselected: select it, and deselect the others.
+    console.log("V", this.visibilities)
+
+    if (Object.values(this.visibilities).every((visibility) => visibility == true)) {
+      this.showButtonContents(buttonID)
+    } else if (this.visibilities[buttonID] === true) {
+      this.hideButtonContents(buttonID)
+    } else if (this.visibilities[buttonID] === false) {
+      this.showButtonContents(buttonID)
+    } else {
+      throw new Error("Internal coding error detected")
+    }
+    Object.keys(this.visibilities).forEach((otherButtonID) => {
+      if (otherButtonID != buttonID) {
+        this.hideButtonContents(otherButtonID)
+      }
+    })
+  }
+
+  // Not used as of this writing (2025-01-11), although it seems
+  // worth keeping around.
+  // This allows setting each of the visibilities independently.
   toggleButtonContents(buttonID) {
     if (this.visibilities[buttonID] === true) {
       this.hideButtonContents(buttonID)
@@ -883,14 +909,17 @@ function _arraysEqual(a, b) {
 
 function _assertIsMapObjectWithKeys(o, keys, callerName, thingName) {
   _assertIsMapObject(o, callerName, thingName)
-  const actualKeys = new Set(Object.keys(o).toSorted())
-  const expectedKeys = new Set(keys.toSorted())
-  if (!expectedKeys.isSubsetOf(actualKeys)) {
+  const actualKeys = Object.keys(o).toSorted()
+  const expectedKeys = keys.toSorted()
+  const actualKeysSet = new Set(actualKeys)
+  const expectedKeysSet = new Set(expectedKeys)
+  if (!expectedKeysSet.isSubsetOf(actualKeysSet)) {
     throw new Error(
       callerName
       + ': '
       + thingName
       + ' must have keys "'
+      // XXX B04K w/ SETS
       + JSON.stringify(expectedKeys)
       + '"; got "'
       + JSON.stringify(actualKeys)
