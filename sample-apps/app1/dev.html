@@ -130,11 +130,14 @@
   .center {
     text-align: center;
   }
+  .red {
+    color: #cc0000;
+  }
   .green {
     color: #007700;
   }
-  .red {
-    color: #cc0000;
+  .blue {
+    color: #000099;
   }
   .switch {
     position: relative;
@@ -253,55 +256,21 @@
 <hr/>
 
 <div>
-  <button class="green" id="item-switch-button-1"> Loading ... </button>
-  <button class="green" id="item-switch-button-2"> Loading ... </button>
+  <button class="blue" id="item-switch-button-1"> Loading ... </button>
+  <button class="blue" id="item-switch-button-2"> Loading ... </button>
+  <button class="blue" id="item-switch-button-3"> Loading ... </button>
 </div>
 
 <div id="switch-item-1b">
-  This is another table. Click the button above to see something else.
-  <table>
-    <tr> <th>D</th> <th>E</th> <th>F</th> </tr>
-    <tr> <td>4</td> <td>5</td> <td>6</td> </tr>
-    <tr> <td>7</td> <td>8</td> <td>9</td> </tr>
-  </table>
+The quick brown fox jumped over the lazy dogs.
 </div>
 
 <div id="switch-item-2b">
-  This is just some text. Click the button above to see the table again.
+Few black taxis drive up major roads on quiet, hazy nights.
 </div>
 
-<!-- ================================================================ -->
-<hr/>
-
-<div>
-<input type=text placeholder="..." size=30 id="font-family-select-input"></input>
-<button class="green" id="font-family-select-button"> Loading ... </button>
-</div>
-
-<div>
-<input type=text placeholder="..." size=30 id="font-style-select-input"></input>
-<button class="green" id="font-style-select-button" enterkeyhint="enter"> Loading ... </button>
-</div>
-
-<div>
-<input type=text placeholder="..." size=30 id="font-weight-select-input"></input>
-<button class="green" id="font-weight-select-button"> Loading ... </button>
-</div>
-
-<div id="font-select-output">
-<b>Hamburgevons</b>
-<p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-incididunt ut labore et dolore magna aliqua. Diam sollicitudin tempor id eu
-nisl nunc mi ipsum faucibus. Sed vulputate mi sit amet mauris. Ut tellus
-elementum sagittis vitae et leo duis ut. Nunc sed blandit libero volutpat sed
-cras. Cursus in hac habitasse platea dictumst quisque. Amet dictum sit amet
-justo. In cursus turpis massa tincidunt. Vitae proin sagittis nisl rhoncus
-mattis rhoncus urna neque. Enim nunc faucibus a pellentesque sit amet. Vel orci
-porta non pulvinar neque laoreet. Facilisi nullam vehicula ipsum a. Mi bibendum
-neque egestas congue quisque egestas diam in arcu. Viverra mauris in aliquam
-sem fringilla ut morbi tincidunt augue.
-</p>
+<div id="switch-item-3b">
+While making deep excavations we found some quaint bronze jewelry.
 </div>
 
 <!-- ================================================================ -->
@@ -387,6 +356,40 @@ ante.
 <hr/>
 
 <div>
+<input type=text placeholder="..." size=30 id="font-family-select-input"></input>
+<button class="green" id="font-family-select-button"> Loading ... </button>
+</div>
+
+<div>
+<input type=text placeholder="..." size=30 id="font-style-select-input"></input>
+<button class="green" id="font-style-select-button" enterkeyhint="enter"> Loading ... </button>
+</div>
+
+<div>
+<input type=text placeholder="..." size=30 id="font-weight-select-input"></input>
+<button class="green" id="font-weight-select-button"> Loading ... </button>
+</div>
+
+<div id="font-select-output">
+<b>Hamburgevons</b>
+<p>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Diam sollicitudin tempor id eu
+nisl nunc mi ipsum faucibus. Sed vulputate mi sit amet mauris. Ut tellus
+elementum sagittis vitae et leo duis ut. Nunc sed blandit libero volutpat sed
+cras. Cursus in hac habitasse platea dictumst quisque. Amet dictum sit amet
+justo. In cursus turpis massa tincidunt. Vitae proin sagittis nisl rhoncus
+mattis rhoncus urna neque. Enim nunc faucibus a pellentesque sit amet. Vel orci
+porta non pulvinar neque laoreet. Facilisi nullam vehicula ipsum a. Mi bibendum
+neque egestas congue quisque egestas diam in arcu. Viverra mauris in aliquam
+sem fringilla ut morbi tincidunt augue.
+</p>
+</div>
+
+<!-- ================================================================ -->
+<hr/>
+
+<div>
   Source and documentation: <a href="https://github.com/johnkerl/sliver">https://github.com/johnkerl/sliver</a>
 </div>
 <p/>
@@ -438,6 +441,7 @@ ante.
     setElementsAndCallbacks() {
       this.elements = {}
 
+      // ----------------------------------------------------------------
       this.elements.textInput1 = new TextInput(
         "text-input-1",
         (event) => {
@@ -458,6 +462,16 @@ ante.
 
       this.elements.textOutput1 = new TextSpan("text-output-1", "")
 
+      // ----------------------------------------------------------------
+      this.elements.makeAnErrorHappenButton = new Button(
+        "make-an-error-happen-button",
+        "Make an error happen",
+        (event) => {
+          throw new Error("This is an error message")
+        },
+      )
+
+      // ----------------------------------------------------------------
       this.elements.switcherButton = new OneButtonSwitcher(
         "item-switch-button",
         [
@@ -473,10 +487,11 @@ ante.
         },
       )
 
+      // ----------------------------------------------------------------
       this.elements.switcher = new NButtonSwitcher(
         {
           "item-switch-button-1": {
-            "text": "Label 1",
+            "text": "Pangram 1",
             "items": [
               new GenericElement("switch-item-1b"),
             ],
@@ -485,7 +500,7 @@ ante.
             },
           },
           "item-switch-button-2": {
-            "text": "Label 2",
+            "text": "Pangram 2",
             "items": [
               new GenericElement("switch-item-2b"),
             ],
@@ -493,11 +508,21 @@ ante.
               this.logAt1("switcherButton2 click")
             },
           },
+          "item-switch-button-3": {
+            "text": "Pangram 3",
+            "items": [
+              new GenericElement("switch-item-3b"),
+            ],
+            "callback": (event) => {
+              this.logAt1("switcherButton3 click")
+            },
+          },
         },
         "selected",   // CSS style
         "deselected", // CSS style
       )
 
+      // ----------------------------------------------------------------
       this.elements.multiswitcher = new URLAndPersistentNButtonToggler(
         {
           "toggler-button-1": {
@@ -539,14 +564,7 @@ ante.
         "deselected", // CSS style
       )
 
-      this.elements.makeAnErrorHappenButton = new Button(
-        "make-an-error-happen-button",
-        "Make an error happen",
-        (event) => {
-          throw new Error("This is an error message")
-        },
-      )
-
+      // ----------------------------------------------------------------
       this.elements.fontSelectOutput = new GenericElement(
         "font-select-output",
       )
@@ -592,6 +610,7 @@ ante.
         },
       )
 
+      // ----------------------------------------------------------------
       this.elements.lightDarkThemeElement = new LightDarkThemeSlider(
         "light-theme-dark-theme-toggle",
         "light-theme-dark-theme-label",

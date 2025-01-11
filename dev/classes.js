@@ -342,6 +342,7 @@ export class PersistentDropdown extends Dropdown {
 }
 
 // One button, controlling which of two elements are visible.
+// Nominal use is for hide/show.
 export class OneButtonSwitcher {
   constructor(
     buttonElementID,
@@ -513,8 +514,9 @@ export class PersistentNButtonSwitcher extends NButtonSwitcher {
   }
 }
 
-// N buttons, controlling which elements are visible. Each element's visibility
-// is independently toggleable. There are also expand-all and collapse-all buttons.
+// N buttons, controlling which elements are visible. Like NButtonSwitcher,
+// except that there are also expand-all and collapse-all buttons, and
+// there is the ability to show none of the options.
 export class NButtonToggler {
   constructor(
     elementsConfig,
@@ -564,7 +566,7 @@ export class NButtonToggler {
         buttonID,
         elementConfig["text"],
         (event) => {
-          this.toggleButtonContents(buttonID)
+          this.onClick(buttonID)
         },
       )
       this.itemLists[buttonID] = elementConfig["items"]
@@ -640,6 +642,31 @@ export class NButtonToggler {
     this.visibilities[buttonID] = false
   }
 
+  onClick(buttonID) {
+    // If all are selected: select the current one and deselect the others.
+    // If the current one is selected: deselect it and the others.
+    // If the current one is deselected: select it, and deselect the others.
+    console.log("V", this.visibilities)
+
+    if (Object.values(this.visibilities).every((visibility) => visibility == true)) {
+      this.showButtonContents(buttonID)
+    } else if (this.visibilities[buttonID] === true) {
+      this.hideButtonContents(buttonID)
+    } else if (this.visibilities[buttonID] === false) {
+      this.showButtonContents(buttonID)
+    } else {
+      throw new Error("Internal coding error detected")
+    }
+    Object.keys(this.visibilities).forEach((otherButtonID) => {
+      if (otherButtonID != buttonID) {
+        this.hideButtonContents(otherButtonID)
+      }
+    })
+  }
+
+  // Not used as of this writing (2025-01-11), although it seems
+  // worth keeping around.
+  // This allows setting each of the visibilities independently.
   toggleButtonContents(buttonID) {
     if (this.visibilities[buttonID] === true) {
       this.hideButtonContents(buttonID)
