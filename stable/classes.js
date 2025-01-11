@@ -144,6 +144,10 @@ export class Button extends GenericElement {
 
     // Browser-model element by composition
     this.underlying = document.getElementById(elementID)
+
+    // XXX TODO: null-asserts throughout this library.
+    // In fact, wrap getElementById in a get-and-assert
+
     // This lets underlying-level callbacks invoke our methods
     this.underlying.parent = this
     this.callback = callback
