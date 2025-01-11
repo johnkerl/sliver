@@ -9,7 +9,7 @@ export class GenericElement {
   constructor(
     elementID,
   ) {
-    this.underlying = document.getElementById(elementID)
+    this.underlying = _getElementById(elementID)
   }
 
   makeVisible() {
@@ -36,13 +36,13 @@ export class Slider extends GenericElement {
     toUncheckedCallback,
     toCheckedCallback,
   ) {
-    super()
+    super(sliderElementID)
 
     // Browser-model element by composition
     // * Underlying unchecked = slider left = light theme
     // * Underlying checked   = slider left = dark  theme
-    this.underlyingSlider = document.getElementById(sliderElementID)
-    this.underlyingLabel  = document.getElementById(labelElementID)
+    this.underlyingSlider = _getElementById(sliderElementID)
+    this.underlyingLabel  = _getElementById(labelElementID)
     // This lets underlying-level callbacks invoke our methods
     this.underlyingSlider.parent = this
 
@@ -140,14 +140,10 @@ export class Button extends GenericElement {
     text,
     callback,
   ) {
-    super()
+    super(elementID)
 
     // Browser-model element by composition
-    this.underlying = document.getElementById(elementID)
-
-    // XXX TODO: null-asserts throughout this library.
-    // In fact, wrap getElementById in a get-and-assert
-
+    this.underlying = _getElementById(elementID)
     // This lets underlying-level callbacks invoke our methods
     this.underlying.parent = this
     this.callback = callback
@@ -169,10 +165,10 @@ export class Button extends GenericElement {
 export class TextInput extends GenericElement {
   // Single-line input element
   constructor(elementID, callback) {
-    super()
+    super(elementID)
 
     // Browser-model element by composition
-    this.underlying = document.getElementById(elementID)
+    this.underlying = _getElementById(elementID)
 
     // This lets underlying-level callbacks invoke our methods
     this.underlying.parent = this
@@ -197,10 +193,10 @@ export class ConstrainedTextInput extends GenericElement {
   // The constrainer callback lets the app modify the input: e.g. removing whitespace,
   // removing special characters, upper-casing, lower-casing, etc.
   constructor(elementID, constrainerCallback, eventCallback) {
-    super()
+    super(elementID)
 
     // Browser-model element by composition
-    this.underlying = document.getElementById(elementID)
+    this.underlying = _getElementById(elementID)
 
     // This lets underlying-level callbacks invoke our methods
     this.underlying.parent = this
@@ -224,9 +220,9 @@ export class ConstrainedTextInput extends GenericElement {
 // Non-editable text output.
 export class TextSpan extends GenericElement {
   constructor(elementID, initialText) {
-    super()
+    super(elementID)
     // Browser-model element by composition
-    this.underlying = document.getElementById(elementID)
+    this.underlying = _getElementById(elementID)
     this.underlying.textContent = initialText
   }
 
@@ -239,7 +235,7 @@ export class TextSpan extends GenericElement {
 // There is optional peering: one element's value must be <= or >= its peer's value.
 export class IntRangeInput extends GenericElement {
   constructor(elementID, defaultValue, minAllowable, maxAllowable, callback) {
-    super()
+    super(elementID)
 
     this.defaultValue = defaultValue
     // Min/max values for this widget:
@@ -250,7 +246,7 @@ export class IntRangeInput extends GenericElement {
     this.peerMax = null
 
     // Browser-model element by composition
-    this.underlying = document.getElementById(elementID)
+    this.underlying = _getElementById(elementID)
     this.underlying.value = this.defaultValue
 
     // This lets underlying-level callbacks invoke our methods
@@ -305,10 +301,10 @@ export class IntRangeInput extends GenericElement {
 // Dropdown element. At present, the value-list must be set within the calling HTML.
 export class Dropdown extends GenericElement {
   constructor(elementID, callback) {
-    super()
+    super(elementID)
 
     // Browser-model element by composition
-    this.underlying = document.getElementById(elementID)
+    this.underlying = _getElementById(elementID)
 
     // This lets underlying-level callbacks invoke our methods
     this.underlying.parent = this
@@ -823,8 +819,8 @@ export class URLAndPersistentNButtonToggler extends PersistentNButtonToggler {
 //   o Any CSS styling for the error-container
 //   o Any other widgets within the error-container, e.g. a button to clear them.
 export function setErrorWidget(containerElementID, textElementID) {
-  let containerElement = document.getElementById(containerElementID)
-  let textElement = document.getElementById(textElementID)
+  let containerElement = _getElementById(containerElementID)
+  let textElement = _getElementById(textElementID)
   if (containerElement == null) {
     console.log('Sliver: cannot find element "' + containerElementID + '" to set for showing error messages')
     return false
@@ -859,8 +855,13 @@ export function isInteger(text) {
 // ----------------------------------------------------------------
 // INTERNALS
 
-// TODO:
-// * assertor for non-null (e.g. get-element-by-id)
+function _getElementById(elementID) {
+  const element = document.getElementById(elementID)
+  if (element == null) {
+    throw new Error('Element ID "' + elementID + '" not found in document.')
+  }
+  return element
+}
 
 function _assertIsMapObject(o, callerName, thingName) {
   if (!o instanceof Object) {
