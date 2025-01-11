@@ -130,11 +130,14 @@
   .center {
     text-align: center;
   }
+  .red {
+    color: #cc0000;
+  }
   .green {
     color: #007700;
   }
-  .red {
-    color: #cc0000;
+  .blue {
+    color: #000099;
   }
   .switch {
     position: relative;
@@ -253,42 +256,21 @@
 <hr/>
 
 <div>
-  <button class="green" id="item-switch-button-1"> Loading ... </button>
-  <button class="green" id="item-switch-button-2"> Loading ... </button>
+  <button class="blue" id="item-switch-button-1"> Loading ... </button>
+  <button class="blue" id="item-switch-button-2"> Loading ... </button>
+  <button class="blue" id="item-switch-button-3"> Loading ... </button>
 </div>
 
 <div id="switch-item-1b">
-  This is another table. Click the button above to see something else.
-  <table>
-    <tr> <th>D</th> <th>E</th> <th>F</th> </tr>
-    <tr> <td>4</td> <td>5</td> <td>6</td> </tr>
-    <tr> <td>7</td> <td>8</td> <td>9</td> </tr>
-  </table>
+The quick brown fox jumped over the lazy dogs.
 </div>
 
 <div id="switch-item-2b">
-  This is just some text. Click the button above to see the table again.
+Few black taxis drive up major roads on quiet, hazy nights.
 </div>
 
-<!-- ================================================================ -->
-<hr/>
-
-<input type=text placeholder="..." size=30 id="font-select-input"></input>
-<button class="green" id="font-select-button"> Loading ... </button>
-<div id="font-select-output">
-<b>Hamburgevons</b>
-<p>
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-incididunt ut labore et dolore magna aliqua. Diam sollicitudin tempor id eu
-nisl nunc mi ipsum faucibus. Sed vulputate mi sit amet mauris. Ut tellus
-elementum sagittis vitae et leo duis ut. Nunc sed blandit libero volutpat sed
-cras. Cursus in hac habitasse platea dictumst quisque. Amet dictum sit amet
-justo. In cursus turpis massa tincidunt. Vitae proin sagittis nisl rhoncus
-mattis rhoncus urna neque. Enim nunc faucibus a pellentesque sit amet. Vel orci
-porta non pulvinar neque laoreet. Facilisi nullam vehicula ipsum a. Mi bibendum
-neque egestas congue quisque egestas diam in arcu. Viverra mauris in aliquam
-sem fringilla ut morbi tincidunt augue.
-</p>
+<div id="switch-item-3b">
+While making deep excavations we found some quaint bronze jewelry.
 </div>
 
 <!-- ================================================================ -->
@@ -297,12 +279,13 @@ sem fringilla ut morbi tincidunt augue.
 <button class="green" id="toggler-button-1"> Loading ... </button>
 <button class="green" id="toggler-button-2"> Loading ... </button>
 <button class="green" id="toggler-button-3"> Loading ... </button>
+<button class="green" id="toggler-button-4"> Loading ... </button>
 <button id="toggler-button-expand-all"> Loading ... </button>
 <button id="toggler-button-collapse-all"> Loading ... </button>
 <p/>
 
-<div id="toggler-section-1">
-<b>Section 1</b>
+<div id="toggler-section-1" style="font-family:Palatino; font-style: italic">
+<b>Section 1: Palatino-Italic</b>
 <p>
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
 incididunt ut labore et dolore magna aliqua. Diam sollicitudin tempor id eu
@@ -317,8 +300,8 @@ sem fringilla ut morbi tincidunt augue.
 </p>
 </div>
 
-<div id="toggler-section-2">
-<b>Section 2</b>
+<div id="toggler-section-2" style="font-family:helvetica">
+<b>Section 2: Helvetica</b>
 <p>
 Ipsum faucibus vitae aliquet nec ullamcorper sit amet risus nullam. Convallis
 posuere morbi leo urna molestie at elementum eu facilisis. Sit amet consectetur
@@ -335,8 +318,8 @@ quis vel eros donec ac.
 </p>
 </div>
 
-<div id="toggler-section-3">
-<b>Section 3</b>
+<div id="toggler-section-3" style="font-family:franklin; font-weight: bold">
+<b>Section 3: Franklin-Bold</b>
 <p>
 Nunc pulvinar sapien et ligula ullamcorper malesuada. Ante in nibh mauris
 cursus mattis molestie a iaculis at. Et ultrices neque ornare aenean euismod.
@@ -351,6 +334,55 @@ Nunc sed velit dignissim sodales ut eu sem integer. Porttitor lacus luctus
 accumsan tortor posuere ac. Id consectetur purus ut faucibus pulvinar. Bibendum
 est ultricies integer quis auctor elit sed vulputate mi. Magna sit amet purus
 gravida quis.
+</p>
+</div>
+
+<div id="toggler-section-4" style="font-family:verdana">
+<b>Section 4: Verdana</b>
+<p>
+Nunc non lectus arcu. Duis lorem nulla, sollicitudin et malesuada id, dignissim id erat. Sed ex
+augue, lacinia ut libero et, convallis tristique sem. Nam nulla odio, bibendum non viverra quis,
+vestibulum quis elit. Nullam in pulvinar massa. Aliquam vestibulum lorem lectus, sit amet euismod
+velit tristique ornare. Vestibulum venenatis pellentesque diam, vitae egestas metus vestibulum et.
+Ut id justo tempus, varius purus ut, pretium purus. Quisque quis tellus sed enim euismod imperdiet.
+Nunc gravida, nunc sit amet pellentesque sollicitudin, quam tortor vehicula elit, tempor ultricies
+massa leo sit amet nunc. Maecenas nisl turpis, sollicitudin sit amet diam vitae, vulputate viverra
+elit. Duis eu nisl placerat, pellentesque nulla et, tempor neque. Vivamus vel mollis ex, id ornare
+ante.
+</p>
+</div>
+
+<!-- ================================================================ -->
+<hr/>
+
+<div>
+<input type=text placeholder="..." size=30 id="font-family-select-input"></input>
+<button class="green" id="font-family-select-button"> Loading ... </button>
+</div>
+
+<div>
+<input type=text placeholder="..." size=30 id="font-style-select-input"></input>
+<button class="green" id="font-style-select-button" enterkeyhint="enter"> Loading ... </button>
+</div>
+
+<div>
+<input type=text placeholder="..." size=30 id="font-weight-select-input"></input>
+<button class="green" id="font-weight-select-button"> Loading ... </button>
+</div>
+
+<div id="font-select-output">
+<b>Hamburgevons</b>
+<p>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Diam sollicitudin tempor id eu
+nisl nunc mi ipsum faucibus. Sed vulputate mi sit amet mauris. Ut tellus
+elementum sagittis vitae et leo duis ut. Nunc sed blandit libero volutpat sed
+cras. Cursus in hac habitasse platea dictumst quisque. Amet dictum sit amet
+justo. In cursus turpis massa tincidunt. Vitae proin sagittis nisl rhoncus
+mattis rhoncus urna neque. Enim nunc faucibus a pellentesque sit amet. Vel orci
+porta non pulvinar neque laoreet. Facilisi nullam vehicula ipsum a. Mi bibendum
+neque egestas congue quisque egestas diam in arcu. Viverra mauris in aliquam
+sem fringilla ut morbi tincidunt augue.
 </p>
 </div>
 
@@ -408,6 +440,7 @@ gravida quis.
     setElementsAndCallbacks() {
       this.elements = {}
 
+      // ----------------------------------------------------------------
       this.elements.textInput1 = new TextInput(
         "text-input-1",
         (event) => {
@@ -428,23 +461,16 @@ gravida quis.
 
       this.elements.textOutput1 = new TextSpan("text-output-1", "")
 
-      this.elements.fontSelectInput = new TextInput(
-        "font-select-input",
-        (event) => {},
-      )
-
-      this.elements.fontSelectOutput = new GenericElement(
-        "font-select-output",
-      )
-
-      this.elements.fontSelectButton = new Button(
-        "font-select-button",
-        "Apply font",
+      // ----------------------------------------------------------------
+      this.elements.makeAnErrorHappenButton = new Button(
+        "make-an-error-happen-button",
+        "Make an error happen",
         (event) => {
-          this.elements.fontSelectOutput.underlying.style.fontFamily = this.elements.fontSelectInput.get()
+          throw new Error("This is an error message")
         },
       )
 
+      // ----------------------------------------------------------------
       this.elements.switcherButton = new OneButtonSwitcher(
         "item-switch-button",
         [
@@ -460,24 +486,34 @@ gravida quis.
         },
       )
 
+      // ----------------------------------------------------------------
       this.elements.switcher = new NButtonSwitcher(
         {
           "item-switch-button-1": {
-            "text": "Label 1",
+            "text": "Pangram 1",
             "items": [
               new GenericElement("switch-item-1b"),
             ],
-            "appCallback": (event) => {
+            "callback": (event) => {
               this.logAt1("switcherButton1 click")
             },
           },
           "item-switch-button-2": {
-            "text": "Label 2",
+            "text": "Pangram 2",
             "items": [
               new GenericElement("switch-item-2b"),
             ],
-            "appCallback": (event) => {
+            "callback": (event) => {
               this.logAt1("switcherButton2 click")
+            },
+          },
+          "item-switch-button-3": {
+            "text": "Pangram 3",
+            "items": [
+              new GenericElement("switch-item-3b"),
+            ],
+            "callback": (event) => {
+              this.logAt1("switcherButton3 click")
             },
           },
         },
@@ -485,22 +521,32 @@ gravida quis.
         "deselected", // CSS style
       )
 
+      // ----------------------------------------------------------------
       this.elements.multiswitcher = new URLAndPersistentNButtonToggler(
         {
           "toggler-button-1": {
-            "text": "Section 1",
+            "text": "Palatino-Italic",
             "items": [ new GenericElement("toggler-section-1") ],
+            "callback": () => {},
             "urlShorthand": "section1",
           },
           "toggler-button-2": {
-            "text": "Section 2",
+            "text": "Helvetica",
             "items": [ new GenericElement("toggler-section-2") ],
+            "callback": () => {},
             "urlShorthand": "section2",
           },
           "toggler-button-3": {
-            "text": "Section 3",
+            "text": "Franklin-Bold",
             "items": [ new GenericElement("toggler-section-3") ],
+            "callback": () => {},
             "urlShorthand": "section3",
+          },
+          "toggler-button-4": {
+            "text": "Verdana",
+            "items": [ new GenericElement("toggler-section-4") ],
+            "callback": () => {},
+            "urlShorthand": "section4",
           },
         },
         {
@@ -517,14 +563,53 @@ gravida quis.
         "deselected", // CSS style
       )
 
-      this.elements.clearTextInput1Button = new Button(
-        "make-an-error-happen-button",
-        "Make an error happen",
+      // ----------------------------------------------------------------
+      this.elements.fontSelectOutput = new GenericElement(
+        "font-select-output",
+      )
+
+      this.elements.fontFamilySelectInput = new TextInput(
+        "font-family-select-input",
+        (event) => {},
+      )
+
+      this.elements.fontStyleSelectInput = new TextInput(
+        "font-style-select-input",
         (event) => {
-          throw new Error("This is an error message")
         },
       )
 
+      this.elements.fontWeightSelectInput = new TextInput(
+        "font-weight-select-input",
+        (event) => {
+        },
+      )
+
+      this.elements.fontFamilySelectButton = new Button(
+        "font-family-select-button",
+        "Apply font family",
+        (event) => {
+          this.elements.fontSelectOutput.underlying.style.fontFamily = this.elements.fontFamilySelectInput.get()
+        },
+      )
+
+      this.elements.fontStyleSelectButton = new Button(
+        "font-style-select-button",
+        "Apply font style",
+        (event) => {
+          this.elements.fontSelectOutput.underlying.style.fontStyle = this.elements.fontStyleSelectInput.get()
+        },
+      )
+
+      this.elements.fontWeightSelectButton = new Button(
+        "font-weight-select-button",
+        "Apply font weight",
+        (event) => {
+          this.elements.fontSelectOutput.underlying.style.fontWeight = this.elements.fontWeightSelectInput.get()
+        },
+      )
+
+      // ----------------------------------------------------------------
       this.elements.lightDarkThemeElement = new LightDarkThemeSlider(
         "light-theme-dark-theme-toggle",
         "light-theme-dark-theme-label",
