@@ -781,20 +781,22 @@ export class URLAndPersistentNButtonToggler extends PersistentNButtonToggler {
     })
 
     const urlParams = new URLSearchParams(window.location.search);
-    let foundAny = false;
-    let visibilities = {...this.visibilities}
-    const availableButtonIDs = new Set(Object.keys(this.visibilities))
+    let foundAny = false
+    let urlVisibilities = {}
+    Object.entries(this.visibilities).forEach(([elementID, visibility]) => {
+      urlVisibilities[elementID] = false
+    })
 
     for (let key of urlParams.keys()) {
       const desiredButtonID = urlShorthands[key]
       if (desiredButtonID != null) {
-        visibilities[desiredButtonID] = true
+        urlVisibilities[desiredButtonID] = true
         foundAny = true
       }
     }
 
     if (foundAny) {
-      this.visibilities = {...visibilities}
+      this.visibilities = {...urlVisibilities}
       this.setFromVisibilities()
     }
   }
