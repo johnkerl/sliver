@@ -273,6 +273,27 @@
 <!-- ================================================================ -->
 <hr/>
 
+<input type=text placeholder="..." size=30 id="font-select-input"></input>
+<button class="green" id="font-select-button"> Loading ... </button>
+<div id="font-select-output">
+<b>Hamburgevons</b>
+<p>
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Diam sollicitudin tempor id eu
+nisl nunc mi ipsum faucibus. Sed vulputate mi sit amet mauris. Ut tellus
+elementum sagittis vitae et leo duis ut. Nunc sed blandit libero volutpat sed
+cras. Cursus in hac habitasse platea dictumst quisque. Amet dictum sit amet
+justo. In cursus turpis massa tincidunt. Vitae proin sagittis nisl rhoncus
+mattis rhoncus urna neque. Enim nunc faucibus a pellentesque sit amet. Vel orci
+porta non pulvinar neque laoreet. Facilisi nullam vehicula ipsum a. Mi bibendum
+neque egestas congue quisque egestas diam in arcu. Viverra mauris in aliquam
+sem fringilla ut morbi tincidunt augue.
+</p>
+</div>
+
+<!-- ================================================================ -->
+<hr/>
+
 <button class="green" id="toggler-button-1"> Loading ... </button>
 <button class="green" id="toggler-button-2"> Loading ... </button>
 <button class="green" id="toggler-button-3"> Loading ... </button>
@@ -406,6 +427,23 @@ gravida quis.
       )
 
       this.elements.textOutput1 = new TextSpan("text-output-1", "")
+
+      this.elements.fontSelectInput = new TextInput(
+        "font-select-input",
+        (event) => {},
+      )
+
+      this.elements.fontSelectOutput = new GenericElement(
+        "font-select-output",
+      )
+
+      this.elements.fontSelectButton = new Button(
+        "font-select-button",
+        "Apply font",
+        (event) => {
+          this.elements.fontSelectOutput.underlying.style.fontFamily = this.elements.fontSelectInput.get()
+        },
+      )
 
       this.elements.switcherButton = new OneButtonSwitcher(
         "item-switch-button",
