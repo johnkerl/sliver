@@ -408,7 +408,9 @@ export class NButtonSelector {
       // CSS class for deselected button(s)
   ) {
     // Validate the first argument
+    console.log("AAA001")
     const callerName = "NButtonSelector"
+    console.log("AAA002")
     _assertIsMapObjectWithSubobjectKeys(
       elementsConfig,
       1,
@@ -419,12 +421,15 @@ export class NButtonSelector {
     )
     this.buttonSelectedStyle = buttonSelectedStyle
     this.buttonDeselectedStyle = buttonDeselectedStyle
+    console.log("AAA003")
 
     // * Instantiate the button objects, each with their callback closures
     // * Remember the app-level callbacks for each button
     this.buttons = {}
     this.callbacks = {}
+    console.log("AAA004")
     Object.entries(elementsConfig).forEach(([elementID, elementConfig]) => {
+      console.log("AAA005", elementID, elementConfig["text"])
       // This is a closure over the elementID
       this.buttons[elementID] = new Button(
         elementID,
@@ -433,13 +438,19 @@ export class NButtonSelector {
           this.onClick(event, elementID)
         },
       )
+      console.log("AAA006")
       this.callbacks[elementID] = elementConfig["callback"]
+      console.log("AAA007")
     })
 
     // Select the first button by default. (This could be made another constructor argument.)
+    console.log("AAA008")
     const firstElementID = Object.keys(elementsConfig)[0]
+    console.log("AAA009")
     this.whichButtonIDSelected = firstElementID
+    console.log("AAA010")
     this.onClick(null, firstElementID)
+    console.log("AAA011")
   }
 
   which() {
@@ -500,10 +511,16 @@ export class NButtonSwitcher extends NButtonSelector{
     Object.entries(elementsConfig).forEach(([elementID, elementConfig]) => {
       this.itemLists[elementID] = elementConfig["items"]
     })
+    console.log("A ITEM LISTS", this.itemLists)
   }
 
   onClick(event, selectedButtonID) {
-    super(event, selectedButtonID)
+    if (this.itemLists == null) {
+      return // At construction time
+    }
+
+    super.onClick(event, selectedButtonID)
+    console.log("B ITEM LISTS", this.itemLists)
 
     // Set visibilities of controlled items
     Object.entries(this.itemLists).forEach(([buttonID, itemList]) => {
@@ -513,6 +530,7 @@ export class NButtonSwitcher extends NButtonSelector{
         itemList.forEach((item) => item.makeInvisible())
       }
     })
+
   }
 }
 
