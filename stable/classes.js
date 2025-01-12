@@ -394,76 +394,72 @@ export class OneButtonSwitcher {
   }
 }
 
-// N buttons, controlling which element is visible.
-export class NButtonSwitcher {
+// N buttons, only one active
+export class NButtonSelector {
   constructor(
     elementsConfig,
       // * Keys: element ID
       // * Values: objects with:
-      //   o Key: "text",        Value: button text
-      //   o Key: "items",       Value: array of objects inheriting from GenericElement
-      //   o Key: "callback",    Value: application-level callback
+      //   o Key: "text",      Value: button text
+      //   o Key: "callback",  Value: application-level callback
     buttonSelectedStyle,
       // CSS class for selected button
     buttonDeselectedStyle,
       // CSS class for deselected button(s)
   ) {
     // Validate the first argument
-    const callerName = "NButtonSwitcher"
+    console.log("AAA001")
+    const callerName = "NButtonSelector"
+    console.log("AAA002")
     _assertIsMapObjectWithSubobjectKeys(
       elementsConfig,
       1,
       null,
-      ["text", "items", "callback"],
+      ["text", "callback"],
       callerName,
       "elementsConfig",
     )
-
     this.buttonSelectedStyle = buttonSelectedStyle
     this.buttonDeselectedStyle = buttonDeselectedStyle
+    console.log("AAA003")
 
-    // Now:
     // * Instantiate the button objects, each with their callback closures
-    // * Remember the item-list each button controls
     // * Remember the app-level callbacks for each button
     this.buttons = {}
-    this.itemLists = {}
     this.callbacks = {}
+    console.log("AAA004")
     Object.entries(elementsConfig).forEach(([elementID, elementConfig]) => {
+      console.log("AAA005", elementID, elementConfig["text"])
       // This is a closure over the elementID
       this.buttons[elementID] = new Button(
         elementID,
         elementConfig["text"],
         (event) => {
-          this.show(event, elementID)
+          this.onClick(event, elementID)
         },
       )
-      this.itemLists[elementID] = elementConfig["items"]
+      console.log("AAA006")
       this.callbacks[elementID] = elementConfig["callback"]
+      console.log("AAA007")
     })
 
     // Select the first button by default. (This could be made another constructor argument.)
+    console.log("AAA008")
     const firstElementID = Object.keys(elementsConfig)[0]
+    console.log("AAA009")
     this.whichButtonIDSelected = firstElementID
-    this.show(null, firstElementID)
+    console.log("AAA010")
+    this.onClick(null, firstElementID)
+    console.log("AAA011")
   }
 
   which() {
     return this.whichButtonIDSelected
   }
 
-  show(event, selectedButtonID) {
+  onClick(event, selectedButtonID) {
     // Remember this
     this.whichButtonIDSelected = selectedButtonID
-
-    // Set visibilities of controlled items
-    Object.entries(this.itemLists).forEach(([buttonID, itemList]) => {
-      if (buttonID == selectedButtonID) {
-        itemList.forEach((item) => item.makeVisible())
-      } else {
-        itemList.forEach((item) => item.makeInvisible())
-      }
-    })
 
     // Update CSS styles for selected & deselected buttons
     Object.entries(this.buttons).forEach(([buttonID, button]) => {
@@ -483,6 +479,61 @@ export class NButtonSwitcher {
   }
 }
 
+// N buttons, controlling which element is visible.
+export class NButtonSwitcher extends NButtonSelector{
+  constructor(
+    elementsConfig,
+      // * Keys: element ID
+      // * Values: objects with:
+      //   o Key: "text",        Value: button text
+      //   o Key: "callback",    Value: application-level callback
+      //   o Key: "items",       Value: array of objects inheriting from GenericElement
+    buttonSelectedStyle,
+      // CSS class for selected button
+    buttonDeselectedStyle,
+      // CSS class for deselected button(s)
+  ) {
+    super(elementsConfig, buttonSelectedStyle, buttonDeselectedStyle)
+
+    // Validate the first argument
+    const callerName = "NButtonSwitcher"
+    _assertIsMapObjectWithSubobjectKeys(
+      elementsConfig,
+      1,
+      null,
+      ["text", "callback", "items"],
+      callerName,
+      "elementsConfig",
+    )
+
+    // Remember the item-list whose visibilities each button controls
+    this.itemLists = {}
+    Object.entries(elementsConfig).forEach(([elementID, elementConfig]) => {
+      this.itemLists[elementID] = elementConfig["items"]
+    })
+    console.log("A ITEM LISTS", this.itemLists)
+  }
+
+  onClick(event, selectedButtonID) {
+    if (this.itemLists == null) {
+      return // At construction time
+    }
+
+    super.onClick(event, selectedButtonID)
+    console.log("B ITEM LISTS", this.itemLists)
+
+    // Set visibilities of controlled items
+    Object.entries(this.itemLists).forEach(([buttonID, itemList]) => {
+      if (buttonID == selectedButtonID) {
+        itemList.forEach((item) => item.makeVisible())
+      } else {
+        itemList.forEach((item) => item.makeInvisible())
+      }
+    })
+
+  }
+}
+
 // Same as NButtonSwitcher, with local-storage memory of previous state
 export class PersistentNButtonSwitcher extends NButtonSwitcher {
   constructor(
@@ -498,7 +549,7 @@ export class PersistentNButtonSwitcher extends NButtonSwitcher {
     const previousButtonIDSelected = localStorage.getItem(this.localStorageKey)
     if (previousButtonIDSelected != null) {
       this.whichButtonIDSelected = previousButtonIDSelected
-      this.show(null, previousButtonIDSelected)
+      this.onClick(null, previousButtonIDSelected)
     }
 
     // Set local storage when any of the buttons is selected

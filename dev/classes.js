@@ -549,7 +549,7 @@ export class PersistentNButtonSwitcher extends NButtonSwitcher {
     const previousButtonIDSelected = localStorage.getItem(this.localStorageKey)
     if (previousButtonIDSelected != null) {
       this.whichButtonIDSelected = previousButtonIDSelected
-      this.show(null, previousButtonIDSelected)
+      this.onClick(null, previousButtonIDSelected)
     }
 
     // Set local storage when any of the buttons is selected
