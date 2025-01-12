@@ -236,6 +236,19 @@
 <hr/>
 
 <div>
+  <button class="green" id="select-button-1"> Loading ... </button>
+  <button class="green" id="select-button-2"> Loading ... </button>
+  <button class="green" id="select-button-3"> Loading ... </button>
+</div>
+
+<div id="selector-output">
+  Loading ...
+</div>
+
+<!-- ================================================================ -->
+<hr/>
+
+<div>
   <button class="green" id="item-switch-button"> Loading ... </button>
 </div>
 
@@ -413,6 +426,7 @@ sem fringilla ut morbi tincidunt augue.
     GenericElement,
     IntRangeInput,
     LightDarkThemeSlider,
+    NButtonSelector,
     NButtonSwitcher,
     OneButtonSwitcher,
     TextInput,
@@ -484,6 +498,33 @@ sem fringilla ut morbi tincidunt augue.
         () => {
           this.logAt1("switcherButton click")
         },
+      )
+
+      // ----------------------------------------------------------------
+      this.elements.selectorOutput = new TextSpan("selector-output", "No option has been selected yet")
+      this.elements.selector = new NButtonSelector(
+        {
+          "select-button-1": {
+            "text": "Option 1",
+            "callback": (event) => {
+              this.elements.selectorOutput.set("Option 1 was selected")
+            },
+          },
+          "select-button-2": {
+            "text": "Option 2",
+            "callback": (event) => {
+              this.elements.selectorOutput.set("Option 2 was selected")
+            },
+          },
+          "select-button-3": {
+            "text": "Option 3",
+            "callback": (event) => {
+              this.elements.selectorOutput.set("Option 3 was selected")
+            },
+          },
+        },
+        "selected",   // CSS style
+        "deselected", // CSS style
       )
 
       // ----------------------------------------------------------------
