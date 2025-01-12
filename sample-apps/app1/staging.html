@@ -87,24 +87,27 @@
   button {
     font-weight: bold;
     background-color: #e8e8e8;
-    border: 0;
-    padding: 4px;
+    border: 1px solid transparent;
+    padding: 6px;
     border-radius: 4px;
     margin: 4px;
   }
   button:hover {
-    font-weight: bold;
+    /*
     background-color: #d8d8d8;
-    border: 0;
-    padding: 4px;
+    */
+    border: 1px solid transparent;
+    padding: 6px;
     border-radius: 4px;
     margin: 4px;
   }
   button:active {
+    /*
     font-weight: bold;
     background-color: #c0c0c0;
-    border: 0;
-    padding: 4px;
+    */
+    border: 0px solid transparent;
+    padding: 6px;
     border-radius: 4px;
     margin: 4px;
   }
@@ -131,13 +134,26 @@
     text-align: center;
   }
   .red {
+    /*
     color: #cc0000;
+    */
+    color: #e0e0e0;
+    background-color: #cc0000;
+    border: 0px solid transparent;
   }
   .green {
+    /*
     color: #007700;
+    */
+    color: #e0e0e0;
+    background-color: #007700;
   }
   .blue {
+    /*
     color: #000099;
+    */
+    color: #e0e0e0;
+    background-color: #000099;
   }
   .switch {
     position: relative;
@@ -231,6 +247,19 @@
 <hr/>
 
 <button class="red" id="make-an-error-happen-button"> Loading ... </button>
+
+<!-- ================================================================ -->
+<hr/>
+
+<div>
+  <button class="green" id="select-button-1"> Loading ... </button>
+  <button class="green" id="select-button-2"> Loading ... </button>
+  <button class="green" id="select-button-3"> Loading ... </button>
+</div>
+
+<div id="selector-output">
+  Loading ...
+</div>
 
 <!-- ================================================================ -->
 <hr/>
@@ -413,6 +442,7 @@ sem fringilla ut morbi tincidunt augue.
     GenericElement,
     IntRangeInput,
     LightDarkThemeSlider,
+    NButtonSelector,
     NButtonSwitcher,
     OneButtonSwitcher,
     TextInput,
@@ -483,6 +513,33 @@ sem fringilla ut morbi tincidunt augue.
         () => {
           this.logAt1("switcherButton click")
         },
+      )
+
+      // ----------------------------------------------------------------
+      this.elements.selectorOutput = new TextSpan("selector-output", "No option has been selected yet")
+      this.elements.selector = new NButtonSelector(
+        {
+          "select-button-1": {
+            "text": "Option 1",
+            "callback": (event) => {
+              this.elements.selectorOutput.set("Option 1 was selected")
+            },
+          },
+          "select-button-2": {
+            "text": "Option 2",
+            "callback": (event) => {
+              this.elements.selectorOutput.set("Option 2 was selected")
+            },
+          },
+          "select-button-3": {
+            "text": "Option 3",
+            "callback": (event) => {
+              this.elements.selectorOutput.set("Option 3 was selected")
+            },
+          },
+        },
+        "selected",   // CSS style
+        "deselected", // CSS style
       )
 
       // ----------------------------------------------------------------
