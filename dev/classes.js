@@ -438,7 +438,6 @@ export class NButtonSelector {
 
     // Select the first button by default. (This could be made another constructor argument.)
     const firstElementID = Object.keys(elementsConfig)[0]
-    this.whichButtonIDSelected = firstElementID
     this.onClick(null, firstElementID)
   }
 
@@ -447,6 +446,7 @@ export class NButtonSelector {
   }
 
   onClick(event, selectedButtonID) {
+    console.log("HEY", selectedButtonID)
     // Remember this
     this.whichButtonIDSelected = selectedButtonID
 
@@ -500,6 +500,10 @@ export class NButtonSwitcher extends NButtonSelector{
     Object.entries(elementsConfig).forEach(([elementID, elementConfig]) => {
       this.itemLists[elementID] = elementConfig["items"]
     })
+
+    // Select the first button by default. (This could be made another constructor argument.)
+    const firstElementID = Object.keys(elementsConfig)[0]
+    this.onClick(null, firstElementID)
   }
 
   onClick(event, selectedButtonID) {
