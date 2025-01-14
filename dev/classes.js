@@ -446,7 +446,6 @@ export class NButtonSelector {
   }
 
   onClick(event, selectedButtonID) {
-    console.log("HEY", selectedButtonID)
     // Remember this
     this.whichButtonIDSelected = selectedButtonID
 
