@@ -136,24 +136,18 @@
     text-align: center;
   }
   .red {
-    /*
-    color: #cc0000;
-    */
+    /* color: #cc0000; */
     color: #e0e0e0;
     background-color: #cc0000;
     border: 0px solid transparent;
   }
   .green {
-    /*
-    color: #007700;
-    */
+    /* color: #007700; */
     color: #e0e0e0;
     background-color: #007700;
   }
   .blue {
-    /*
-    color: #000099;
-    */
+    /* color: #000099; */
     color: #e0e0e0;
     background-color: #000099;
   }
@@ -242,6 +236,7 @@
 </span>
 
 <!-- ================================================================ -->
+<hr/>
 
 <span>
   <button class="green" id="clear-text-input-1"> Loading ... </button>
@@ -323,30 +318,30 @@ While making deep excavations we found some quaint bronze jewelry.
 <button id="toggler-button-collapse-all"> Loading ... </button>
 <p/>
 
-<div id="toggler-section-1" style="font-family:Palatino; font-style: italic">
-<b>Section 1: Palatino-Italic</b>
+<div id="toggler-section-1">
+<b>Section 1</b>
 <p>
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
 incididunt ut labore et dolore magna aliqua.
 </p>
 </div>
 
-<div id="toggler-section-2" style="font-family:helvetica">
-<b>Section 2: Helvetica</b>
+<div id="toggler-section-2">
+<b>Section 2</b>
 <p>
 Diam sollicitudin tempor id eu nisl nunc mi ipsum faucibus.
 </p>
 </div>
 
-<div id="toggler-section-3" style="font-family:franklin; font-weight: bold">
-<b>Section 3: Franklin-Bold</b>
+<div id="toggler-section-3">
+<b>Section 3</b>
 <p>
 Sed vulputate mi sit amet mauris.
 </p>
 </div>
 
-<div id="toggler-section-4" style="font-family:verdana">
-<b>Section 4: Verdana</b>
+<div id="toggler-section-4">
+<b>Section 4</b>
 <p>
 Ut tellus elementum sagittis vitae et leo duis ut.
 </p>
@@ -355,32 +350,81 @@ Ut tellus elementum sagittis vitae et leo duis ut.
 <!-- ================================================================ -->
 <hr/>
 
-<div>
-<input type=text placeholder="..." size=30 id="font-family-select-input"></input>
-<button class="green" id="font-family-select-button"> Loading ... </button>
-</div>
+<!-- fieldset allows a nice legend, of which I enjoy the styling -->
+<fieldset>
+  <legend>
+    <b>Font 1</b>
+  </legend>
+  <label>Name: <input id="font-family-input-1" list="font-names-1" /></label>
+  <datalist id="font-names-1">
+    <option value="Arial">
+    <option value="Courier">
+    <option value="Courier New">
+    <option value="Garamond">
+    <option value="Palatino">
+    <option value="Times New Roman">
+    <option value="Verdana">
+  </datalist>
+  <label>Style: <input id="font-style-input-1" list="font-styles-1" /></label>
+  <datalist id="font-styles-1">
+    <option value="normal">
+    <option value="italic">
+    <option value="oblique">
+  </datalist>
+  <label>Weight: <input id="font-weight-input-1" list="font-weights-1" /></label>
+  <datalist id="font-weights-1">
+    <option value="1">
+    <option value="thin">
+    <option value="normal">
+    <option value="400">
+    <option value="bold">
+    <option value="700">
+    <option value="heavy">
+    <option value="999">
+  </datalist>
+  <div id="font-output-1">
+    <p>Hamburgevons. The quick brown fox jumped over the lazy dogs.</p>
+    <p>HAMBURGEVONS. THE QUICK BROWN FOX JUMPED OVER THE LAZY DOGS.</p>
+  </div>
+</fieldset>
 
-<div>
-<input type=text placeholder="..." size=30 id="font-style-select-input"></input>
-<button class="green" id="font-style-select-button" enterkeyhint="enter"> Loading ... </button>
-</div>
-
-<div>
-<input type=text placeholder="..." size=30 id="font-weight-select-input"></input>
-<button class="green" id="font-weight-select-button"> Loading ... </button>
-</div>
-
-<div id="font-select-output">
-<b>Hamburgevons</b>
-<p>
-The quick brown fox jumped over the lazy dogs.
-Amazingly few discotheques provide jukeboxes.
-</p>
-<p>
-THE QUICK BROWN FOX JUMPED OVER THE LAZY DOGS.
-AMAZINGLY FEW DISCOTHEQUES PROVIDE JUKEBOXES.
-</p>
-</div>
+<!-- fieldset allows a nice legend, of which I enjoy the styling -->
+<fieldset>
+  <legend>
+    <b>Font 2</b>
+  </legend>
+  <label>Name: <input id="font-family-input-2" list="font-names-2" /></label>
+  <datalist id="font-names-2">
+    <option value="Arial">
+    <option value="Courier">
+    <option value="Courier New">
+    <option value="Garamond">
+    <option value="Palatino">
+    <option value="Times New Roman">
+    <option value="Verdana">
+  </datalist>
+  <label>Style: <input id="font-style-input-2" list="font-styles-2" /></label>
+  <datalist id="font-styles-2">
+    <option value="normal">
+    <option value="italic">
+    <option value="oblique">
+  </datalist>
+  <label>Weight: <input id="font-weight-input-2" list="font-weights-2" /></label>
+  <datalist id="font-weights-2">
+    <option value="1">
+    <option value="thin">
+    <option value="normal">
+    <option value="400">
+    <option value="bold">
+    <option value="700">
+    <option value="heavy">
+    <option value="999">
+  </datalist>
+  <div id="font-output-2">
+    <p>Hamburgevons. The quick brown fox jumped over the lazy dogs.</p>
+    <p>HAMBURGEVONS. THE QUICK BROWN FOX JUMPED OVER THE LAZY DOGS.</p>
+  </div>
+</fieldset>
 
 <!-- ================================================================ -->
 <hr/>
@@ -419,8 +463,8 @@ AMAZINGLY FEW DISCOTHEQUES PROVIDE JUKEBOXES.
     setErrorWidget,
   // } from "http://127.0.0.1:9999/sliver/dev/classes.js"
   // npx http-server ~/pub_http_internet -o -p 9999
-  // } from "https://johnkerl.org/sliver/staging/classes.js"
-  } from "https://johnkerl.org/sliver/stable/classes.js"
+  } from "https://johnkerl.org/sliver/staging/classes.js"
+  // } from "https://johnkerl.org/sliver/stable/classes.js"
 
   setErrorWidget("error-container", "error-text")
 
@@ -551,25 +595,25 @@ AMAZINGLY FEW DISCOTHEQUES PROVIDE JUKEBOXES.
       this.elements.toggler = new URLAndPersistentNButtonToggler(
         {
           "toggler-button-1": {
-            "text": "Palatino-Italic",
+            "text": "Section 1",
             "items": [ new GenericElement("toggler-section-1") ],
             "callback": () => {},
             "urlShorthand": "section1",
           },
           "toggler-button-2": {
-            "text": "Helvetica",
+            "text": "Section 2",
             "items": [ new GenericElement("toggler-section-2") ],
             "callback": () => {},
             "urlShorthand": "section2",
           },
           "toggler-button-3": {
-            "text": "Franklin-Bold",
+            "text": "Section 3",
             "items": [ new GenericElement("toggler-section-3") ],
             "callback": () => {},
             "urlShorthand": "section3",
           },
           "toggler-button-4": {
-            "text": "Verdana",
+            "text": "Section 4",
             "items": [ new GenericElement("toggler-section-4") ],
             "callback": () => {},
             "urlShorthand": "section4",
@@ -590,48 +634,48 @@ AMAZINGLY FEW DISCOTHEQUES PROVIDE JUKEBOXES.
       )
 
       // ----------------------------------------------------------------
-      this.elements.fontSelectOutput = new GenericElement(
-        "font-select-output",
-      )
 
-      this.elements.fontFamilySelectInput = new TextInput(
-        "font-family-select-input",
-        (event) => {},
+      this.elements.fontSelectOutput1 = new GenericElement(
+        "font-output-1",
       )
-
-      this.elements.fontStyleSelectInput = new TextInput(
-        "font-style-select-input",
+      this.elements.fontFamilySelectInput1 = new TextInput(
+        "font-family-input-1",
         (event) => {
+          this.elements.fontSelectOutput1.underlying.style.fontFamily = event.target.value
+        },
+      )
+      this.elements.fontStyleSelectInput1 = new TextInput(
+        "font-style-input-1",
+        (event) => {
+          this.elements.fontSelectOutput1.underlying.style.fontStyle = event.target.value
+        },
+      )
+      this.elements.fontWeightSelectInput1 = new TextInput(
+        "font-weight-input-1",
+        (event) => {
+          this.elements.fontSelectOutput1.underlying.style.fontWeight = event.target.value
         },
       )
 
-      this.elements.fontWeightSelectInput = new TextInput(
-        "font-weight-select-input",
+      this.elements.fontSelectOutput2 = new GenericElement(
+        "font-output-2",
+      )
+      this.elements.fontFamilySelectInput2 = new TextInput(
+        "font-family-input-2",
         (event) => {
+          this.elements.fontSelectOutput2.underlying.style.fontFamily = event.target.value
         },
       )
-
-      this.elements.fontFamilySelectButton = new Button(
-        "font-family-select-button",
-        "Apply font family",
+      this.elements.fontStyleSelectInput2 = new TextInput(
+        "font-style-input-2",
         (event) => {
-          this.elements.fontSelectOutput.underlying.style.fontFamily = this.elements.fontFamilySelectInput.get()
+          this.elements.fontSelectOutput2.underlying.style.fontStyle = event.target.value
         },
       )
-
-      this.elements.fontStyleSelectButton = new Button(
-        "font-style-select-button",
-        "Apply font style",
+      this.elements.fontWeightSelectInput2 = new TextInput(
+        "font-weight-input-2",
         (event) => {
-          this.elements.fontSelectOutput.underlying.style.fontStyle = this.elements.fontStyleSelectInput.get()
-        },
-      )
-
-      this.elements.fontWeightSelectButton = new Button(
-        "font-weight-select-button",
-        "Apply font weight",
-        (event) => {
-          this.elements.fontSelectOutput.underlying.style.fontWeight = this.elements.fontWeightSelectInput.get()
+          this.elements.fontSelectOutput2.underlying.style.fontWeight = event.target.value
         },
       )
 
