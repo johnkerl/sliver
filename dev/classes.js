@@ -880,7 +880,6 @@ export class Table extends GenericElement {
 
   put(dataRows) {
     dataRows.forEach((dataRow) => {
-      console.log("DATA ROW", dataRow)
       const tableRow = this.underlying.insertRow()
       let c = this.classNames["tr"]
       if (c != null) {
