@@ -1,10 +1,18 @@
 TO DO:
 
+* table-populator
+* popup
+* try google fonts
+* Learn more about CSS -- sharpen how theming works
+* Dropdown options specified within JS?
+* have min/max be written by JS?
+  <input tabindex=4 type="number" id="min-match-length" name="min-match-length" min="1" max="30"/>
+
+Also:
+
 * How to encapsulate: include CSS as well? Needs to come from the app ...
 * Props more generally; button colors, minimally
 * Fix isInteger(3.4) b04k
-* Dropdown options specified within JS?
-* Learn more about CSS -- sharpen how theming works
 
 Notes on React:
 
