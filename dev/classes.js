@@ -843,10 +843,14 @@ export class URLAndPersistentNButtonToggler extends PersistentNButtonToggler {
 }
 
 // WIP: simple data table. Create with column headers. Add rows one at a time, with reset.
+// TODO: rename to SimpleDataTable or somesuch?
+// TODO: sort-by configs ..... maybe a subclass ....... ?
 export class Table extends GenericElement {
   constructor(
     elementID,
+    // TODO: move columnNames to be 2nd arg
     classNames, // Keys: "table", "tr", "th", "td"
+    // TODO: classNameRules for th and td
     columnNames, // List
     cellRenderers, // Keys: from among classNames. Not used yet.
   ) {
@@ -861,6 +865,7 @@ export class Table extends GenericElement {
   reset() {
     this.underlying.innerHTML = ''
     let c = this.classNames["table"]
+    // TODO: methodize
     if (c != null) {
       this.underlying.setAttribute('class', c)
     }

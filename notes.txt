@@ -1,6 +1,8 @@
 TO DO:
 
+* more in-page narrative in sample app
 * table-populator
+  o  more to-do items
 * popup
 * try google fonts
 * Learn more about CSS -- sharpen how theming works
