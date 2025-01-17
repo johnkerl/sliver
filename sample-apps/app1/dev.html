@@ -59,14 +59,16 @@
     border-color: #808080;
   }
 
-  td {
+  th {
+    font-size: 90%;
     border: 1px solid;
     border-collapse: collapse;
     border-color: #808080;
     padding: 3px;
   }
 
-  th {
+  td {
+    font-size: 90%;
     border: 1px solid;
     border-collapse: collapse;
     border-color: #808080;
@@ -83,18 +85,18 @@
     color: #202020;
     background-color: #e0e0e0;
     font-weight: bold;
-    padding: 4px;
+    padding: 8px;
   }
   .dataTable.td {
-    padding: 4px;
-    font-family: "Courier New";
+    padding: 8px;
+    font-family: "Courier";
   }
 
   /* ERROR */
   .error {
     color: red;
     background-color: white;
-    border: 1px solid gray;
+    border: none;
     padding: 10px;
     margin: 10px;
   }
@@ -102,6 +104,7 @@
   /* BUTTON */
 
   button {
+    font-size: 80%;
     font-weight: bold;
     background-color: #e8e8e8;
     border: 1px solid transparent;
@@ -239,23 +242,19 @@
 
 <h1><span class="boxed-text">Sliver Example App</span></h1>
 
-<!--
-  This is a self-contained widget for error-text and cancel/X button.
-  We use Sliver's setErrorWidget to route top-level errors here.
--->
-<span id="error-container" class="error">
-  <button
-    class=transparent
-    onClick='
-      document.getElementById("error-container").style.display = "none";
-      document.getElementById("error-text").innerHTML = "";
-    '
-  > &times; </button>
-  <span id="error-text"> </span>
-</span>
+<p>
+This is a sample application for the <a href="https://github.com/johnkerl/sliver">Sliver JavaScript
+library</a>, which is a lark/DIY project.
+</p>
 
 <!-- ================================================================ -->
 <hr/>
+
+<p>
+These use Sliver&rsquo;s <code>TextInput</code> and <code>TextSpan</code> classes.
+A <code>Button</code> is connected to clear the former; events in the former are used to update
+the latter.
+</p>
 
 <span>
   <button class="green" id="clear-text-input-1"> Loading ... </button>
@@ -270,10 +269,39 @@
 <!-- ================================================================ -->
 <hr/>
 
+<p>
+Here we use Sliver&rsquo;s <code>setErrorWidget</code> which puts error text where it can be seen, on the
+page, rather than being hidden in the Developer Console.
+</p>
+
+<!--
+  This is a self-contained widget for error-text and cancel/X button.
+  We use Sliver's setErrorWidget to route top-level errors here.
+-->
+<div id="error-container" class="error">
+  <hr/>
+  <!-- This is a little x -->
+  <button
+    class=transparent
+    onClick='
+      document.getElementById("error-container").style.display = "none";
+      document.getElementById("error-text").innerHTML = "";
+    '
+  > &times; </button>
+  <span id="error-text"> </span>
+  <hr/>
+</div>
+
 <button class="red" id="make-an-error-happen-button"> Loading ... </button>
 
 <!-- ================================================================ -->
 <hr/>
+
+<p>
+Here we use Sliver&rsquo;s <code>NButtonSelector</code>. This class ensures that selecting one button
+deselects the other two. The action performed on button-click is an app-level callback: here, we
+simply write a message to a <code>TextSpan</code>.
+</p>
 
 <div>
   <button class="grey" id="select-button-1"> Loading ... </button>
@@ -288,13 +316,20 @@
 <!-- ================================================================ -->
 <hr/>
 
+<p>
+Here we use Sliver&rsquo;s <code>OneButtonSwitcher</code>. This controls two other elements.
+Precisely one of the two is visible at once time. The nominal use is for a show/hide button.
+Note that the two elements persist &mdash; only their visibility is toggled. In particular, you can
+add rows to the table, hide it, then show it again, and its contents are still there.
+</p>
+
 <div>
   <button class="blue" id="item-switch-button"> Loading ... </button>
 </div>
 
 <div id="switch-item-1">
   <span>
-    <button class="grey" id="data-table-add-row"></button>
+    <button class="green" id="data-table-add-row"></button>
     <button class="grey" id="data-table-clear"></button>
   </span>
   <table id="data-table"> </table>
@@ -306,6 +341,12 @@
 
 <!-- ================================================================ -->
 <hr/>
+
+<p>
+Here we use Sliver&rsquo;s <code>NButtonSwitcher</code>. This like <code>OneButtonSwitcher</code>,
+except that you can have arbitrarily many elements, with only one being visible at a time. Each has its
+own button.
+</p>
 
 <div>
   <button class="blue" id="item-switch-button-1"> Loading ... </button>
@@ -327,6 +368,13 @@ While making deep excavations we found some quaint bronze jewelry.
 
 <!-- ================================================================ -->
 <hr/>
+
+<p>
+Here we use Sliver&rsquo;s <code>NButtonToggler</code>. This is like <code>NButtonSwitcher</code>,
+except that there are expand-all and collape-all buttons, and, it's possible to have none of
+the elements be visible: namely, by clicking the button for an element that&rsquo;s currently visible.
+I created this for <a href="https://johnkerl.org">https://johnkerl.org</a>.
+</p>
 
 <button class="grey" id="toggler-button-1"> Loading ... </button>
 <button class="grey" id="toggler-button-2"> Loading ... </button>
@@ -367,6 +415,11 @@ Ut tellus elementum sagittis vitae et leo duis ut.
 
 <!-- ================================================================ -->
 <hr/>
+
+<p> This is a bit of font fun. It uses Sliver&rsquo;s <code>TextInput</code> connect with
+<code>&lt;fieldset&gt;</code> and <code>&lt;datalist&gt;</code> in the browser API. The app-level
+callbacks on this page are set up to control font family, style, and weight for some sample text.
+There are two such areas, so you can compare one against the other.  </p>
 
 <!-- fieldset allows a nice legend, of which I enjoy the styling -->
 <fieldset>
@@ -452,6 +505,8 @@ Ut tellus elementum sagittis vitae et leo duis ut.
 </div>
 <p/>
 
+<p> This uses Sliver&rsquo;s <code>LightDarkThemeSlider</code>.
+
 <div>
   <label class="switch">
     <input type="checkbox" id="light-theme-dark-theme-toggle">
@@ -486,6 +541,15 @@ Ut tellus elementum sagittis vitae et leo duis ut.
   // } from "https://johnkerl.org/sliver/stable/classes.js"
 
   setErrorWidget("error-container", "error-text")
+
+  function randomWord(alphabet, wordLength) {
+    let output = ""
+    for (let i = 0; i < wordLength; i++) {
+      let idx = Math.floor(alphabet.length * Math.random())
+      output += alphabet[idx]
+    }
+    return output
+  }
 
   class App1 {
 
@@ -541,8 +605,8 @@ Ut tellus elementum sagittis vitae et leo duis ut.
         [
           new GenericElement("switch-item-2"),
         ],
-        "Label for one thing",
-        "Label for other thing",
+        "Show the first thing",
+        "Show the second thing",
         () => {
           this.logAt1("switcherButton click")
         },
@@ -557,7 +621,7 @@ Ut tellus elementum sagittis vitae et leo duis ut.
           "th": "dataTable th",
           "td": "dataTable td",
         },
-        ["Nonce", "Hex", "Alpha"],
+        ["Nonce", "Alpha", "Hex"],
         {},
       )
 
@@ -565,28 +629,14 @@ Ut tellus elementum sagittis vitae et leo duis ut.
         "data-table-add-row",
         "Add row to table",
         (event) => {
-          let nonce = ""
-          for (let i = 0; i < 6; i++) {
-            nonce += Math.floor(10*Math.random()).toString()
-          }
-
-          let hx = "0x"
-          for (let i = 0; i < 8; i++) {
-            let idx = Math.floor(16*Math.random()).toString()
-            let c = "0123456789abcdef"
-            hx += c[idx]
-          }
-
-          let alpha = ""
-          for (let i = 0; i < 8; i++) {
-            let idx = Math.floor(26*Math.random()).toString()
-            let c = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-            alpha += c[idx]
-          }
+          let nonce = randomWord("0123456789", 6)
+          let alpha = randomWord("ABCDEFGHIJKLMNOPQRSTUVWXYZ", 8)
+          let hexes = "0123456789abcdef"
+          let hx = randomWord(hexes, 4) + "-" + randomWord(hexes, 8)
 
           this.elements.dataTable.put(
             [
-              [nonce, hx, alpha],
+              [nonce, alpha, hx],
             ],
           )
 

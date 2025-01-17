@@ -1,6 +1,5 @@
 TO DO:
 
-* more in-page narrative in sample app
 * table-populator
   o  more to-do items
 * popup
