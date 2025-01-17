@@ -842,6 +842,80 @@ export class URLAndPersistentNButtonToggler extends PersistentNButtonToggler {
   }
 }
 
+// WIP: simple data table. Create with column headers. Add rows one at a time, with reset.
+export class Table extends GenericElement {
+  constructor(
+    elementID,
+    classNames, // Keys: "table", "tr", "th", "td"
+    columnNames, // List
+    cellRenderers, // Keys: from among classNames. Not used yet.
+  ) {
+    super(elementID)
+    this.classNames    = {...classNames}
+    this.columnNames   = [...columnNames]
+    this.cellRenderers = {...cellRenderers}
+
+    this.reset()
+  }
+
+  reset() {
+    this.underlying.innerHTML = ''
+    let c = this.classNames["table"]
+    if (c != null) {
+      this.underlying.setAttribute('class', c)
+    }
+
+    const headerRow = this.underlying.insertRow()
+    this.columnNames.forEach((columnName) => {
+      const headerCell = document.createElement('th')
+      let c = this.classNames["th"]
+      if (c != null) {
+        headerCell.setAttribute('class', c)
+      }
+      headerCell.innerHTML = columnName
+      headerRow.appendChild(headerCell)
+    })
+
+  }
+
+  put(dataRows) {
+    dataRows.forEach((dataRow) => {
+      console.log("DATA ROW", dataRow)
+      const tableRow = this.underlying.insertRow()
+      let c = this.classNames["tr"]
+      if (c != null) {
+        tableRow.setAttribute('class', c)
+      }
+
+      dataRow.forEach((dataCell) => {
+        const tableCell = tableRow.insertCell()
+        tableCell.innerHTML = dataCell
+        let c = this.classNames["td"]
+        if (c != null) {
+          tableCell.setAttribute('class', c)
+        }
+      })
+    })
+  }
+
+// TODO:
+//      config.forEach(item => {
+//        const cell = row.insertCell()
+//        const rawValue = dataRow[item.attributeName]
+//        const cellRenderer = item.cellRenderer
+//        const formattedValue = cellRenderer != null
+//          ? cellRenderer(rawValue)
+//          : rawValue
+//        cell.innerHTML = formattedValue
+//        if (item.classNameRule != null) {
+//          const className = item.classNameRule(rawValue)
+//          if (className != null) {
+//            cell.setAttribute('class', className)
+//          }
+//        }
+//      })
+
+}
 
 // ----------------------------------------------------------------
 // FUNCTIONS

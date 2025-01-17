@@ -73,6 +73,23 @@
     padding: 3px;
   }
 
+  .dataTable.table {
+    border: 1px solid;
+  }
+  .dataTable.tr {
+    border: 1px solid;
+  }
+  .dataTable.th {
+    color: #202020;
+    background-color: #e0e0e0;
+    font-weight: bold;
+    padding: 4px;
+  }
+  .dataTable.td {
+    padding: 4px;
+    font-family: "Courier New";
+  }
+
   /* ERROR */
   .error {
     color: red;
@@ -272,16 +289,15 @@
 <hr/>
 
 <div>
-  <button class="grey" id="item-switch-button"> Loading ... </button>
+  <button class="blue" id="item-switch-button"> Loading ... </button>
 </div>
 
 <div id="switch-item-1">
-  This is a table. Click the button above to see something else.
-  <table>
-    <tr> <th>A</th> <th>B</th> <th>C</th> </tr>
-    <tr> <td>1</td> <td>2</td> <td>3</td> </tr>
-    <tr> <td>4</td> <td>5</td> <td>6</td> </tr>
-  </table>
+  <span>
+    <button class="grey" id="data-table-add-row"></button>
+    <button class="grey" id="data-table-clear"></button>
+  </span>
+  <table id="data-table"> </table>
 </div>
 
 <div id="switch-item-2">
@@ -458,6 +474,7 @@ Ut tellus elementum sagittis vitae et leo duis ut.
     NButtonSelector,
     NButtonSwitcher,
     OneButtonSwitcher,
+    Table,
     TextInput,
     TextSpan,
     URLAndPersistentNButtonToggler,
@@ -528,6 +545,59 @@ Ut tellus elementum sagittis vitae et leo duis ut.
         "Label for other thing",
         () => {
           this.logAt1("switcherButton click")
+        },
+      )
+
+      // ----------------------------------------------------------------
+      this.elements.dataTable = new Table(
+        "data-table",
+        {
+          "table": "dataTable table",
+          "tr": "dataTable tr",
+          "th": "dataTable th",
+          "td": "dataTable td",
+        },
+        ["Nonce", "Hex", "Alpha"],
+        {},
+      )
+
+      this.elements.dataTableAddRowButton = new Button(
+        "data-table-add-row",
+        "Add row to table",
+        (event) => {
+          let nonce = ""
+          for (let i = 0; i < 6; i++) {
+            nonce += Math.floor(10*Math.random()).toString()
+          }
+
+          let hx = "0x"
+          for (let i = 0; i < 8; i++) {
+            let idx = Math.floor(16*Math.random()).toString()
+            let c = "0123456789abcdef"
+            hx += c[idx]
+          }
+
+          let alpha = ""
+          for (let i = 0; i < 8; i++) {
+            let idx = Math.floor(26*Math.random()).toString()
+            let c = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            alpha += c[idx]
+          }
+
+          this.elements.dataTable.put(
+            [
+              [nonce, hx, alpha],
+            ],
+          )
+
+        },
+      )
+
+      this.elements.dataTableClearButton = new Button(
+        "data-table-clear",
+        "Clear table",
+        (event) => {
+          this.elements.dataTable.reset()
         },
       )
 
