@@ -844,7 +844,9 @@ export class URLAndPersistentNButtonToggler extends PersistentNButtonToggler {
 
 // WIP: simple data table. Create with column headers. Add rows one at a time, with reset.
 // TODO: rename to SimpleDataTable or somesuch?
+// TODO: td not a single classname per column but rather a classname rule
 // TODO: sort-by configs ..... maybe a subclass ....... ?
+// TODO: cellRenderers
 export class Table extends GenericElement {
   constructor(
     elementID,
