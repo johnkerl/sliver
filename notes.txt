@@ -4,7 +4,6 @@ TO DO:
   o  more to-do items
 * tabs as css stylings for switcher
 * left-hand nav as switcher-like
-
 * popup
 * try google fonts
 * Learn more about CSS -- sharpen how theming works

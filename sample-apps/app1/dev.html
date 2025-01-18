@@ -434,7 +434,7 @@ There are two such areas, so you can compare one against the other.  </p>
   <legend>
     <b>Font 1</b>
   </legend>
-  <label>Name: <input id="font-family-input-1" list="font-names-1" /></label>
+  <label>Name: <input id="fontFamilySelectInput1" list="font-names-1" /></label>
   <datalist id="font-names-1">
     <option value="Arial">
     <option value="Courier">
@@ -444,13 +444,13 @@ There are two such areas, so you can compare one against the other.  </p>
     <option value="Times New Roman">
     <option value="Verdana">
   </datalist>
-  <label>Style: <input id="font-style-input-1" list="font-styles-1" /></label>
+  <label>Style: <input id="fontStyleSelectInput1" list="font-styles-1" /></label>
   <datalist id="font-styles-1">
     <option value="normal">
     <option value="italic">
     <option value="oblique">
   </datalist>
-  <label>Weight: <input id="font-weight-input-1" list="font-weights-1" /></label>
+  <label>Weight: <input id="fontWeightSelectInput1" list="font-weights-1" /></label>
   <datalist id="font-weights-1">
     <option value="1">
     <option value="thin">
@@ -461,7 +461,7 @@ There are two such areas, so you can compare one against the other.  </p>
     <option value="heavy">
     <option value="999">
   </datalist>
-  <div id="font-output-1">
+  <div id="fontSelectOutput1">
     <p>Hamburgevons. The quick brown fox jumped over the lazy dogs.</p>
     <p>HAMBURGEVONS. THE QUICK BROWN FOX JUMPED OVER THE LAZY DOGS.</p>
   </div>
@@ -472,7 +472,7 @@ There are two such areas, so you can compare one against the other.  </p>
   <legend>
     <b>Font 2</b>
   </legend>
-  <label>Name: <input id="font-family-input-2" list="font-names-2" /></label>
+  <label>Name: <input id="fontFamilySelectInput2" list="font-names-2" /></label>
   <datalist id="font-names-2">
     <option value="Arial">
     <option value="Courier">
@@ -482,13 +482,13 @@ There are two such areas, so you can compare one against the other.  </p>
     <option value="Times New Roman">
     <option value="Verdana">
   </datalist>
-  <label>Style: <input id="font-style-input-2" list="font-styles-2" /></label>
+  <label>Style: <input id="fontStyleSelectInput2" list="font-styles-2" /></label>
   <datalist id="font-styles-2">
     <option value="normal">
     <option value="italic">
     <option value="oblique">
   </datalist>
-  <label>Weight: <input id="font-weight-input-2" list="font-weights-2" /></label>
+  <label>Weight: <input id="fontWeightSelectInput2" list="font-weights-2" /></label>
   <datalist id="font-weights-2">
     <option value="1">
     <option value="thin">
@@ -499,7 +499,7 @@ There are two such areas, so you can compare one against the other.  </p>
     <option value="heavy">
     <option value="999">
   </datalist>
-  <div id="font-output-2">
+  <div id="fontSelectOutput2">
     <p>Hamburgevons. The quick brown fox jumped over the lazy dogs.</p>
     <p>HAMBURGEVONS. THE QUICK BROWN FOX JUMPED OVER THE LAZY DOGS.</p>
   </div>
@@ -766,44 +766,44 @@ There are two such areas, so you can compare one against the other.  </p>
       // ----------------------------------------------------------------
 
       this.elements.fontSelectOutput1 = new GenericElement(
-        "font-output-1",
+        "fontSelectOutput1",
       )
       this.elements.fontFamilySelectInput1 = new TextInput(
-        "font-family-input-1",
+        "fontFamilySelectInput1",
         (event) => {
           this.elements.fontSelectOutput1.underlying.style.fontFamily = event.target.value
         },
       )
       this.elements.fontStyleSelectInput1 = new TextInput(
-        "font-style-input-1",
+        "fontStyleSelectInput1",
         (event) => {
           this.elements.fontSelectOutput1.underlying.style.fontStyle = event.target.value
         },
       )
       this.elements.fontWeightSelectInput1 = new TextInput(
-        "font-weight-input-1",
+        "fontWeightSelectInput1",
         (event) => {
           this.elements.fontSelectOutput1.underlying.style.fontWeight = event.target.value
         },
       )
 
       this.elements.fontSelectOutput2 = new GenericElement(
-        "font-output-2",
+        "fontSelectOutput2",
       )
       this.elements.fontFamilySelectInput2 = new TextInput(
-        "font-family-input-2",
+        "fontFamilySelectInput2",
         (event) => {
           this.elements.fontSelectOutput2.underlying.style.fontFamily = event.target.value
         },
       )
       this.elements.fontStyleSelectInput2 = new TextInput(
-        "font-style-input-2",
+        "fontStyleSelectInput2",
         (event) => {
           this.elements.fontSelectOutput2.underlying.style.fontStyle = event.target.value
         },
       )
       this.elements.fontWeightSelectInput2 = new TextInput(
-        "font-weight-input-2",
+        "fontWeightSelectInput2",
         (event) => {
           this.elements.fontSelectOutput2.underlying.style.fontWeight = event.target.value
         },
