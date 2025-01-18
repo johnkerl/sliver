@@ -248,6 +248,16 @@ library</a>, which is a lark/DIY project.
 </p>
 
 <!-- ================================================================ -->
+<!--
+<hr/>
+
+<div>
+  <span> <code>&gt;</code> </span>
+  <span> <code>v</code> </span>
+</div>
+-->
+
+<!-- ================================================================ -->
 <hr/>
 
 <p>
@@ -259,9 +269,9 @@ the latter.
 <span>
   <button class="green" id="clearTextInput1Button"> Loading ... </button>
   <span> Your text: </span>
-  <input type=text placeholder="..." size=30 id="textInput1"></input>
+  <input type=text placeholder="..." size=30 id="textInput_1"></input>
   <span> Reversed: </span>
-  <span id="text-output-1" style="display:inline"> Loading ... </span>
+  <span id="textSpan_1" style="display:inline"> Loading ... </span>
 </span>
 
 <p/>
@@ -304,12 +314,12 @@ simply write a message to a <code>TextSpan</code>.
 </p>
 
 <div>
-  <button class="grey" id="select-button-1"> Loading ... </button>
-  <button class="grey" id="select-button-2"> Loading ... </button>
-  <button class="grey" id="select-button-3"> Loading ... </button>
+  <button class="grey" id="NButtonSelector_1_button_1"> Loading ... </button>
+  <button class="grey" id="NButtonSelector_1_button_2"> Loading ... </button>
+  <button class="grey" id="NButtonSelector_1_button_3"> Loading ... </button>
 </div>
 
-<div id="selector-output">
+<div id="NButtonSelector_1_Output">
   Loading ...
 </div>
 
@@ -324,18 +334,18 @@ add rows to the table, hide it, then show it again, and its contents are still t
 </p>
 
 <div>
-  <button class="blue" id="switcherButton"> Loading ... </button>
+  <button class="blue" id="oneButtonSwitcher_1_button"> Loading ... </button>
 </div>
 
-<div id="switcherItem11">
+<div id="oneButtonSwitcher_1_item_1">
   <span>
     <button class="green" id="dataTableAddRowButton"></button>
     <button class="grey" id="dataTableClearButton"></button>
   </span>
-  <table id="data-table"> </table>
+  <table id="dataTable_1"> </table>
 </div>
 
-<div id="switcherItem12">
+<div id="oneButtonSwitcher_1_item_2">
   This is just some text. Click the button above to see the table again.
 </div>
 
@@ -349,20 +359,20 @@ own button.
 </p>
 
 <div>
-  <button class="blue" id="switcherButton-1"> Loading ... </button>
-  <button class="blue" id="switcherButton-2"> Loading ... </button>
-  <button class="blue" id="switcherButton-3"> Loading ... </button>
+  <button class="blue" id="NButtonSwitcher_1_button_1"> Loading ... </button>
+  <button class="blue" id="NButtonSwitcher_1_button_2"> Loading ... </button>
+  <button class="blue" id="NButtonSwitcher_1_button_3"> Loading ... </button>
 </div>
 
-<div id="switcherItem11b">
+<div id="switcherItem1b">
 The quick brown fox jumped over the lazy dogs.
 </div>
 
-<div id="switcherItem12b">
+<div id="switcherItem2b">
 Few black taxis drive up major roads on quiet, hazy nights.
 </div>
 
-<div id="switcherItem13b">
+<div id="switcherItem3b">
 While making deep excavations we found some quaint bronze jewelry.
 </div>
 
@@ -376,12 +386,12 @@ the elements be visible: namely, by clicking the button for an element that&rsqu
 I created this for <a href="https://johnkerl.org">https://johnkerl.org</a>.
 </p>
 
-<button class="grey" id="toggler-button-1"> Loading ... </button>
-<button class="grey" id="toggler-button-2"> Loading ... </button>
-<button class="grey" id="toggler-button-3"> Loading ... </button>
-<button class="grey" id="toggler-button-4"> Loading ... </button>
-<button id="toggler-button-expand-all"> Loading ... </button>
-<button id="toggler-button-collapse-all"> Loading ... </button>
+<button class="grey" id="NButtonToggler1Button1"> Loading ... </button>
+<button class="grey" id="NButtonToggler1Button2"> Loading ... </button>
+<button class="grey" id="NButtonToggler1Button3"> Loading ... </button>
+<button class="grey" id="NButtonToggler1Button4"> Loading ... </button>
+<button id="NButtonToggler1ExpandAll"> Loading ... </button>
+<button id="NButtonToggler1CollapseAll"> Loading ... </button>
 <p/>
 
 <div id="toggler-section-1">
@@ -426,7 +436,7 @@ There are two such areas, so you can compare one against the other.  </p>
   <legend>
     <b>Font 1</b>
   </legend>
-  <label>Name: <input id="font-family-input-1" list="font-names-1" /></label>
+  <label>Name: <input id="fontFamilySelectInput1" list="font-names-1" /></label>
   <datalist id="font-names-1">
     <option value="Arial">
     <option value="Courier">
@@ -436,13 +446,13 @@ There are two such areas, so you can compare one against the other.  </p>
     <option value="Times New Roman">
     <option value="Verdana">
   </datalist>
-  <label>Style: <input id="font-style-input-1" list="font-styles-1" /></label>
+  <label>Style: <input id="fontStyleSelectInput1" list="font-styles-1" /></label>
   <datalist id="font-styles-1">
     <option value="normal">
     <option value="italic">
     <option value="oblique">
   </datalist>
-  <label>Weight: <input id="font-weight-input-1" list="font-weights-1" /></label>
+  <label>Weight: <input id="fontWeightSelectInput1" list="font-weights-1" /></label>
   <datalist id="font-weights-1">
     <option value="1">
     <option value="thin">
@@ -453,7 +463,7 @@ There are two such areas, so you can compare one against the other.  </p>
     <option value="heavy">
     <option value="999">
   </datalist>
-  <div id="font-output-1">
+  <div id="fontSelectOutput1">
     <p>Hamburgevons. The quick brown fox jumped over the lazy dogs.</p>
     <p>HAMBURGEVONS. THE QUICK BROWN FOX JUMPED OVER THE LAZY DOGS.</p>
   </div>
@@ -464,7 +474,7 @@ There are two such areas, so you can compare one against the other.  </p>
   <legend>
     <b>Font 2</b>
   </legend>
-  <label>Name: <input id="font-family-input-2" list="font-names-2" /></label>
+  <label>Name: <input id="fontFamilySelectInput2" list="font-names-2" /></label>
   <datalist id="font-names-2">
     <option value="Arial">
     <option value="Courier">
@@ -474,13 +484,13 @@ There are two such areas, so you can compare one against the other.  </p>
     <option value="Times New Roman">
     <option value="Verdana">
   </datalist>
-  <label>Style: <input id="font-style-input-2" list="font-styles-2" /></label>
+  <label>Style: <input id="fontStyleSelectInput2" list="font-styles-2" /></label>
   <datalist id="font-styles-2">
     <option value="normal">
     <option value="italic">
     <option value="oblique">
   </datalist>
-  <label>Weight: <input id="font-weight-input-2" list="font-weights-2" /></label>
+  <label>Weight: <input id="fontWeightSelectInput2" list="font-weights-2" /></label>
   <datalist id="font-weights-2">
     <option value="1">
     <option value="thin">
@@ -491,7 +501,7 @@ There are two such areas, so you can compare one against the other.  </p>
     <option value="heavy">
     <option value="999">
   </datalist>
-  <div id="font-output-2">
+  <div id="fontSelectOutput2">
     <p>Hamburgevons. The quick brown fox jumped over the lazy dogs.</p>
     <p>HAMBURGEVONS. THE QUICK BROWN FOX JUMPED OVER THE LAZY DOGS.</p>
   </div>
@@ -509,10 +519,10 @@ There are two such areas, so you can compare one against the other.  </p>
 
 <div>
   <label class="switch">
-    <input type="checkbox" id="light-theme-dark-theme-toggle">
+    <input type="checkbox" id="lightThemeDarkThemeToggle">
     <span class="slider round"></span>
   </label>
-  <span id="light-theme-dark-theme-label">Loading ...</span>
+  <span id="lightThemeDarkThemeLabel">Loading ...</span>
 </div>
 <p/>
 
@@ -555,23 +565,24 @@ There are two such areas, so you can compare one against the other.  </p>
 
     constructor() {
 
+      // You can set `window.app.state.logLevel = 2` in the Developer Console
       this.state = {
-        "logLevel": 1, // 0,1,2,3
+        "logLevel": 0, // 0,1,2,3
       }
 
       this.setElementsAndCallbacks()
-      this.elements.textInput1.focus()
+      this.elements.textInput_1.focus()
     }
 
     setElementsAndCallbacks() {
       this.elements = {}
 
       // ----------------------------------------------------------------
-      this.elements.textInput1 = new TextInput(
-        "textInput1",
+      this.elements.textInput_1 = new TextInput(
+        "textInput_1",
         (event) => {
-          this.logAt1("textInput1: <<" + event.target.value + ">>")
-          this.elements.textOutput1.set(event.target.value.split("").reverse().join(""))
+          this.logAt1("textInput_1: <<" + event.target.value + ">>")
+          this.elements.textSpan_1.set(event.target.value.split("").reverse().join(""))
         }
       )
 
@@ -580,12 +591,12 @@ There are two such areas, so you can compare one against the other.  </p>
         "Clear",
         (event) => {
           this.logAt1("clearTextInput1Button click")
-          this.elements.textInput1.set("")
-          this.elements.textOutput1.set("")
+          this.elements.textInput_1.set("")
+          this.elements.textSpan_1.set("")
         },
       )
 
-      this.elements.textOutput1 = new TextSpan("text-output-1", "")
+      this.elements.textSpan_1 = new TextSpan("textSpan_1", "")
 
       // ----------------------------------------------------------------
       this.elements.makeAnErrorHappenButton = new Button(
@@ -597,24 +608,24 @@ There are two such areas, so you can compare one against the other.  </p>
       )
 
       // ----------------------------------------------------------------
-      this.elements.switcherButton = new OneButtonSwitcher(
-        "switcherButton",
+      this.elements.oneButtonSwitcher_1_Button = new OneButtonSwitcher(
+        "oneButtonSwitcher_1_button",
         [
-          new GenericElement("switcherItem11"),
+          new GenericElement("oneButtonSwitcher_1_item_1"),
         ],
         [
-          new GenericElement("switcherItem12"),
+          new GenericElement("oneButtonSwitcher_1_item_2"),
         ],
         "Show the first thing",
         "Show the second thing",
         () => {
-          this.logAt1("switcherButton click")
+          this.logAt1("oneButtonSwitcher_1_button click")
         },
       )
 
       // ----------------------------------------------------------------
-      this.elements.dataTable = new Table(
-        "data-table",
+      this.elements.dataTable_1 = new Table(
+        "dataTable_1",
         {
           "table": "dataTable table",
           "tr": "dataTable tr",
@@ -634,7 +645,7 @@ There are two such areas, so you can compare one against the other.  </p>
           let hexes = "0123456789abcdef"
           let hx = randomWord(hexes, 4) + "-" + randomWord(hexes, 8)
 
-          this.elements.dataTable.put(
+          this.elements.dataTable_1.put(
             [
               [nonce, alpha, hx],
             ],
@@ -647,27 +658,27 @@ There are two such areas, so you can compare one against the other.  </p>
         "dataTableClearButton",
         "Clear table",
         (event) => {
-          this.elements.dataTable.reset()
+          this.elements.dataTable_1.reset()
         },
       )
 
       // ----------------------------------------------------------------
-      this.elements.selectorOutput = new TextSpan("selector-output", "No option has been selected yet")
-      this.elements.selector = new NButtonSelector(
+      this.elements.selectorOutput = new TextSpan("NButtonSelector_1_Output", "No option has been selected yet")
+      this.elements.NButtonSelector1 = new NButtonSelector(
         {
-          "select-button-1": {
+          "NButtonSelector_1_button_1": {
             "text": "Option 1",
             "callback": (event) => {
               this.elements.selectorOutput.set("Option 1 was selected")
             },
           },
-          "select-button-2": {
+          "NButtonSelector_1_button_2": {
             "text": "Option 2",
             "callback": (event) => {
               this.elements.selectorOutput.set("Option 2 was selected")
             },
           },
-          "select-button-3": {
+          "NButtonSelector_1_button_3": {
             "text": "Option 3",
             "callback": (event) => {
               this.elements.selectorOutput.set("Option 3 was selected")
@@ -679,30 +690,30 @@ There are two such areas, so you can compare one against the other.  </p>
       )
 
       // ----------------------------------------------------------------
-      this.elements.switcher = new NButtonSwitcher(
+      this.elements.NButtonSwitcher1 = new NButtonSwitcher(
         {
-          "switcherButton-1": {
+          "NButtonSwitcher_1_button_1": {
             "text": "Pangram 1",
             "items": [
-              new GenericElement("switcherItem11b"),
+              new GenericElement("switcherItem1b"),
             ],
             "callback": (event) => {
               this.logAt1("switcherButton1 click")
             },
           },
-          "switcherButton-2": {
+          "NButtonSwitcher_1_button_2": {
             "text": "Pangram 2",
             "items": [
-              new GenericElement("switcherItem12b"),
+              new GenericElement("switcherItem2b"),
             ],
             "callback": (event) => {
               this.logAt1("switcherButton2 click")
             },
           },
-          "switcherButton-3": {
+          "NButtonSwitcher_1_button_3": {
             "text": "Pangram 3",
             "items": [
-              new GenericElement("switcherItem13b"),
+              new GenericElement("switcherItem3b"),
             ],
             "callback": (event) => {
               this.logAt1("switcherButton3 click")
@@ -714,27 +725,27 @@ There are two such areas, so you can compare one against the other.  </p>
       )
 
       // ----------------------------------------------------------------
-      this.elements.toggler = new URLAndPersistentNButtonToggler(
+      this.elements.NButtonToggler1 = new URLAndPersistentNButtonToggler(
         {
-          "toggler-button-1": {
+          "NButtonToggler1Button1": {
             "text": "Section 1",
             "items": [ new GenericElement("toggler-section-1") ],
             "callback": () => {},
             "urlShorthand": "section1",
           },
-          "toggler-button-2": {
+          "NButtonToggler1Button2": {
             "text": "Section 2",
             "items": [ new GenericElement("toggler-section-2") ],
             "callback": () => {},
             "urlShorthand": "section2",
           },
-          "toggler-button-3": {
+          "NButtonToggler1Button3": {
             "text": "Section 3",
             "items": [ new GenericElement("toggler-section-3") ],
             "callback": () => {},
             "urlShorthand": "section3",
           },
-          "toggler-button-4": {
+          "NButtonToggler1Button4": {
             "text": "Section 4",
             "items": [ new GenericElement("toggler-section-4") ],
             "callback": () => {},
@@ -742,12 +753,12 @@ There are two such areas, so you can compare one against the other.  </p>
           },
         },
         {
-          "toggler-button-expand-all": {
+          "NButtonToggler1ExpandAll": {
             "text": "Expand all",
           },
         },
         {
-          "toggler-button-collapse-all": {
+          "NButtonToggler1CollapseAll": {
             "text": "Collapse all",
           },
         },
@@ -758,44 +769,44 @@ There are two such areas, so you can compare one against the other.  </p>
       // ----------------------------------------------------------------
 
       this.elements.fontSelectOutput1 = new GenericElement(
-        "font-output-1",
+        "fontSelectOutput1",
       )
       this.elements.fontFamilySelectInput1 = new TextInput(
-        "font-family-input-1",
+        "fontFamilySelectInput1",
         (event) => {
           this.elements.fontSelectOutput1.underlying.style.fontFamily = event.target.value
         },
       )
       this.elements.fontStyleSelectInput1 = new TextInput(
-        "font-style-input-1",
+        "fontStyleSelectInput1",
         (event) => {
           this.elements.fontSelectOutput1.underlying.style.fontStyle = event.target.value
         },
       )
       this.elements.fontWeightSelectInput1 = new TextInput(
-        "font-weight-input-1",
+        "fontWeightSelectInput1",
         (event) => {
           this.elements.fontSelectOutput1.underlying.style.fontWeight = event.target.value
         },
       )
 
       this.elements.fontSelectOutput2 = new GenericElement(
-        "font-output-2",
+        "fontSelectOutput2",
       )
       this.elements.fontFamilySelectInput2 = new TextInput(
-        "font-family-input-2",
+        "fontFamilySelectInput2",
         (event) => {
           this.elements.fontSelectOutput2.underlying.style.fontFamily = event.target.value
         },
       )
       this.elements.fontStyleSelectInput2 = new TextInput(
-        "font-style-input-2",
+        "fontStyleSelectInput2",
         (event) => {
           this.elements.fontSelectOutput2.underlying.style.fontStyle = event.target.value
         },
       )
       this.elements.fontWeightSelectInput2 = new TextInput(
-        "font-weight-input-2",
+        "fontWeightSelectInput2",
         (event) => {
           this.elements.fontSelectOutput2.underlying.style.fontWeight = event.target.value
         },
@@ -803,8 +814,8 @@ There are two such areas, so you can compare one against the other.  </p>
 
       // ----------------------------------------------------------------
       this.elements.lightDarkThemeElement = new LightDarkThemeSlider(
-        "light-theme-dark-theme-toggle",
-        "light-theme-dark-theme-label",
+        "lightThemeDarkThemeToggle",
+        "lightThemeDarkThemeLabel",
         (event) => {
           document.body.style.backgroundColor = "white"
           document.body.style.color = "black"

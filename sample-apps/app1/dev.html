@@ -248,12 +248,14 @@ library</a>, which is a lark/DIY project.
 </p>
 
 <!-- ================================================================ -->
+<!--
 <hr/>
 
 <div>
   <span> <code>&gt;</code> </span>
   <span> <code>v</code> </span>
 </div>
+-->
 
 <!-- ================================================================ -->
 <hr/>
@@ -267,9 +269,9 @@ the latter.
 <span>
   <button class="green" id="clearTextInput1Button"> Loading ... </button>
   <span> Your text: </span>
-  <input type=text placeholder="..." size=30 id="textInput1"></input>
+  <input type=text placeholder="..." size=30 id="textInput_1"></input>
   <span> Reversed: </span>
-  <span id="text-output-1" style="display:inline"> Loading ... </span>
+  <span id="textSpan_1" style="display:inline"> Loading ... </span>
 </span>
 
 <p/>
@@ -312,12 +314,12 @@ simply write a message to a <code>TextSpan</code>.
 </p>
 
 <div>
-  <button class="grey" id="select-button-1"> Loading ... </button>
-  <button class="grey" id="select-button-2"> Loading ... </button>
-  <button class="grey" id="select-button-3"> Loading ... </button>
+  <button class="grey" id="NButtonSelector_1_button_1"> Loading ... </button>
+  <button class="grey" id="NButtonSelector_1_button_2"> Loading ... </button>
+  <button class="grey" id="NButtonSelector_1_button_3"> Loading ... </button>
 </div>
 
-<div id="NButtonSelector1Output">
+<div id="NButtonSelector_1_Output">
   Loading ...
 </div>
 
@@ -332,18 +334,18 @@ add rows to the table, hide it, then show it again, and its contents are still t
 </p>
 
 <div>
-  <button class="blue" id="OneButtonSwitcherButton"> Loading ... </button>
+  <button class="blue" id="oneButtonSwitcher_1_button"> Loading ... </button>
 </div>
 
-<div id="OneButtonSwitcherItem1">
+<div id="oneButtonSwitcher_1_item_1">
   <span>
     <button class="green" id="dataTableAddRowButton"></button>
     <button class="grey" id="dataTableClearButton"></button>
   </span>
-  <table id="data-table"> </table>
+  <table id="dataTable_1"> </table>
 </div>
 
-<div id="OneButtonSwitcherItem2">
+<div id="oneButtonSwitcher_1_item_2">
   This is just some text. Click the button above to see the table again.
 </div>
 
@@ -357,9 +359,9 @@ own button.
 </p>
 
 <div>
-  <button class="blue" id="switcherButton-1"> Loading ... </button>
-  <button class="blue" id="switcherButton-2"> Loading ... </button>
-  <button class="blue" id="switcherButton-3"> Loading ... </button>
+  <button class="blue" id="NButtonSwitcher_1_button_1"> Loading ... </button>
+  <button class="blue" id="NButtonSwitcher_1_button_2"> Loading ... </button>
+  <button class="blue" id="NButtonSwitcher_1_button_3"> Loading ... </button>
 </div>
 
 <div id="switcherItem1b">
@@ -563,23 +565,24 @@ There are two such areas, so you can compare one against the other.  </p>
 
     constructor() {
 
+      // You can set `window.app.state.logLevel = 2` in the Developer Console
       this.state = {
-        "logLevel": 1, // 0,1,2,3
+        "logLevel": 0, // 0,1,2,3
       }
 
       this.setElementsAndCallbacks()
-      this.elements.textInput1.focus()
+      this.elements.textInput_1.focus()
     }
 
     setElementsAndCallbacks() {
       this.elements = {}
 
       // ----------------------------------------------------------------
-      this.elements.textInput1 = new TextInput(
-        "textInput1",
+      this.elements.textInput_1 = new TextInput(
+        "textInput_1",
         (event) => {
-          this.logAt1("textInput1: <<" + event.target.value + ">>")
-          this.elements.textOutput1.set(event.target.value.split("").reverse().join(""))
+          this.logAt1("textInput_1: <<" + event.target.value + ">>")
+          this.elements.textSpan_1.set(event.target.value.split("").reverse().join(""))
         }
       )
 
@@ -588,12 +591,12 @@ There are two such areas, so you can compare one against the other.  </p>
         "Clear",
         (event) => {
           this.logAt1("clearTextInput1Button click")
-          this.elements.textInput1.set("")
-          this.elements.textOutput1.set("")
+          this.elements.textInput_1.set("")
+          this.elements.textSpan_1.set("")
         },
       )
 
-      this.elements.textOutput1 = new TextSpan("text-output-1", "")
+      this.elements.textSpan_1 = new TextSpan("textSpan_1", "")
 
       // ----------------------------------------------------------------
       this.elements.makeAnErrorHappenButton = new Button(
@@ -605,24 +608,24 @@ There are two such areas, so you can compare one against the other.  </p>
       )
 
       // ----------------------------------------------------------------
-      this.elements.OneButtonSwitcherButton = new OneButtonSwitcher(
-        "OneButtonSwitcherButton",
+      this.elements.oneButtonSwitcher_1_Button = new OneButtonSwitcher(
+        "oneButtonSwitcher_1_button",
         [
-          new GenericElement("OneButtonSwitcherItem1"),
+          new GenericElement("oneButtonSwitcher_1_item_1"),
         ],
         [
-          new GenericElement("OneButtonSwitcherItem2"),
+          new GenericElement("oneButtonSwitcher_1_item_2"),
         ],
         "Show the first thing",
         "Show the second thing",
         () => {
-          this.logAt2("switcherButton click")
+          this.logAt1("oneButtonSwitcher_1_button click")
         },
       )
 
       // ----------------------------------------------------------------
-      this.elements.dataTable = new Table(
-        "data-table",
+      this.elements.dataTable_1 = new Table(
+        "dataTable_1",
         {
           "table": "dataTable table",
           "tr": "dataTable tr",
@@ -642,7 +645,7 @@ There are two such areas, so you can compare one against the other.  </p>
           let hexes = "0123456789abcdef"
           let hx = randomWord(hexes, 4) + "-" + randomWord(hexes, 8)
 
-          this.elements.dataTable.put(
+          this.elements.dataTable_1.put(
             [
               [nonce, alpha, hx],
             ],
@@ -655,27 +658,27 @@ There are two such areas, so you can compare one against the other.  </p>
         "dataTableClearButton",
         "Clear table",
         (event) => {
-          this.elements.dataTable.reset()
+          this.elements.dataTable_1.reset()
         },
       )
 
       // ----------------------------------------------------------------
-      this.elements.selectorOutput = new TextSpan("NButtonSelector1Output", "No option has been selected yet")
+      this.elements.selectorOutput = new TextSpan("NButtonSelector_1_Output", "No option has been selected yet")
       this.elements.NButtonSelector1 = new NButtonSelector(
         {
-          "select-button-1": {
+          "NButtonSelector_1_button_1": {
             "text": "Option 1",
             "callback": (event) => {
               this.elements.selectorOutput.set("Option 1 was selected")
             },
           },
-          "select-button-2": {
+          "NButtonSelector_1_button_2": {
             "text": "Option 2",
             "callback": (event) => {
               this.elements.selectorOutput.set("Option 2 was selected")
             },
           },
-          "select-button-3": {
+          "NButtonSelector_1_button_3": {
             "text": "Option 3",
             "callback": (event) => {
               this.elements.selectorOutput.set("Option 3 was selected")
@@ -689,7 +692,7 @@ There are two such areas, so you can compare one against the other.  </p>
       // ----------------------------------------------------------------
       this.elements.NButtonSwitcher1 = new NButtonSwitcher(
         {
-          "switcherButton-1": {
+          "NButtonSwitcher_1_button_1": {
             "text": "Pangram 1",
             "items": [
               new GenericElement("switcherItem1b"),
@@ -698,7 +701,7 @@ There are two such areas, so you can compare one against the other.  </p>
               this.logAt1("switcherButton1 click")
             },
           },
-          "switcherButton-2": {
+          "NButtonSwitcher_1_button_2": {
             "text": "Pangram 2",
             "items": [
               new GenericElement("switcherItem2b"),
@@ -707,7 +710,7 @@ There are two such areas, so you can compare one against the other.  </p>
               this.logAt1("switcherButton2 click")
             },
           },
-          "switcherButton-3": {
+          "NButtonSwitcher_1_button_3": {
             "text": "Pangram 3",
             "items": [
               new GenericElement("switcherItem3b"),
