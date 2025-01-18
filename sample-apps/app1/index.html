@@ -161,6 +161,24 @@
     background-color: #808080;
   }
 
+  button.tab {
+    font-size: 80%;
+    font-weight: bold;
+    background-color: transparent;
+    border: 1px solid gray;
+    border-radius: 0px;
+    margin: 0px;
+    padding: 6px;
+  }
+  button.tab.selected {
+    font-weight: bold;
+    border: 1px solid gray;
+  }
+  button.tab.deselected {
+    font-weight: normal;
+    border: 1px solid gray;
+  }
+
   /* CLASSES */
   .boxed-text {
     border: 1px solid black;
@@ -353,6 +371,35 @@ add rows to the table, hide it, then show it again, and its contents are still t
 <hr/>
 
 <p>
+This is also <code>OneButtonSwitcher</code>, with different CSS.
+</p>
+
+<div style="border:1px solid gray">
+  <div style="border:3px solid gray">
+    <span>
+      <button class="transparent" id="oneButtonSwitcher_2_button"> Loading ... </button>
+      Here is a card with show/hide of its contents
+    </span>
+  </div>
+
+  <div id="oneButtonSwitcher_2_item_1">
+    <ul>
+      <li>This is an item in the list</i>
+      <li>This is the second item in the list</i>
+      <li>This is the third item in the list</i>
+    </ul>
+    <table id="dataTable_1"> </table>
+  </div>
+
+  <div id="oneButtonSwitcher_2_item_2">
+  </div>
+
+</div>
+
+<!-- ================================================================ -->
+<hr/>
+
+<p>
 Here we use Sliver&rsquo;s <code>NButtonSwitcher</code>. This like <code>OneButtonSwitcher</code>,
 except that you can have arbitrarily many elements, with only one being visible at a time. Each has its
 own button.
@@ -364,15 +411,15 @@ own button.
   <button class="blue" id="NButtonSwitcher_1_button_3"> Loading ... </button>
 </div>
 
-<div id="switcherItem1b">
+<div id="NButtonSwitcher_1_item_1">
 The quick brown fox jumped over the lazy dogs.
 </div>
 
-<div id="switcherItem2b">
+<div id="NButtonSwitcher_1_item_2">
 Few black taxis drive up major roads on quiet, hazy nights.
 </div>
 
-<div id="switcherItem3b">
+<div id="NButtonSwitcher_1_item_3">
 While making deep excavations we found some quaint bronze jewelry.
 </div>
 
@@ -380,8 +427,64 @@ While making deep excavations we found some quaint bronze jewelry.
 <hr/>
 
 <p>
+This is also <code>NButtonSwitcher</code> with different CSS, implementing a tabbed look.
+</p>
+
+<div style="border: 3px solid gray">
+  <!--
+  <div style="background-color: gray">
+  -->
+  <div>
+  <span style="border: none">
+    <button class="tab" id="NButtonSwitcher_2_button_1"> Loading ... </button>
+    <button class="tab" id="NButtonSwitcher_2_button_2"> Loading ... </button>
+    <button class="tab" id="NButtonSwitcher_2_button_3"> Loading ... </button>
+  </span>
+  </div>
+
+  <div style="border: 1px solid gray; padding: 4px">
+
+    <div id="NButtonSwitcher_2_item_1">
+      <ul>
+        <li>Ipsum faucibus vitae aliquet nec ullamcorper sit amet risus nullam.</li>
+        <li>Convallis posuere morbi leo urna molestie at elementum eu facilisis.</li>
+        <li>Sit amet consectetur adipiscing elit.</li>
+        <li>Augue mauris augue neque gravida.</li>
+        <li>Vel pharetra vel turpis nunc eget lorem dolor sed viverra.</li>
+        <li>Fermentum posuere urna nec tincidunt praesent semper.</li>
+      </ul>
+    </div>
+
+    <div id="NButtonSwitcher_2_item_2">
+      <ul>
+        <li>Sapien pellentesque habitant morbi tristique senectus et netus et.</li>
+        <li>Consectetur adipiscing elit ut aliquam purus sit amet. Eget egestas purus viverra accumsan in nisl
+          nisi.</li>
+        <li>Ullamcorper morbi tincidunt ornare massa eget egestas.</li>
+        <li>Massa enim nec dui nunc mattis.</li>
+        <li>Orci eu lobortis elementum nibh.</li>
+        <li>Sit amet mauris commodo quis.</li>
+      </ul>
+    </div>
+
+    <div id="NButtonSwitcher_2_item_3">
+      <ul>
+        <li>Aliquet risus feugiat in ante metus.</li>
+        <li>Ornare arcu odio ut sem.</li>
+        <li>Auctor elit sed vulputate mi sit amet mauris.</li>
+        <li>Urna nec tincidunt praesent semper feugiat nibh sed pulvinar.</li>
+        <li>Vitae tortor condimentum lacinia quis vel eros donec ac.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ================================================================ -->
+<hr/>
+
+<p>
 Here we use Sliver&rsquo;s <code>NButtonToggler</code>. This is like <code>NButtonSwitcher</code>,
-except that there are expand-all and collape-all buttons, and, it's possible to have none of
+except that there are expand-all and collapse-all buttons, and, it's possible to have none of
 the elements be visible: namely, by clicking the button for an element that&rsquo;s currently visible.
 I created this for <a href="https://johnkerl.org">https://johnkerl.org</a>.
 </p>
@@ -608,7 +711,7 @@ There are two such areas, so you can compare one against the other.  </p>
       )
 
       // ----------------------------------------------------------------
-      this.elements.oneButtonSwitcher_1_Button = new OneButtonSwitcher(
+      this.elements.oneButtonSwitcher_1_button = new OneButtonSwitcher(
         "oneButtonSwitcher_1_button",
         [
           new GenericElement("oneButtonSwitcher_1_item_1"),
@@ -620,6 +723,22 @@ There are two such areas, so you can compare one against the other.  </p>
         "Show the second thing",
         () => {
           this.logAt1("oneButtonSwitcher_1_button click")
+        },
+      )
+
+      // ----------------------------------------------------------------
+      this.elements.oneButtonSwitcher_2_button = new OneButtonSwitcher(
+        "oneButtonSwitcher_2_button",
+        [
+          new GenericElement("oneButtonSwitcher_2_item_1"),
+        ],
+        [
+          new GenericElement("oneButtonSwitcher_2_item_2"),
+        ],
+        "v", // Unicode "&#2228;"
+        ">",
+        () => {
+          this.logAt1("oneButtonSwitcher_2_button click")
         },
       )
 
@@ -690,33 +809,33 @@ There are two such areas, so you can compare one against the other.  </p>
       )
 
       // ----------------------------------------------------------------
-      this.elements.NButtonSwitcher1 = new NButtonSwitcher(
+      this.elements.NButtonSwitcher_1 = new NButtonSwitcher(
         {
           "NButtonSwitcher_1_button_1": {
             "text": "Pangram 1",
             "items": [
-              new GenericElement("switcherItem1b"),
+              new GenericElement("NButtonSwitcher_1_item_1"),
             ],
             "callback": (event) => {
-              this.logAt1("switcherButton1 click")
+              this.logAt1("NButtonSwitcher_1_button1_1 click")
             },
           },
           "NButtonSwitcher_1_button_2": {
             "text": "Pangram 2",
             "items": [
-              new GenericElement("switcherItem2b"),
+              new GenericElement("NButtonSwitcher_1_item_2"),
             ],
             "callback": (event) => {
-              this.logAt1("switcherButton2 click")
+              this.logAt1("NButtonSwitcher_1_button_2 click")
             },
           },
           "NButtonSwitcher_1_button_3": {
             "text": "Pangram 3",
             "items": [
-              new GenericElement("switcherItem3b"),
+              new GenericElement("NButtonSwitcher_1_item_3"),
             ],
             "callback": (event) => {
-              this.logAt1("switcherButton3 click")
+              this.logAt1("NButtonSwitcher_1_button_3 click")
             },
           },
         },
@@ -725,7 +844,42 @@ There are two such areas, so you can compare one against the other.  </p>
       )
 
       // ----------------------------------------------------------------
-      this.elements.NButtonToggler1 = new URLAndPersistentNButtonToggler(
+      this.elements.NButtonSwitcher_2 = new NButtonSwitcher(
+        {
+          "NButtonSwitcher_2_button_1": {
+            "text": "Tab 1",
+            "items": [
+              new GenericElement("NButtonSwitcher_2_item_1"),
+            ],
+            "callback": (event) => {
+              this.logAt1("NButtonSwitcher_2_button1_1 click")
+            },
+          },
+          "NButtonSwitcher_2_button_2": {
+            "text": "Tab 2",
+            "items": [
+              new GenericElement("NButtonSwitcher_2_item_2"),
+            ],
+            "callback": (event) => {
+              this.logAt1("NButtonSwitcher_2_button_2 click")
+            },
+          },
+          "NButtonSwitcher_2_button_3": {
+            "text": "Tab 3",
+            "items": [
+              new GenericElement("NButtonSwitcher_2_item_3"),
+            ],
+            "callback": (event) => {
+              this.logAt1("NButtonSwitcher_2_button_3 click")
+            },
+          },
+        },
+        "selected",   // CSS style
+        "deselected", // CSS style
+      )
+
+      // ----------------------------------------------------------------
+      this.elements.NButtonToggler_1 = new URLAndPersistentNButtonToggler(
         {
           "NButtonToggler1Button1": {
             "text": "Section 1",
