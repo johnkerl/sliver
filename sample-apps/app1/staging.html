@@ -257,9 +257,9 @@ the latter.
 </p>
 
 <span>
-  <button class="green" id="clear-text-input-1"> Loading ... </button>
+  <button class="green" id="clearTextInput1Button"> Loading ... </button>
   <span> Your text: </span>
-  <input type=text placeholder="..." size=30 id="text-input-1"></input>
+  <input type=text placeholder="..." size=30 id="textInput1"></input>
   <span> Reversed: </span>
   <span id="text-output-1" style="display:inline"> Loading ... </span>
 </span>
@@ -292,7 +292,7 @@ page, rather than being hidden in the Developer Console.
   <hr/>
 </div>
 
-<button class="red" id="make-an-error-happen-button"> Loading ... </button>
+<button class="red" id="makeAnErrorHappenButton"> Loading ... </button>
 
 <!-- ================================================================ -->
 <hr/>
@@ -324,18 +324,18 @@ add rows to the table, hide it, then show it again, and its contents are still t
 </p>
 
 <div>
-  <button class="blue" id="item-switch-button"> Loading ... </button>
+  <button class="blue" id="switcherButton"> Loading ... </button>
 </div>
 
-<div id="switch-item-1">
+<div id="switcherItem11">
   <span>
-    <button class="green" id="data-table-add-row"></button>
-    <button class="grey" id="data-table-clear"></button>
+    <button class="green" id="dataTableAddRowButton"></button>
+    <button class="grey" id="dataTableClearButton"></button>
   </span>
   <table id="data-table"> </table>
 </div>
 
-<div id="switch-item-2">
+<div id="switcherItem12">
   This is just some text. Click the button above to see the table again.
 </div>
 
@@ -349,20 +349,20 @@ own button.
 </p>
 
 <div>
-  <button class="blue" id="item-switch-button-1"> Loading ... </button>
-  <button class="blue" id="item-switch-button-2"> Loading ... </button>
-  <button class="blue" id="item-switch-button-3"> Loading ... </button>
+  <button class="blue" id="switcherButton-1"> Loading ... </button>
+  <button class="blue" id="switcherButton-2"> Loading ... </button>
+  <button class="blue" id="switcherButton-3"> Loading ... </button>
 </div>
 
-<div id="switch-item-1b">
+<div id="switcherItem11b">
 The quick brown fox jumped over the lazy dogs.
 </div>
 
-<div id="switch-item-2b">
+<div id="switcherItem12b">
 Few black taxis drive up major roads on quiet, hazy nights.
 </div>
 
-<div id="switch-item-3b">
+<div id="switcherItem13b">
 While making deep excavations we found some quaint bronze jewelry.
 </div>
 
@@ -568,7 +568,7 @@ There are two such areas, so you can compare one against the other.  </p>
 
       // ----------------------------------------------------------------
       this.elements.textInput1 = new TextInput(
-        "text-input-1",
+        "textInput1",
         (event) => {
           this.logAt1("textInput1: <<" + event.target.value + ">>")
           this.elements.textOutput1.set(event.target.value.split("").reverse().join(""))
@@ -576,7 +576,7 @@ There are two such areas, so you can compare one against the other.  </p>
       )
 
       this.elements.clearTextInput1Button = new Button(
-        "clear-text-input-1",
+        "clearTextInput1Button",
         "Clear",
         (event) => {
           this.logAt1("clearTextInput1Button click")
@@ -589,7 +589,7 @@ There are two such areas, so you can compare one against the other.  </p>
 
       // ----------------------------------------------------------------
       this.elements.makeAnErrorHappenButton = new Button(
-        "make-an-error-happen-button",
+        "makeAnErrorHappenButton",
         "Make an error happen",
         (event) => {
           throw new Error("This is an error message")
@@ -598,12 +598,12 @@ There are two such areas, so you can compare one against the other.  </p>
 
       // ----------------------------------------------------------------
       this.elements.switcherButton = new OneButtonSwitcher(
-        "item-switch-button",
+        "switcherButton",
         [
-          new GenericElement("switch-item-1"),
+          new GenericElement("switcherItem11"),
         ],
         [
-          new GenericElement("switch-item-2"),
+          new GenericElement("switcherItem12"),
         ],
         "Show the first thing",
         "Show the second thing",
@@ -626,7 +626,7 @@ There are two such areas, so you can compare one against the other.  </p>
       )
 
       this.elements.dataTableAddRowButton = new Button(
-        "data-table-add-row",
+        "dataTableAddRowButton",
         "Add row to table",
         (event) => {
           let nonce = randomWord("0123456789", 6)
@@ -644,7 +644,7 @@ There are two such areas, so you can compare one against the other.  </p>
       )
 
       this.elements.dataTableClearButton = new Button(
-        "data-table-clear",
+        "dataTableClearButton",
         "Clear table",
         (event) => {
           this.elements.dataTable.reset()
@@ -681,28 +681,28 @@ There are two such areas, so you can compare one against the other.  </p>
       // ----------------------------------------------------------------
       this.elements.switcher = new NButtonSwitcher(
         {
-          "item-switch-button-1": {
+          "switcherButton-1": {
             "text": "Pangram 1",
             "items": [
-              new GenericElement("switch-item-1b"),
+              new GenericElement("switcherItem11b"),
             ],
             "callback": (event) => {
               this.logAt1("switcherButton1 click")
             },
           },
-          "item-switch-button-2": {
+          "switcherButton-2": {
             "text": "Pangram 2",
             "items": [
-              new GenericElement("switch-item-2b"),
+              new GenericElement("switcherItem12b"),
             ],
             "callback": (event) => {
               this.logAt1("switcherButton2 click")
             },
           },
-          "item-switch-button-3": {
+          "switcherButton-3": {
             "text": "Pangram 3",
             "items": [
-              new GenericElement("switch-item-3b"),
+              new GenericElement("switcherItem13b"),
             ],
             "callback": (event) => {
               this.logAt1("switcherButton3 click")

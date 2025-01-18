@@ -265,9 +265,9 @@ the latter.
 </p>
 
 <span>
-  <button class="green" id="clear-text-input-1"> Loading ... </button>
+  <button class="green" id="clearTextInput1Button"> Loading ... </button>
   <span> Your text: </span>
-  <input type=text placeholder="..." size=30 id="text-input-1"></input>
+  <input type=text placeholder="..." size=30 id="textInput1"></input>
   <span> Reversed: </span>
   <span id="text-output-1" style="display:inline"> Loading ... </span>
 </span>
@@ -300,7 +300,7 @@ page, rather than being hidden in the Developer Console.
   <hr/>
 </div>
 
-<button class="red" id="make-an-error-happen-button"> Loading ... </button>
+<button class="red" id="makeAnErrorHappenButton"> Loading ... </button>
 
 <!-- ================================================================ -->
 <hr/>
@@ -317,7 +317,7 @@ simply write a message to a <code>TextSpan</code>.
   <button class="grey" id="select-button-3"> Loading ... </button>
 </div>
 
-<div id="selector-output">
+<div id="NButtonSelector1Output">
   Loading ...
 </div>
 
@@ -332,18 +332,18 @@ add rows to the table, hide it, then show it again, and its contents are still t
 </p>
 
 <div>
-  <button class="blue" id="item-switch-button"> Loading ... </button>
+  <button class="blue" id="OneButtonSwitcherButton"> Loading ... </button>
 </div>
 
-<div id="switch-item-1">
+<div id="OneButtonSwitcherItem1">
   <span>
-    <button class="green" id="data-table-add-row"></button>
-    <button class="grey" id="data-table-clear"></button>
+    <button class="green" id="dataTableAddRowButton"></button>
+    <button class="grey" id="dataTableClearButton"></button>
   </span>
   <table id="data-table"> </table>
 </div>
 
-<div id="switch-item-2">
+<div id="OneButtonSwitcherItem2">
   This is just some text. Click the button above to see the table again.
 </div>
 
@@ -357,20 +357,20 @@ own button.
 </p>
 
 <div>
-  <button class="blue" id="item-switch-button-1"> Loading ... </button>
-  <button class="blue" id="item-switch-button-2"> Loading ... </button>
-  <button class="blue" id="item-switch-button-3"> Loading ... </button>
+  <button class="blue" id="switcherButton-1"> Loading ... </button>
+  <button class="blue" id="switcherButton-2"> Loading ... </button>
+  <button class="blue" id="switcherButton-3"> Loading ... </button>
 </div>
 
-<div id="switch-item-1b">
+<div id="switcherItem1b">
 The quick brown fox jumped over the lazy dogs.
 </div>
 
-<div id="switch-item-2b">
+<div id="switcherItem2b">
 Few black taxis drive up major roads on quiet, hazy nights.
 </div>
 
-<div id="switch-item-3b">
+<div id="switcherItem3b">
 While making deep excavations we found some quaint bronze jewelry.
 </div>
 
@@ -384,12 +384,12 @@ the elements be visible: namely, by clicking the button for an element that&rsqu
 I created this for <a href="https://johnkerl.org">https://johnkerl.org</a>.
 </p>
 
-<button class="grey" id="toggler-button-1"> Loading ... </button>
-<button class="grey" id="toggler-button-2"> Loading ... </button>
-<button class="grey" id="toggler-button-3"> Loading ... </button>
-<button class="grey" id="toggler-button-4"> Loading ... </button>
-<button id="toggler-button-expand-all"> Loading ... </button>
-<button id="toggler-button-collapse-all"> Loading ... </button>
+<button class="grey" id="NButtonToggler1Button1"> Loading ... </button>
+<button class="grey" id="NButtonToggler1Button2"> Loading ... </button>
+<button class="grey" id="NButtonToggler1Button3"> Loading ... </button>
+<button class="grey" id="NButtonToggler1Button4"> Loading ... </button>
+<button id="NButtonToggler1ExpandAll"> Loading ... </button>
+<button id="NButtonToggler1CollapseAll"> Loading ... </button>
 <p/>
 
 <div id="toggler-section-1">
@@ -517,10 +517,10 @@ There are two such areas, so you can compare one against the other.  </p>
 
 <div>
   <label class="switch">
-    <input type="checkbox" id="light-theme-dark-theme-toggle">
+    <input type="checkbox" id="lightThemeDarkThemeToggle">
     <span class="slider round"></span>
   </label>
-  <span id="light-theme-dark-theme-label">Loading ...</span>
+  <span id="lightThemeDarkThemeLabel">Loading ...</span>
 </div>
 <p/>
 
@@ -576,7 +576,7 @@ There are two such areas, so you can compare one against the other.  </p>
 
       // ----------------------------------------------------------------
       this.elements.textInput1 = new TextInput(
-        "text-input-1",
+        "textInput1",
         (event) => {
           this.logAt1("textInput1: <<" + event.target.value + ">>")
           this.elements.textOutput1.set(event.target.value.split("").reverse().join(""))
@@ -584,7 +584,7 @@ There are two such areas, so you can compare one against the other.  </p>
       )
 
       this.elements.clearTextInput1Button = new Button(
-        "clear-text-input-1",
+        "clearTextInput1Button",
         "Clear",
         (event) => {
           this.logAt1("clearTextInput1Button click")
@@ -597,7 +597,7 @@ There are two such areas, so you can compare one against the other.  </p>
 
       // ----------------------------------------------------------------
       this.elements.makeAnErrorHappenButton = new Button(
-        "make-an-error-happen-button",
+        "makeAnErrorHappenButton",
         "Make an error happen",
         (event) => {
           throw new Error("This is an error message")
@@ -605,18 +605,18 @@ There are two such areas, so you can compare one against the other.  </p>
       )
 
       // ----------------------------------------------------------------
-      this.elements.switcherButton = new OneButtonSwitcher(
-        "item-switch-button",
+      this.elements.OneButtonSwitcherButton = new OneButtonSwitcher(
+        "OneButtonSwitcherButton",
         [
-          new GenericElement("switch-item-1"),
+          new GenericElement("OneButtonSwitcherItem1"),
         ],
         [
-          new GenericElement("switch-item-2"),
+          new GenericElement("OneButtonSwitcherItem2"),
         ],
         "Show the first thing",
         "Show the second thing",
         () => {
-          this.logAt1("switcherButton click")
+          this.logAt2("switcherButton click")
         },
       )
 
@@ -634,7 +634,7 @@ There are two such areas, so you can compare one against the other.  </p>
       )
 
       this.elements.dataTableAddRowButton = new Button(
-        "data-table-add-row",
+        "dataTableAddRowButton",
         "Add row to table",
         (event) => {
           let nonce = randomWord("0123456789", 6)
@@ -652,7 +652,7 @@ There are two such areas, so you can compare one against the other.  </p>
       )
 
       this.elements.dataTableClearButton = new Button(
-        "data-table-clear",
+        "dataTableClearButton",
         "Clear table",
         (event) => {
           this.elements.dataTable.reset()
@@ -660,8 +660,8 @@ There are two such areas, so you can compare one against the other.  </p>
       )
 
       // ----------------------------------------------------------------
-      this.elements.selectorOutput = new TextSpan("selector-output", "No option has been selected yet")
-      this.elements.selector = new NButtonSelector(
+      this.elements.selectorOutput = new TextSpan("NButtonSelector1Output", "No option has been selected yet")
+      this.elements.NButtonSelector1 = new NButtonSelector(
         {
           "select-button-1": {
             "text": "Option 1",
@@ -687,30 +687,30 @@ There are two such areas, so you can compare one against the other.  </p>
       )
 
       // ----------------------------------------------------------------
-      this.elements.switcher = new NButtonSwitcher(
+      this.elements.NButtonSwitcher1 = new NButtonSwitcher(
         {
-          "item-switch-button-1": {
+          "switcherButton-1": {
             "text": "Pangram 1",
             "items": [
-              new GenericElement("switch-item-1b"),
+              new GenericElement("switcherItem1b"),
             ],
             "callback": (event) => {
               this.logAt1("switcherButton1 click")
             },
           },
-          "item-switch-button-2": {
+          "switcherButton-2": {
             "text": "Pangram 2",
             "items": [
-              new GenericElement("switch-item-2b"),
+              new GenericElement("switcherItem2b"),
             ],
             "callback": (event) => {
               this.logAt1("switcherButton2 click")
             },
           },
-          "item-switch-button-3": {
+          "switcherButton-3": {
             "text": "Pangram 3",
             "items": [
-              new GenericElement("switch-item-3b"),
+              new GenericElement("switcherItem3b"),
             ],
             "callback": (event) => {
               this.logAt1("switcherButton3 click")
@@ -722,27 +722,27 @@ There are two such areas, so you can compare one against the other.  </p>
       )
 
       // ----------------------------------------------------------------
-      this.elements.toggler = new URLAndPersistentNButtonToggler(
+      this.elements.NButtonToggler1 = new URLAndPersistentNButtonToggler(
         {
-          "toggler-button-1": {
+          "NButtonToggler1Button1": {
             "text": "Section 1",
             "items": [ new GenericElement("toggler-section-1") ],
             "callback": () => {},
             "urlShorthand": "section1",
           },
-          "toggler-button-2": {
+          "NButtonToggler1Button2": {
             "text": "Section 2",
             "items": [ new GenericElement("toggler-section-2") ],
             "callback": () => {},
             "urlShorthand": "section2",
           },
-          "toggler-button-3": {
+          "NButtonToggler1Button3": {
             "text": "Section 3",
             "items": [ new GenericElement("toggler-section-3") ],
             "callback": () => {},
             "urlShorthand": "section3",
           },
-          "toggler-button-4": {
+          "NButtonToggler1Button4": {
             "text": "Section 4",
             "items": [ new GenericElement("toggler-section-4") ],
             "callback": () => {},
@@ -750,12 +750,12 @@ There are two such areas, so you can compare one against the other.  </p>
           },
         },
         {
-          "toggler-button-expand-all": {
+          "NButtonToggler1ExpandAll": {
             "text": "Expand all",
           },
         },
         {
-          "toggler-button-collapse-all": {
+          "NButtonToggler1CollapseAll": {
             "text": "Collapse all",
           },
         },
@@ -811,8 +811,8 @@ There are two such areas, so you can compare one against the other.  </p>
 
       // ----------------------------------------------------------------
       this.elements.lightDarkThemeElement = new LightDarkThemeSlider(
-        "light-theme-dark-theme-toggle",
-        "light-theme-dark-theme-label",
+        "lightThemeDarkThemeToggle",
+        "lightThemeDarkThemeLabel",
         (event) => {
           document.body.style.backgroundColor = "white"
           document.body.style.color = "black"
