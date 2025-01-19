@@ -2,9 +2,10 @@ TO DO:
 
 * table-populator
   o  more to-do items
-* > v
+* > v: use SVG
 * tabs as css stylings for switcher
-* left-hand nav as switcher-like
+* left-hand nav as switcher-like (poki)
+* solve transparent-background items not showing up in dark mode by improving themes
 * popup
 * try google fonts
 * Learn more about CSS -- sharpen how theming works

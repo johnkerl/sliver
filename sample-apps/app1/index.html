@@ -95,7 +95,9 @@
   /* ERROR */
   .error {
     color: red;
+    /*
     background-color: white;
+    */
     border: none;
     padding: 10px;
     margin: 10px;
@@ -105,7 +107,9 @@
 
   button {
     font-size: 80%;
+    /*
     font-weight: bold;
+    */
     background-color: #e8e8e8;
     border: 1px solid transparent;
     border-radius: 4px;
@@ -143,20 +147,25 @@
     background-color: transparent;
   }
 
-  button.red {
+  .white-on-red {
     color: #ffffff;
     background-color: #a7322c;
     border: 0px solid transparent;
   }
-  button.green {
+  .white-on-green {
     color: #ffffff;
     background-color: #238636;
   }
-  button.blue {
+  .white-on-blue {
     color: #ffffff;
     background-color: #0a66c2;
   }
-  button.grey {
+  .white-on-orange {
+    color: #ffffff;
+    background-color: #cc6600;
+    border: 0px solid transparent;
+  }
+  .white-on-grey {
     color: #ffffff;
     background-color: #808080;
   }
@@ -164,19 +173,25 @@
   button.tab {
     font-size: 80%;
     font-weight: bold;
-    background-color: transparent;
+    color: black;
+    background-color: white;
     border: 1px solid gray;
     border-radius: 0px;
-    margin: 0px;
+    margin: 0px !important;
     padding: 6px;
+    display: inline-block;
   }
   button.tab.selected {
     font-weight: bold;
     border: 1px solid gray;
+    display: inline-block;
   }
   button.tab.deselected {
     font-weight: normal;
     border: 1px solid gray;
+    color: #808080;;
+    background-color: white;
+    display: inline-block;
   }
 
   /* CLASSES */
@@ -277,6 +292,7 @@ library</a>, which is a lark/DIY project.
 
 <!-- ================================================================ -->
 <hr/>
+<h1> <code>TextInput, TextSpan</code> </h1>
 
 <p>
 These use Sliver&rsquo;s <code>TextInput</code> and <code>TextSpan</code> classes.
@@ -285,7 +301,7 @@ the latter.
 </p>
 
 <span>
-  <button class="green" id="clearTextInput1Button"> Loading ... </button>
+  <button class="white-on-green" id="clearTextInput1Button"> Loading ... </button>
   <span> Your text: </span>
   <input type=text placeholder="..." size=30 id="textInput_1"></input>
   <span> Reversed: </span>
@@ -296,6 +312,8 @@ the latter.
 
 <!-- ================================================================ -->
 <hr/>
+
+<h1><code>setErrorWidget</code></h1>
 
 <p>
 Here we use Sliver&rsquo;s <code>setErrorWidget</code> which puts error text where it can be seen, on the
@@ -310,7 +328,6 @@ page, rather than being hidden in the Developer Console.
   <hr/>
   <!-- This is a little x -->
   <button
-    class=transparent
     onClick='
       document.getElementById("error-container").style.display = "none";
       document.getElementById("error-text").innerHTML = "";
@@ -320,10 +337,11 @@ page, rather than being hidden in the Developer Console.
   <hr/>
 </div>
 
-<button class="red" id="makeAnErrorHappenButton"> Loading ... </button>
+<button class="white-on-red" id="makeAnErrorHappenButton"> Loading ... </button>
 
 <!-- ================================================================ -->
 <hr/>
+<h1><code>NButtonSelector</code></h1>
 
 <p>
 Here we use Sliver&rsquo;s <code>NButtonSelector</code>. This class ensures that selecting one button
@@ -332,9 +350,9 @@ simply write a message to a <code>TextSpan</code>.
 </p>
 
 <div>
-  <button class="grey" id="NButtonSelector_1_button_1"> Loading ... </button>
-  <button class="grey" id="NButtonSelector_1_button_2"> Loading ... </button>
-  <button class="grey" id="NButtonSelector_1_button_3"> Loading ... </button>
+  <button class="white-on-grey" id="NButtonSelector_1_button_1"> Loading ... </button>
+  <button class="white-on-grey" id="NButtonSelector_1_button_2"> Loading ... </button>
+  <button class="white-on-grey" id="NButtonSelector_1_button_3"> Loading ... </button>
 </div>
 
 <div id="NButtonSelector_1_Output">
@@ -343,6 +361,7 @@ simply write a message to a <code>TextSpan</code>.
 
 <!-- ================================================================ -->
 <hr/>
+<h1><code>OneButtonSwitcher</code></h1>
 
 <p>
 Here we use Sliver&rsquo;s <code>OneButtonSwitcher</code>. This controls two other elements.
@@ -352,13 +371,13 @@ add rows to the table, hide it, then show it again, and its contents are still t
 </p>
 
 <div>
-  <button class="blue" id="oneButtonSwitcher_1_button"> Loading ... </button>
+  <button class="white-on-blue" id="oneButtonSwitcher_1_button"> Loading ... </button>
 </div>
 
 <div id="oneButtonSwitcher_1_item_1">
   <span>
-    <button class="green" id="dataTableAddRowButton"></button>
-    <button class="grey" id="dataTableClearButton"></button>
+    <button class="white-on-green" id="dataTableAddRowButton"></button>
+    <button class="white-on-grey" id="dataTableClearButton"></button>
   </span>
   <table id="dataTable_1"> </table>
 </div>
@@ -371,13 +390,14 @@ add rows to the table, hide it, then show it again, and its contents are still t
 <hr/>
 
 <p>
-This is also <code>OneButtonSwitcher</code>, with different CSS.
+This is also <code>OneButtonSwitcher</code>, with different CSS. The button is the borderless
+wedge-expander at the upper left:
 </p>
 
 <div style="border:1px solid gray">
   <div style="border:3px solid gray">
     <span>
-      <button class="transparent" id="oneButtonSwitcher_2_button"> Loading ... </button>
+      <button id="oneButtonSwitcher_2_button"> Loading ... </button>
       Here is a card with show/hide of its contents
     </span>
   </div>
@@ -398,6 +418,7 @@ This is also <code>OneButtonSwitcher</code>, with different CSS.
 
 <!-- ================================================================ -->
 <hr/>
+<h1><code>NButtonSwitcher</code></h1>
 
 <p>
 Here we use Sliver&rsquo;s <code>NButtonSwitcher</code>. This like <code>OneButtonSwitcher</code>,
@@ -406,9 +427,9 @@ own button.
 </p>
 
 <div>
-  <button class="blue" id="NButtonSwitcher_1_button_1"> Loading ... </button>
-  <button class="blue" id="NButtonSwitcher_1_button_2"> Loading ... </button>
-  <button class="blue" id="NButtonSwitcher_1_button_3"> Loading ... </button>
+  <button class="white-on-orange" id="NButtonSwitcher_1_button_1"> Loading ... </button>
+  <button class="white-on-orange" id="NButtonSwitcher_1_button_2"> Loading ... </button>
+  <button class="white-on-orange" id="NButtonSwitcher_1_button_3"> Loading ... </button>
 </div>
 
 <div id="NButtonSwitcher_1_item_1">
@@ -427,19 +448,17 @@ While making deep excavations we found some quaint bronze jewelry.
 <hr/>
 
 <p>
-This is also <code>NButtonSwitcher</code> with different CSS, implementing a tabbed look.
+This is also <code>NButtonSwitcher</code> with different CSS, implementing a tabbed look:
 </p>
 
 <div style="border: 3px solid gray">
-  <!--
-  <div style="background-color: gray">
-  -->
+
   <div>
-  <span style="border: none">
-    <button class="tab" id="NButtonSwitcher_2_button_1"> Loading ... </button>
-    <button class="tab" id="NButtonSwitcher_2_button_2"> Loading ... </button>
-    <button class="tab" id="NButtonSwitcher_2_button_3"> Loading ... </button>
-  </span>
+    <span>
+      <button class="tab" id="NButtonSwitcher_2_button_1"> Loading ... </button>
+      <button class="tab" id="NButtonSwitcher_2_button_2"> Loading ... </button>
+      <button class="tab" id="NButtonSwitcher_2_button_3"> Loading ... </button>
+    </span>
   </div>
 
   <div style="border: 1px solid gray; padding: 4px">
@@ -481,6 +500,7 @@ This is also <code>NButtonSwitcher</code> with different CSS, implementing a tab
 
 <!-- ================================================================ -->
 <hr/>
+<h1><code>NButtonToggler</code></h1>
 
 <p>
 Here we use Sliver&rsquo;s <code>NButtonToggler</code>. This is like <code>NButtonSwitcher</code>,
@@ -489,10 +509,10 @@ the elements be visible: namely, by clicking the button for an element that&rsqu
 I created this for <a href="https://johnkerl.org">https://johnkerl.org</a>.
 </p>
 
-<button class="grey" id="NButtonToggler1Button1"> Loading ... </button>
-<button class="grey" id="NButtonToggler1Button2"> Loading ... </button>
-<button class="grey" id="NButtonToggler1Button3"> Loading ... </button>
-<button class="grey" id="NButtonToggler1Button4"> Loading ... </button>
+<button class="white-on-grey" id="NButtonToggler1Button1"> Loading ... </button>
+<button class="white-on-grey" id="NButtonToggler1Button2"> Loading ... </button>
+<button class="white-on-grey" id="NButtonToggler1Button3"> Loading ... </button>
+<button class="white-on-grey" id="NButtonToggler1Button4"> Loading ... </button>
 <button id="NButtonToggler1ExpandAll"> Loading ... </button>
 <button id="NButtonToggler1CollapseAll"> Loading ... </button>
 <p/>
@@ -528,6 +548,7 @@ Ut tellus elementum sagittis vitae et leo duis ut.
 
 <!-- ================================================================ -->
 <hr/>
+<h1>Font comparison</h1>
 
 <p> This is a bit of font fun. It uses Sliver&rsquo;s <code>TextInput</code> connect with
 <code>&lt;fieldset&gt;</code> and <code>&lt;datalist&gt;</code> in the browser API. The app-level
@@ -537,7 +558,7 @@ There are two such areas, so you can compare one against the other.  </p>
 <!-- fieldset allows a nice legend, of which I enjoy the styling -->
 <fieldset>
   <legend>
-    <b>Font 1</b>
+    <b style="color:maroon">Font 1</b>
   </legend>
   <label>Name: <input id="fontFamilySelectInput1" list="font-names-1" /></label>
   <datalist id="font-names-1">
@@ -575,7 +596,7 @@ There are two such areas, so you can compare one against the other.  </p>
 <!-- fieldset allows a nice legend, of which I enjoy the styling -->
 <fieldset>
   <legend>
-    <b>Font 2</b>
+    <b style="color:maroon">Font 2</b>
   </legend>
   <label>Name: <input id="fontFamilySelectInput2" list="font-names-2" /></label>
   <datalist id="font-names-2">
@@ -612,13 +633,7 @@ There are two such areas, so you can compare one against the other.  </p>
 
 <!-- ================================================================ -->
 <hr/>
-
-<div>
-  Source and documentation: <a href="https://github.com/johnkerl/sliver">https://github.com/johnkerl/sliver</a>
-</div>
-<p/>
-
-<p> This uses Sliver&rsquo;s <code>LightDarkThemeSlider</code>.
+<h1>LightDarkThemeSlider</h1>
 
 <div>
   <label class="switch">
@@ -627,6 +642,14 @@ There are two such areas, so you can compare one against the other.  </p>
   </label>
   <span id="lightThemeDarkThemeLabel">Loading ...</span>
 </div>
+<p/>
+
+<!-- ================================================================ -->
+<hr/>
+<h1>Source and documentation</h1>
+
+<p>
+  Please see <a href="https://github.com/johnkerl/sliver">https://github.com/johnkerl/sliver</a>
 <p/>
 
 <!-- ================================================================ -->
