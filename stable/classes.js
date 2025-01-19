@@ -149,7 +149,7 @@ export class Button extends GenericElement {
     this.underlying.parent = this
     this.callback = callback
 
-    if (text != null) {
+    if (text != null) { // Otherwise leave it as in the HTML.
       this.underlying.textContent = text
     }
 
@@ -403,7 +403,7 @@ export class NButtonSelector {
     elementsConfig,
       // * Keys: element ID
       // * Values: objects with:
-      //   o Key: "text",      Value: button text
+      //   o Key: "text",      Value: button text. Use null to leave it as specified in the HTML.
       //   o Key: "callback",  Value: application-level callback
     buttonSelectedStyle,
       // CSS class for selected button
@@ -476,7 +476,7 @@ export class NButtonSwitcher extends NButtonSelector{
     elementsConfig,
       // * Keys: element ID
       // * Values: objects with:
-      //   o Key: "text",        Value: button text
+      //   o Key: "text",        Value: button text. Use null to leave it as specified in the HTML.
       //   o Key: "callback",    Value: application-level callback
       //   o Key: "items",       Value: array of objects inheriting from GenericElement
     buttonSelectedStyle,
@@ -566,7 +566,7 @@ export class NButtonToggler {
     elementsConfig,
       // Keys: button element ID
       // Values: objects with:
-      // * Key: "text",      Value: button text
+      // * Key: "text",      Value: button text. Use null to leave it as specified in the HTML.
       // * Key: "items",     Value: array of objects inheriting from GenericElement
       // * Key: "callback",  Value: application-level callback
       //

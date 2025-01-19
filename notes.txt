@@ -1,11 +1,9 @@
 TO DO:
 
-* buttons etc option to _not_ have to put the text in the ctor
 * table-populator
   o  more to-do items
-* > v: use SVG
-* left-hand nav as switcher-like (poki)
-  * doc/make example ... ?
+* example copied from doc-make: left-hand nav as switcher-like (poki replacement)
+  o or just link?
 * solve transparent-background items not showing up in dark mode by improving themes
 * popup
 * try google fonts
