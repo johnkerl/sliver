@@ -1,5 +1,6 @@
 TO DO:
 
+* buttons etc option to _not_ have to put the text in the ctor
 * table-populator
   o  more to-do items
 * > v: use SVG

@@ -138,6 +138,7 @@ export class Button extends GenericElement {
   constructor(
     elementID,
     text,
+      // If null, HTML content is left as-is. This way you can set button text from JS or HTML.
     callback,
   ) {
     super(elementID)
@@ -148,7 +149,9 @@ export class Button extends GenericElement {
     this.underlying.parent = this
     this.callback = callback
 
-    this.underlying.textContent = text
+    if (text != null) {
+      this.underlying.textContent = text
+    }
 
     this.underlying.addEventListener("click", function(event) {
       const obj = this.parent // Map from browser-level up to class-level
