@@ -29,27 +29,39 @@
     color: #808080;
     font-size: 110%;
     text-align: center;
-    margin: 40px;
+    margin: 8px;
   }
   h2 {
     font-weight: bold;
-    color: #007700;
+    color: #800000;
     font-size: 105%
   }
   h3 {
     font-weight: bold;
-    color: #007700;
+    color: #800000;
     font-size: 100%
   }
 
   a:link {
-    color: #007700;
+    color: #800000;
   }
   a:visited {
-    color: #007700;
+    color: #800000;
   }
   a:active {
-    color: #007700;
+    color: #800000;
+  }
+
+  .boxed-text {
+    border: 1px solid black;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .center {
+    text-align: center;
   }
 
   /* TABLE */
@@ -102,42 +114,14 @@
     padding: 10px;
     margin: 10px;
   }
-  
-  /* BUTTON */
 
-  button {
-    font-size: 80%;
-    background-color: #e8e8e8;
-    border: 1px solid transparent;
-    border-radius: 4px;
-    margin: 4px;
-    padding: 6px;
-  }
-  button:hover {
-    /*
-    border: 1px solid transparent;
-    margin: 4px;
-    padding: 6px;
-    */
-  }
-  button:active {
-    border-radius: 4px;
-    margin: 5px;
-    padding: 5px;
-  }
-  button.selected {
-    font-weight: bold;
-  }
-  button.deselected {
-    font-weight: normal;
-  }
-  button.transparent {
-    font-weight: normal;
-    border: 0;
-    background-color: transparent;
-  }
-
+  /* TEXT COLORS (MAINLY FOR BUTTONS) */
   .white-on-red {
+    color: #ffffff;
+    background-color: #a7322c;
+    border: 0px solid transparent;
+  }
+  .white-on-maroon {
     color: #ffffff;
     background-color: #a7322c;
     border: 0px solid transparent;
@@ -160,15 +144,39 @@
     background-color: #808080;
   }
 
+  /* BUTTONS */
+  button.general {
+    font-size: 80%;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    margin: 4px;
+    padding: 6px;
+  }
+  button.general:hover {
+  }
+  button.general:active {
+    border-radius: 4px;
+    margin: 5px;
+    padding: 5px;
+  }
+  button.general.selected {
+    font-weight: bold;
+  }
+  button.general.deselected {
+    font-weight: normal;
+  }
+  button.general.transparent {
+    font-weight: normal;
+    border: 0;
+    background-color: transparent;
+  }
+
   button.tab {
     font-size: 80%;
     font-weight: bold;
     color: black;
-    background-color: white;
-    border-top: 1px solid gray;
-    border-left: 1px solid gray;
-    border-right: 1px solid gray;
-    border-bottom: unset;
+    background-color: #c0c0c0;
+    border: none;
     border-radius: 0px;
     margin: 0px !important;
     padding: 6px;
@@ -176,35 +184,23 @@
   }
   button.tab.selected {
     font-weight: bold;
-    border-bottom: none;
     display: inline-block;
+    background-color: white;
   }
   button.tab.deselected {
     font-weight: normal;
-    border-bottom: 1px solid gray;
     color: #808080;;
-    background-color: white;
+    background-color: #c0c0c0;
     display: inline-block;
   }
 
+  .tab-container {
+    border: 1px solid gray;
+  }
   .element-under-tab {
-    border-left: 1px solid gray;
-    border-right: 1px solid gray;
-    border-top: none;
-    border-bottom: 1px solid gray;
-  }
-
-  /* CLASSES */
-  .boxed-text {
-    border: 1px solid black;
-    padding-top: 4px;
-    padding-bottom: 4px;
-    padding-left: 8px;
-    padding-right: 8px;
-  }
-
-  .center {
-    text-align: center;
+    /*
+    border-top: 1px solid gray;
+    */
   }
 
   /* INPUT */
@@ -301,7 +297,7 @@ the latter.
 </p>
 
 <span>
-  <button class="white-on-green" id="clearTextInput1Button"> Loading ... </button>
+  <button class="general white-on-green" id="clearTextInput1Button"> Loading ... </button>
   <span> Your text: </span>
   <input type=text placeholder="..." size=30 id="textInput_1"></input>
   <span> Reversed: </span>
@@ -337,7 +333,7 @@ page, rather than being hidden in the Developer Console.
   <hr/>
 </div>
 
-<button class="white-on-red" id="makeAnErrorHappenButton"> Loading ... </button>
+<button class="general white-on-red" id="makeAnErrorHappenButton"> Loading ... </button>
 
 <!-- ================================================================ -->
 <hr/>
@@ -350,9 +346,9 @@ simply write a message to a <code>TextSpan</code>.
 </p>
 
 <div>
-  <button class="white-on-grey" id="NButtonSelector_1_button_1"> Loading ... </button>
-  <button class="white-on-grey" id="NButtonSelector_1_button_2"> Loading ... </button>
-  <button class="white-on-grey" id="NButtonSelector_1_button_3"> Loading ... </button>
+  <button class="general white-on-grey" id="NButtonSelector_1_button_1"> Loading ... </button>
+  <button class="general white-on-grey" id="NButtonSelector_1_button_2"> Loading ... </button>
+  <button class="general white-on-grey" id="NButtonSelector_1_button_3"> Loading ... </button>
 </div>
 
 <div id="NButtonSelector_1_Output">
@@ -371,13 +367,13 @@ add rows to the table, hide it, then show it again, and its contents are still t
 </p>
 
 <div>
-  <button class="white-on-blue" id="oneButtonSwitcher_1_button"> Loading ... </button>
+  <button class="general white-on-blue" id="oneButtonSwitcher_1_button"> Loading ... </button>
 </div>
 
 <div id="oneButtonSwitcher_1_item_1">
   <span>
-    <button class="white-on-green" id="dataTableAddRowButton"></button>
-    <button class="white-on-grey" id="dataTableClearButton"></button>
+    <button class="general white-on-green" id="dataTableAddRowButton"></button>
+    <button class="general white-on-grey" id="dataTableClearButton"></button>
   </span>
   <table id="dataTable_1"> </table>
 </div>
@@ -394,15 +390,15 @@ This is also <code>OneButtonSwitcher</code>, with different CSS. The button is t
 wedge-expander at the upper left:
 </p>
 
-<div style="border:1px solid gray">
+<div>
   <div style="border:3px solid gray">
     <span>
-      <button id="oneButtonSwitcher_2_button"> Loading ... </button>
+      <button class="general" id="oneButtonSwitcher_2_button"> Loading ... </button>
       Here is a card with show/hide of its contents
     </span>
   </div>
 
-  <div id="oneButtonSwitcher_2_item_1">
+  <div id="oneButtonSwitcher_2_item_1" style="border: 1px solid gray">
     <ul>
       <li>This is an item in the list</i>
       <li>This is the second item in the list</i>
@@ -411,7 +407,7 @@ wedge-expander at the upper left:
     <table id="dataTable_1"> </table>
   </div>
 
-  <div id="oneButtonSwitcher_2_item_2">
+  <div id="oneButtonSwitcher_2_item_2" style="border: none">
   </div>
 
 </div>
@@ -427,9 +423,9 @@ own button.
 </p>
 
 <div>
-  <button class="white-on-orange" id="NButtonSwitcher_1_button_1"> Loading ... </button>
-  <button class="white-on-orange" id="NButtonSwitcher_1_button_2"> Loading ... </button>
-  <button class="white-on-orange" id="NButtonSwitcher_1_button_3"> Loading ... </button>
+  <button class="general white-on-orange" id="NButtonSwitcher_1_button_1"> Loading ... </button>
+  <button class="general white-on-orange" id="NButtonSwitcher_1_button_2"> Loading ... </button>
+  <button class="general white-on-orange" id="NButtonSwitcher_1_button_3"> Loading ... </button>
 </div>
 
 <div id="NButtonSwitcher_1_item_1">
@@ -451,13 +447,14 @@ While making deep excavations we found some quaint bronze jewelry.
 This is also <code>NButtonSwitcher</code> with different CSS, implementing a tabbed look:
 </p>
 
-<div style="border: 3px solid gray">
+<div class="tab-container">
 
   <div>
-    <span>
-      <button class="tab" id="NButtonSwitcher_2_button_1"> Loading ... </button>
-      <button class="tab" id="NButtonSwitcher_2_button_2"> Loading ... </button>
-      <button class="tab" id="NButtonSwitcher_2_button_3"> Loading ... </button>
+    <div class="flex-container" style="background-color: #808080">
+      &nbsp;
+      <button class="tab" id="NButtonSwitcher_2_button_1"> Ipsum </button>
+      <button class="tab" id="NButtonSwitcher_2_button_2"> Sapien </button>
+      <button class="tab" id="NButtonSwitcher_2_button_3"> Aliquet </button>
     </span>
   </div>
 
@@ -509,12 +506,12 @@ the elements be visible: namely, by clicking the button for an element that&rsqu
 I created this for <a href="https://johnkerl.org">https://johnkerl.org</a>.
 </p>
 
-<button class="white-on-grey" id="NButtonToggler1Button1"> Loading ... </button>
-<button class="white-on-grey" id="NButtonToggler1Button2"> Loading ... </button>
-<button class="white-on-grey" id="NButtonToggler1Button3"> Loading ... </button>
-<button class="white-on-grey" id="NButtonToggler1Button4"> Loading ... </button>
-<button id="NButtonToggler1ExpandAll"> Loading ... </button>
-<button id="NButtonToggler1CollapseAll"> Loading ... </button>
+<button class="general white-on-maroon" id="NButtonToggler1Button1"> Loading ... </button>
+<button class="general white-on-maroon" id="NButtonToggler1Button2"> Loading ... </button>
+<button class="general white-on-maroon" id="NButtonToggler1Button3"> Loading ... </button>
+<button class="general white-on-maroon" id="NButtonToggler1Button4"> Loading ... </button>
+<button class="general" id="NButtonToggler1ExpandAll"> Loading ... </button>
+<button class="general" id="NButtonToggler1CollapseAll"> Loading ... </button>
 <p/>
 
 <div id="toggler-section-1">
@@ -558,7 +555,7 @@ There are two such areas, so you can compare one against the other.  </p>
 <!-- fieldset allows a nice legend, of which I enjoy the styling -->
 <fieldset>
   <legend>
-    <b style="color:maroon">Font 1</b>
+    <b style="color:#800000">Font 1</b>
   </legend>
   <label>Name: <input id="fontFamilySelectInput1" list="font-names-1" /></label>
   <datalist id="font-names-1">
@@ -596,7 +593,7 @@ There are two such areas, so you can compare one against the other.  </p>
 <!-- fieldset allows a nice legend, of which I enjoy the styling -->
 <fieldset>
   <legend>
-    <b style="color:maroon">Font 2</b>
+    <b style="color:#000080">Font 2</b>
   </legend>
   <label>Name: <input id="fontFamilySelectInput2" list="font-names-2" /></label>
   <datalist id="font-names-2">
@@ -742,8 +739,8 @@ There are two such areas, so you can compare one against the other.  </p>
         [
           new GenericElement("oneButtonSwitcher_1_item_2"),
         ],
-        "Show the first thing",
-        "Show the second thing",
+        "Showing the first thing",
+        "Showing the second thing",
         () => {
           this.logAt1("oneButtonSwitcher_1_button click")
         },
@@ -870,7 +867,7 @@ There are two such areas, so you can compare one against the other.  </p>
       this.elements.NButtonSwitcher_2 = new NButtonSwitcher(
         {
           "NButtonSwitcher_2_button_1": {
-            "text": "Tab 1",
+            "text": null, // Use HTML
             "items": [
               new GenericElement("NButtonSwitcher_2_item_1"),
             ],
@@ -879,7 +876,7 @@ There are two such areas, so you can compare one against the other.  </p>
             },
           },
           "NButtonSwitcher_2_button_2": {
-            "text": "Tab 2",
+            "text": null, // Use HTML
             "items": [
               new GenericElement("NButtonSwitcher_2_item_2"),
             ],
@@ -888,7 +885,7 @@ There are two such areas, so you can compare one against the other.  </p>
             },
           },
           "NButtonSwitcher_2_button_3": {
-            "text": "Tab 3",
+            "text": null, // Use HTML
             "items": [
               new GenericElement("NButtonSwitcher_2_item_3"),
             ],
