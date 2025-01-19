@@ -138,6 +138,7 @@ export class Button extends GenericElement {
   constructor(
     elementID,
     text,
+      // If null, HTML content is left as-is. This way you can set button text from JS or HTML.
     callback,
   ) {
     super(elementID)
@@ -148,7 +149,9 @@ export class Button extends GenericElement {
     this.underlying.parent = this
     this.callback = callback
 
-    this.underlying.textContent = text
+    if (text != null) {
+      this.underlying.textContent = text
+    }
 
     this.underlying.addEventListener("click", function(event) {
       const obj = this.parent // Map from browser-level up to class-level
@@ -843,10 +846,16 @@ export class URLAndPersistentNButtonToggler extends PersistentNButtonToggler {
 }
 
 // WIP: simple data table. Create with column headers. Add rows one at a time, with reset.
+// TODO: rename to SimpleDataTable or somesuch?
+// TODO: td not a single classname per column but rather a classname rule
+// TODO: sort-by configs ..... maybe a subclass ....... ?
+// TODO: cellRenderers
 export class Table extends GenericElement {
   constructor(
     elementID,
+    // TODO: move columnNames to be 2nd arg
     classNames, // Keys: "table", "tr", "th", "td"
+    // TODO: classNameRules for th and td
     columnNames, // List
     cellRenderers, // Keys: from among classNames. Not used yet.
   ) {
@@ -861,6 +870,7 @@ export class Table extends GenericElement {
   reset() {
     this.underlying.innerHTML = ''
     let c = this.classNames["table"]
+    // TODO: methodize
     if (c != null) {
       this.underlying.setAttribute('class', c)
     }
