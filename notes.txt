@@ -1,11 +1,8 @@
 TO DO:
 
+* popup
 * table-populator
   o  more to-do items
-* example copied from doc-make: left-hand nav as switcher-like (poki replacement)
-  o or just link?
-* solve transparent-background items not showing up in dark mode by improving themes
-* popup
 * try google fonts
 * Learn more about CSS -- sharpen how theming works
 * Dropdown options specified within JS?

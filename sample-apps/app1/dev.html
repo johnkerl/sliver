@@ -209,6 +209,34 @@
     color: black;
   }
 
+  /* MODALS */
+  /*
+    There's a trick here (found on the web).
+    * The modal background covers the *entire screen*.
+    * The modal content is a little box within that.
+    *
+  */
+  .modal-background {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Entire screen */
+    height: 100%; /* Entire screen */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0); /* Fallback color in case alpha channel isn't supported */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity -- stuff "under" the modal is dimmed */
+  }
+  .modal-content {
+    background-color: white;
+    border-radius: 4px;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 2px solid black;
+    width: 600px;
+  }
+
   /* SLIDER */
   .switch {
     position: relative;
@@ -455,7 +483,7 @@ This is also <code>NButtonSwitcher</code> with different CSS, implementing a tab
       <button class="tab" id="NButtonSwitcher_2_button_1"> Ipsum </button>
       <button class="tab" id="NButtonSwitcher_2_button_2"> Sapien </button>
       <button class="tab" id="NButtonSwitcher_2_button_3"> Aliquet </button>
-    </span>
+    </div>
   </div>
 
   <div class="element-under-tab">
@@ -494,6 +522,14 @@ This is also <code>NButtonSwitcher</code> with different CSS, implementing a tab
     </div>
   </div>
 </div>
+
+<!-- ================================================================ -->
+<hr/>
+
+<p>
+A third example of <code>NButtonSwitcher</code>, using buttons in a left-hand navbar, may be
+found at <a href="https://johnkerl.org/doc/make/">https://johnkerl.org/doc/make/</a>.
+</p>
 
 <!-- ================================================================ -->
 <hr/>
@@ -542,7 +578,6 @@ Sed vulputate mi sit amet mauris.
 Ut tellus elementum sagittis vitae et leo duis ut.
 </p>
 </div>
-
 <!-- ================================================================ -->
 <hr/>
 <h1>Font comparison</h1>
