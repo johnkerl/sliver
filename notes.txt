@@ -1,6 +1,5 @@
 TO DO:
 
-* popup
 * table-populator
   o  more to-do items
 * try google fonts

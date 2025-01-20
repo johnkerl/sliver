@@ -12,9 +12,13 @@ export class GenericElement {
     this.underlying = _getElementById(elementID)
   }
 
-  makeVisible() {
+  makeVisible(newStyle /* may be omitted */) {
     // Null is best for show/hide of table rows/cells, vs. "block" or "inline"
-    this.underlying.style.display = null
+    if (newStyle === null || newStyle === undefined) {
+      this.underlying.style.display = null
+    } else {
+      this.underlying.style.display = newStyle
+    }
   }
 
   makeInvisible() {
