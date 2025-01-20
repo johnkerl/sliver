@@ -87,21 +87,43 @@
     padding: 3px;
   }
 
-  .dataTable.table {
+  .data-table.table {
     border: 1px solid;
   }
-  .dataTable.tr {
+  .data-table.tr {
     border: 1px solid;
   }
-  .dataTable.th {
+  .data-table.th {
     color: #202020;
     background-color: #e0e0e0;
     font-weight: bold;
     padding: 8px;
   }
-  .dataTable.td {
+  .data-table.td {
     padding: 8px;
     font-family: "Courier";
+  }
+
+  table.modal-parameters {
+    border: 0px;
+  }
+
+  tr.modal-parameters{
+    border: 0px;
+    font-size: 90%;
+    padding: 3px;
+  }
+
+  th.modal-parameters {
+    border: 0px;
+    font-size: 90%;
+    padding: 3px;
+  }
+
+  td.modal-parameters {
+    border: 0px;
+    font-size: 90%;
+    padding: 3px;
   }
 
   /* ERROR */
@@ -207,6 +229,34 @@
   input {
     font-weight: bold;
     color: black;
+  }
+
+  /* MODALS */
+  /*
+    There's a trick here (found on the web).
+    * The modal background covers the *entire screen*.
+    * The modal content is a little box within that.
+    *
+  */
+  .modal-background {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Entire screen */
+    height: 100%; /* Entire screen */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0); /* Fallback color in case alpha channel isn't supported */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity -- stuff "under" the modal is dimmed */
+  }
+  .modal-content {
+    background-color: white;
+    border-radius: 4px;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 2px solid black;
+    width: 600px;
   }
 
   /* SLIDER */
@@ -455,7 +505,7 @@ This is also <code>NButtonSwitcher</code> with different CSS, implementing a tab
       <button class="tab" id="NButtonSwitcher_2_button_1"> Ipsum </button>
       <button class="tab" id="NButtonSwitcher_2_button_2"> Sapien </button>
       <button class="tab" id="NButtonSwitcher_2_button_3"> Aliquet </button>
-    </span>
+    </div>
   </div>
 
   <div class="element-under-tab">
@@ -494,6 +544,14 @@ This is also <code>NButtonSwitcher</code> with different CSS, implementing a tab
     </div>
   </div>
 </div>
+
+<!-- ================================================================ -->
+<hr/>
+
+<p>
+A third example of <code>NButtonSwitcher</code>, using buttons in a left-hand navbar, may be
+found at <a href="https://johnkerl.org/doc/make/">https://johnkerl.org/doc/make/</a>.
+</p>
 
 <!-- ================================================================ -->
 <hr/>
@@ -541,6 +599,73 @@ Sed vulputate mi sit amet mauris.
 <p>
 Ut tellus elementum sagittis vitae et leo duis ut.
 </p>
+</div>
+
+<!-- ================================================================ -->
+<hr/>
+<h1>Modals</h1>
+
+This is a pop-up or modal, implemented using Sliver&rsquo;s <code>Button</code> and <code>GenericElement</code>.
+
+<!-- Modal-launcher button -->
+<div>
+  <button id="modal_1_launcherButton" class="general white-on-blue" > Pop up </button>
+</div>
+
+<!-- Modal content -->
+<div id="modal_1_background" class="modal-background">
+  <div id="modal_1_content" class="modal-content">
+
+    <table id="modal1ParametersTable" class="modal-parameters">
+
+      <tr class="modal-parameters">
+        <td class="modal-parameters">
+          First number:
+        </td>
+        <td class="modal-parameters">
+          <input type="text" id="modal_1_input_number_1"/>
+        </td>
+      </tr>
+
+      <tr class="modal-parameters">
+        <td class="modal-parameters">
+          Second number:
+        </td>
+        <td>
+          <input type="text" id="modal_1_input_number_2"/>
+        </td>
+      </tr>
+
+      <tr class="modal-parameters">
+        <td class="modal-parameters">
+          Operation:
+        </td>
+        <td class="modal-parameters">
+          <select style="width: 280px" id="modal_1_operation"/>
+            <option selected=""></option>
+            <option>+</option>
+            <option>-</option>
+            <option>*</option>
+            <option>/</option>
+            <option>%</option>
+            <option>**</option>
+          </select>
+        </td>
+      </tr>
+
+    </table>
+
+    <div>
+      <button id="modal_1_OKButton" class="general white-on-green" > OK </button>
+      <button id="modal_1_ClearButton" class="general white-on-grey" > Clear </button>
+      <button id="modal_1_CancelButton" class="general white-on-grey" > Cancel </button>
+
+    </div>
+
+  </div>
+</div>
+
+<div id="modal_1_output">
 </div>
 
 <!-- ================================================================ -->
@@ -766,10 +891,10 @@ There are two such areas, so you can compare one against the other.  </p>
       this.elements.dataTable_1 = new Table(
         "dataTable_1",
         {
-          "table": "dataTable table",
-          "tr": "dataTable tr",
-          "th": "dataTable th",
-          "td": "dataTable td",
+          "table": "data-table table",
+          "tr": "data-table tr",
+          "th": "data-table th",
+          "td": "data-table td",
         },
         ["Nonce", "Alpha", "Hex"],
         {},
@@ -983,6 +1108,104 @@ There are two such areas, so you can compare one against the other.  </p>
         "fontWeightSelectInput2",
         (event) => {
           this.elements.fontSelectOutput2.underlying.style.fontWeight = event.target.value
+        },
+      )
+
+      // ----------------------------------------------------------------
+      this.elements.modal_1_background  = new GenericElement("modal_1_background")
+
+      this.elements.modal_1_input_number_1 = new TextInput(
+        "modal_1_input_number_1",
+        (event) => {
+          // Stash the value in the DOM element with key "appValue"
+          this.elements.modal_1_input_number_1.underlying.appValue = event.target.value
+        },
+      )
+      this.elements.modal_1_input_number_2 = new TextInput(
+        "modal_1_input_number_2",
+        (event) => {
+          // Stash the value in the DOM element with key "appValue"
+          this.elements.modal_1_input_number_2.underlying.appValue = event.target.value
+        },
+      )
+      this.elements.modal_1_operation = new TextInput(
+        "modal_1_operation",
+        (event) => {
+          // Stash the value in the DOM element with key "appValue"
+          this.elements.modal_1_operation.underlying.appValue = event.target.value
+        },
+      )
+      this.elements.modal_1_output = new TextSpan(
+        "modal_1_output",
+        "",
+      )
+
+      this.elements.modal_1_input_number_1.underlying.appValue = null;
+      this.elements.modal_1_input_number_2.underlying.appValue = null;
+      this.elements.modal_1_operation.underlying.appValue = null;
+
+      this.elements.modal_1_launcherButton = new Button(
+        "modal_1_launcherButton",
+        null,
+        (event) => {
+          this.elements.modal_1_background.makeVisible("block")
+          this.elements.modal_1_background.underlying.style.display = "block"
+        },
+      )
+
+      this.elements.modal_1_OKButton = new Button(
+        "modal_1_OKButton",
+        null,
+        (event) => {
+          this.elements.modal_1_background.makeInvisible()
+
+          const a = Number(this.elements.modal_1_input_number_1.underlying.appValue)
+          const b = Number(this.elements.modal_1_input_number_2.underlying.appValue)
+          const op = this.elements.modal_1_operation.underlying.appValue
+          if (a == null || a == "" || b == null || b == "" || op == null || op == "") {
+            this.elements.modal_1_output.set("")
+          } else {
+            let output = [a, op, b, "="].join(" ")
+            if (op == "+") {
+              output += a + b
+            } else if (op == "-") {
+              output += a - b
+            } else if (op == "*") {
+              output += a * b
+            } else if (op == "/") {
+              output += a / b
+            } else if (op == "%") {
+              output += a % b
+            } else if (op == "**") {
+              output += a ** b
+            } else {
+              output += "???"
+            }
+            this.elements.modal_1_output.set(output)
+          }
+        },
+      )
+
+      this.elements.modal_1_ClearButton = new Button(
+        "modal_1_ClearButton",
+        null,
+        (event) => {
+          // Clear display values for the pop-up
+          this.elements.modal_1_input_number_1.set(null)
+          this.elements.modal_1_input_number_2.set(null)
+          this.elements.modal_1_operation.set(null)
+          // Clear saved values
+          this.elements.modal_1_input_number_1.underlying.appValue = null;
+          this.elements.modal_1_input_number_2.underlying.appValue = null;
+          this.elements.modal_1_operation.underlying.appValue = null;
+        },
+      )
+
+      this.elements.modal_1_CancelButton = new Button(
+        "modal_1_CancelButton",
+        null,
+        (event) => {
+          this.elements.modal_1_background.makeInvisible()
         },
       )
 
