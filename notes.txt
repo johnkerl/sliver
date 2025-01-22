@@ -29,6 +29,14 @@ d3:
 
 Other:
 
-* randspell?
+* WEB-PGR
+* RANDSPELL?
+* CLASSICAL CIPHERS?
 * randuv?
-* classical ciphers?
+
+React notes:
+* react
+* typescript
+* eslint
+* component library ... mui?
+* next.js
