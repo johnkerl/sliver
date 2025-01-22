@@ -631,7 +631,7 @@ This is a pop-up or modal, implemented using Sliver&rsquo;s <code>Button</code> 
         <td class="modal-parameters">
           Second number:
         </td>
-        <td>
+        <td class=modal-parameters>
           <input type="text" id="modal_1_input_number_2"/>
         </td>
       </tr>
@@ -1112,6 +1112,13 @@ There are two such areas, so you can compare one against the other.  </p>
       )
 
       // ----------------------------------------------------------------
+      // XXX button semantics:
+      // * base app has values; they should` be displayed
+      // * Pop-up button should copy those to the form values
+      // * OK should write the form values to the app values
+      // * Clear should clear the form values
+      // * Cancel should invisible the pop-up
+
       this.elements.modal_1_background  = new GenericElement("modal_1_background")
 
       this.elements.modal_1_input_number_1 = new TextInput(
