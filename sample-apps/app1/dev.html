@@ -793,10 +793,10 @@ There are two such areas, so you can compare one against the other.  </p>
     URLAndPersistentNButtonToggler,
     isInteger,
     setErrorWidget,
-  } from "http://127.0.0.1:9999/sliver/dev/classes.js"
+  } from "http://127.0.0.1:9999/sliver/dev/sliver.js"
   // npx http-server ~/pub_http_internet -o -p 9999
-  // } from "https://johnkerl.org/sliver/staging/classes.js"
-  // } from "https://johnkerl.org/sliver/stable/classes.js"
+  // } from "https://johnkerl.org/sliver/staging/sliver.js"
+  // } from "https://johnkerl.org/sliver/stable/sliver.js"
 
   setErrorWidget("error-container", "error-text")
 
@@ -1112,6 +1112,13 @@ There are two such areas, so you can compare one against the other.  </p>
       )
 
       // ----------------------------------------------------------------
+      // XXX button semantics:
+      // * base app has values; they should` be displayed
+      // * Pop-up button should copy those to the form values
+      // * OK should write the form values to the app values
+      // * Clear should clear the form values
+      // * Cancel should invisible the pop-up
+
       this.elements.modal_1_background  = new GenericElement("modal_1_background")
 
       this.elements.modal_1_input_number_1 = new TextInput(

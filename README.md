@@ -39,16 +39,16 @@ This was just a fun little holiday lark at the end of 2024.
 
 * `dev`:
   * Run `npx http-server ~/pub_http_internet -o -p 9999 &` on the laptop
-  * Use apps which do `import { ... } from "http://127.0.1:9999/sliver/dev/classes.js"`
-  * Edit `dev/classes.js` and any app `dev.html`
+  * Use apps which do `import { ... } from "http://127.0.1:9999/sliver/dev/sliver.js"`
+  * Edit `dev/sliver.js` and any app `dev.html`
   * Test `http://127.0.1:9999/path/to/that/app/dev.html`
 * `staging`:
-  * Apply diffs from `dev/classes.js` to `staging/classes.js`
+  * Apply diffs from `dev/sliver.js` to `staging/sliver.js`
   * Apply diffs from app `dev.html` to app `staging.html`
   * Push to ISP
   * Test with `https://johnkerl.org/path/to/that/app/staging.html`
 * Production:
-  * Apply diffs from `staging/classes.js` to `stable/classes.js`
+  * Apply diffs from `staging/sliver.js` to `stable/sliver.js`
   * Apply diffs from app `staging.html` to app `index.html`
   * Push to ISP
   * Test with `https://johnkerl.org/path/to/that/app/index.html`

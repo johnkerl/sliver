@@ -1,6 +1,6 @@
-} from "https://johnkerl.org/sliver/stable/classes.js"
+} from "https://johnkerl.org/sliver/stable/sliver.js"
 
-} from "https://johnkerl.org/sliver/staging/classes.js"
+} from "https://johnkerl.org/sliver/staging/sliver.js"
 
-} from "http://127.0.0.1:9999/sliver/dev/classes.js"
+} from "http://127.0.0.1:9999/sliver/dev/sliver.js"
 // npx http-server ~/pub_http_internet -o -p 9999
