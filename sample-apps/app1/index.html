@@ -87,6 +87,10 @@
     padding: 3px;
   }
 
+  .borderless {
+    border: none;
+  }
+
   .data-table.table {
     border: 1px solid;
   }
@@ -682,33 +686,58 @@ There are two such areas, so you can compare one against the other.  </p>
   <legend>
     <b style="color:#800000">Font 1</b>
   </legend>
-  <label>Name: <input id="fontFamilySelectInput1" list="font-names-1" /></label>
-  <datalist id="font-names-1">
-    <option value="Arial">
-    <option value="Courier">
-    <option value="Courier New">
-    <option value="Garamond">
-    <option value="Palatino">
-    <option value="Times New Roman">
-    <option value="Verdana">
-  </datalist>
-  <label>Style: <input id="fontStyleSelectInput1" list="font-styles-1" /></label>
-  <datalist id="font-styles-1">
-    <option value="normal">
-    <option value="italic">
-    <option value="oblique">
-  </datalist>
-  <label>Weight: <input id="fontWeightSelectInput1" list="font-weights-1" /></label>
-  <datalist id="font-weights-1">
-    <option value="1">
-    <option value="thin">
-    <option value="normal">
-    <option value="400">
-    <option value="bold">
-    <option value="700">
-    <option value="heavy">
-    <option value="999">
-  </datalist>
+  <div>
+    <table class="borderless">
+      <tr class="borderless">
+        <td class="borderless">
+          <label>Name:</label>
+        </td>
+        <td class="borderless">
+          <input id="fontFamilySelectInput1" list="font-names-1" />
+          <datalist id="font-names-1">
+            <option value="Arial">
+            <option value="Courier">
+            <option value="Courier New">
+            <option value="Garamond">
+            <option value="Palatino">
+            <option value="Times New Roman">
+            <option value="Verdana">
+          </datalist>
+        </td>
+      </tr>
+      <tr class="borderless">
+        <td class="borderless">
+          <label>Style:</label>
+        </td>
+        <td class="borderless">
+          <input id="fontStyleSelectInput1" list="font-styles-1" />
+          <datalist id="font-styles-1">
+            <option value="normal">
+            <option value="italic">
+            <option value="oblique">
+          </datalist>
+        </td>
+      </tr>
+      <tr class="borderless">
+        <td class="borderless">
+          <label>Weight:</label>
+        </td>
+        <td class="borderless">
+          <input id="fontWeightSelectInput1" list="font-weights-1" /></label>
+          <datalist id="font-weights-1">
+            <option value="1">
+            <option value="thin">
+            <option value="normal">
+            <option value="400">
+            <option value="bold">
+            <option value="700">
+            <option value="heavy">
+            <option value="999">
+          </datalist>
+      </td>
+      </tr>
+    </table>
+  </div>
   <div id="fontSelectOutput1">
     <p>Hamburgevons. The quick brown fox jumped over the lazy dogs.</p>
     <p>HAMBURGEVONS. THE QUICK BROWN FOX JUMPED OVER THE LAZY DOGS.</p>
@@ -718,35 +747,60 @@ There are two such areas, so you can compare one against the other.  </p>
 <!-- fieldset allows a nice legend, of which I enjoy the styling -->
 <fieldset>
   <legend>
-    <b style="color:#000080">Font 2</b>
+    <b style="color:#800000">Font 2</b>
   </legend>
-  <label>Name: <input id="fontFamilySelectInput2" list="font-names-2" /></label>
-  <datalist id="font-names-2">
-    <option value="Arial">
-    <option value="Courier">
-    <option value="Courier New">
-    <option value="Garamond">
-    <option value="Palatino">
-    <option value="Times New Roman">
-    <option value="Verdana">
-  </datalist>
-  <label>Style: <input id="fontStyleSelectInput2" list="font-styles-2" /></label>
-  <datalist id="font-styles-2">
-    <option value="normal">
-    <option value="italic">
-    <option value="oblique">
-  </datalist>
-  <label>Weight: <input id="fontWeightSelectInput2" list="font-weights-2" /></label>
-  <datalist id="font-weights-2">
-    <option value="1">
-    <option value="thin">
-    <option value="normal">
-    <option value="400">
-    <option value="bold">
-    <option value="700">
-    <option value="heavy">
-    <option value="999">
-  </datalist>
+  <div>
+    <table class="borderless">
+      <tr class="borderless">
+        <td class="borderless">
+          <label>Name:</label>
+        </td>
+        <td class="borderless">
+          <input id="fontFamilySelectInput2" list="font-names-2" />
+          <datalist id="font-names-2">
+            <option value="Arial">
+            <option value="Courier">
+            <option value="Courier New">
+            <option value="Garamond">
+            <option value="Palatino">
+            <option value="Times New Roman">
+            <option value="Verdana">
+          </datalist>
+        </td>
+      </tr>
+      <tr class="borderless">
+        <td class="borderless">
+          <label>Style:</label>
+        </td>
+        <td class="borderless">
+          <input id="fontStyleSelectInput2" list="font-styles-2" />
+          <datalist id="font-styles-2">
+            <option value="normal">
+            <option value="italic">
+            <option value="oblique">
+          </datalist>
+        </td>
+      </tr>
+      <tr class="borderless">
+        <td class="borderless">
+          <label>Weight:</label>
+        </td>
+        <td class="borderless">
+          <input id="fontWeightSelectInput2" list="font-weights-2" /></label>
+          <datalist id="font-weights-2">
+            <option value="1">
+            <option value="thin">
+            <option value="normal">
+            <option value="400">
+            <option value="bold">
+            <option value="700">
+            <option value="heavy">
+            <option value="999">
+          </datalist>
+      </td>
+      </tr>
+    </table>
+  </div>
   <div id="fontSelectOutput2">
     <p>Hamburgevons. The quick brown fox jumped over the lazy dogs.</p>
     <p>HAMBURGEVONS. THE QUICK BROWN FOX JUMPED OVER THE LAZY DOGS.</p>
