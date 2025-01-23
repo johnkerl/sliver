@@ -930,6 +930,7 @@ export class Table extends GenericElement {
 
 }
 
+// This wraps a range input.
 export class RangeSlider extends GenericElement {
   constructor(
     elementID,
@@ -947,6 +948,39 @@ export class RangeSlider extends GenericElement {
 
   get() {
     return this.underlying.value
+  }
+}
+
+// This wraps a range input, but allows encapsulated remap to floating-point range.
+export class RangeFloatSlider extends GenericElement {
+  constructor(
+    elementID,
+    minFloatValue,   // floating-point
+    startFloatValue, // floating-point
+    maxFloatValue,   // floating-point
+    numPoints,       // since this underlying widget is integer-onLy
+    callback,
+  ) {
+    super(elementID)
+
+    // Integers
+    this.underlying.min = 0
+    this.underlying.value = (startFloatValue - minFloatValue) / (maxFloatValue - minFloatValue) * numPoints
+    this.underlying.max = numPoints
+    this.numPoints = numPoints
+
+    // Floating-point
+    this.minFloatValue = minFloatValue
+    this.maxFloatValue = maxFloatValue
+    this.diff = maxFloatValue - minFloatValue
+
+    this.underlying.addEventListener('input', (event) => callback(event))
+  }
+
+  get() {
+    console.log("")
+    console.log(this)
+    return this.minFloatValue + this.underlying.value / this.numPoints * this.diff
   }
 }
 
