@@ -930,6 +930,26 @@ export class Table extends GenericElement {
 
 }
 
+export class RangeSlider extends GenericElement {
+  constructor(
+    elementID,
+    minValue,
+    startValue,
+    maxValue,
+    callback,
+  ) {
+    super(elementID)
+    this.underlying.min = minValue
+    this.underlying.value = startValue
+    this.underlying.max = maxValue
+    this.underlying.addEventListener('input', (event) => callback(event))
+  }
+
+  get() {
+    return this.underlying.value
+  }
+}
+
 // ----------------------------------------------------------------
 // FUNCTIONS
 

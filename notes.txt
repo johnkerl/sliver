@@ -22,10 +22,14 @@ Notes on React:
 d3:
 
 * fourier-series xy
-* sierpinski triangle
 * mhcoin -- ? other mcmc?
 * numerical differential geometry project
 * SDEs ...
+
+more svg:
+
+* sierpinski triangle
+* 3-body problem
 
 Other:
 

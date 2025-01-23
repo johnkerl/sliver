@@ -316,6 +316,22 @@
     border-radius: 50%;
   }
 
+  /* RANGE-SLIDER */
+  .range-slider {
+    width: 100%; /* Full-width */
+    height: 25px; /* Specified height */
+    background: #d3d3d3; /* Grey background */
+    outline: none; /* Remove outline */
+    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+  }
+
+  /* Mouse-over effects */
+  .range-slider:hover {
+    opacity: 1; /* Fully shown on mouse-over */
+  }
+
 </style>
 
 </head>
@@ -669,8 +685,7 @@ This is a pop-up or modal, implemented using Sliver&rsquo;s <code>Button</code> 
   </div>
 </div>
 
-<div id="modal_1_output">
-</div>
+<div id="modal_1_output"></div>
 
 <!-- ================================================================ -->
 <hr/>
@@ -747,7 +762,7 @@ There are two such areas, so you can compare one against the other.  </p>
 <!-- fieldset allows a nice legend, of which I enjoy the styling -->
 <fieldset>
   <legend>
-    <b style="color:#800000">Font 2</b>
+    <b style="color:#000080">Font 2</b>
   </legend>
   <div>
     <table class="borderless">
@@ -809,6 +824,15 @@ There are two such areas, so you can compare one against the other.  </p>
 
 <!-- ================================================================ -->
 <hr/>
+<h1>RangeSlider</h1>
+
+<div style="width: 100%">
+  <input type="range" min="0" max="1000" value="500" class="range-slider" id="RangeSlider_1">
+  <div id="RangeSlider_1_output"></div>
+</div>
+
+<!-- ================================================================ -->
+<hr/>
 <h1>LightDarkThemeSlider</h1>
 
 <div>
@@ -841,6 +865,7 @@ There are two such areas, so you can compare one against the other.  </p>
     NButtonSelector,
     NButtonSwitcher,
     OneButtonSwitcher,
+    RangeSlider,
     Table,
     TextInput,
     TextSpan,
@@ -1269,6 +1294,25 @@ There are two such areas, so you can compare one against the other.  </p>
           this.elements.modal_1_background.makeInvisible()
         },
       )
+
+      // ----------------------------------------------------------------
+      this.elements.RangeSlider_1_output = new TextSpan(
+        "RangeSlider_1_output",
+        "Ready",
+      )
+
+      this.RangeSlider_1_callback = function(n) {
+          this.elements.RangeSlider_1_output.set("Value " + n + " with square " + n*n)
+      }
+      this.elements.RangeSlider_1 = new RangeSlider(
+        "RangeSlider_1",
+        0, 50, 100,
+        (event) => {
+          this.RangeSlider_1_callback(event.target.value)
+        },
+      )
+
+      this.RangeSlider_1_callback(this.elements.RangeSlider_1.get())
 
       // ----------------------------------------------------------------
       this.elements.lightDarkThemeElement = new LightDarkThemeSlider(
