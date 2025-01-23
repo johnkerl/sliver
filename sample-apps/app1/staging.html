@@ -318,7 +318,6 @@
 
   /* RANGE-SLIDER */
   .range-slider {
-    width: 100%; /* Full-width */
     height: 25px; /* Specified height */
     background: #d3d3d3; /* Grey background */
     outline: none; /* Remove outline */
@@ -827,7 +826,9 @@ There are two such areas, so you can compare one against the other.  </p>
 <h1>RangeSlider</h1>
 
 <div style="width: 100%">
-  <input type="range" id="RangeSlider_1" class="range-slider" min="0" max="1000" value="500">
+  <span id="RangeSlider_1_low_text" style="display:inline"> </span>
+  <input type="range" id="RangeSlider_1" class="range-slider" min="0" max="1000" value="500" style="width:80%">
+  <span id="RangeSlider_1_high_text" style="display:inline"> </span>
   <div id="RangeSlider_1_output"></div>
 </div>
 
@@ -836,7 +837,11 @@ There are two such areas, so you can compare one against the other.  </p>
 <h1>RangeFloatSlider</h1>
 
 <div style="width: 100%">
-  <input type="range" id="RangeFloatSlider_1" class="range-slider" min="0" max="1000" value="500">
+  <span>
+    <span id="RangeFloatSlider_1_low_text" style="display:inline"> </span>
+    <input type="range" id="RangeFloatSlider_1" class="range-slider" min="0" max="1000" value="500" style="width:80%">
+    <span id="RangeFloatSlider_1_high_text" style="display:inline"> </span>
+  </span>
   <div id="RangeFloatSlider_1_output"></div>
 </div>
 
@@ -1306,41 +1311,53 @@ There are two such areas, so you can compare one against the other.  </p>
       )
 
       // ----------------------------------------------------------------
+      const RangeSlider_1_low   = 0
+      const RangeSlider_1_start = 50
+      const RangeSlider_1_high  = 100
       this.elements.RangeSlider_1_output = new TextSpan(
         "RangeSlider_1_output",
         "Ready",
       )
 
-      this.RangeSlider_1_callback = function(n) {
-          this.elements.RangeSlider_1_output.set("Value " + n + " with square " + n*n)
+      this.RangeSlider_1_callback = function(value) {
+          this.elements.RangeSlider_1_output.set("Value " + value + " with square " + value*value)
       }
       this.elements.RangeSlider_1 = new RangeSlider(
         "RangeSlider_1",
-        0, 50, 100,
-        (event) => {
-          this.RangeSlider_1_callback(event.target.value)
+        RangeSlider_1_low, RangeSlider_1_start, RangeSlider_1_high,
+        (value) => {
+          this.RangeSlider_1_callback(value)
         },
       )
 
       this.RangeSlider_1_callback(this.elements.RangeSlider_1.get())
+      this.elements.RangeSlider_1_low_text = new TextSpan("RangeSlider_1_low_text", RangeSlider_1_low)
+      this.elements.RangeSlider_1_high_text = new TextSpan("RangeSlider_1_high_text", RangeSlider_1_high)
 
       // ----------------------------------------------------------------
+      const RangeFloatSlider_1_low   = -1.0
+      const RangeFloatSlider_1_start = 0.2
+      const RangeFloatSlider_1_high  = 1.0
+      const RangeFloatSlider_1_num   = 1000
       this.elements.RangeFloatSlider_1_output = new TextSpan(
         "RangeFloatSlider_1_output",
         "Ready",
       )
 
-      this.RangeFloatSlider_1_callback = function(e) {
-          this.elements.RangeFloatSlider_1_output.set("Value " + this.elements.RangeFloatSlider_1.get())
+      this.RangeFloatSlider_1_callback = function(value) {
+          this.elements.RangeFloatSlider_1_output.set("Value " + value.toFixed(4))
       }
       this.elements.RangeFloatSlider_1 = new RangeFloatSlider(
         "RangeFloatSlider_1",
-        -1.0, 0.0, 1.0, 1000,
-        (event) => {
-          this.RangeFloatSlider_1_callback(event)
+        RangeFloatSlider_1_low, RangeFloatSlider_1_start, RangeFloatSlider_1_high,
+        RangeFloatSlider_1_num,
+        (value) => {
+          this.RangeFloatSlider_1_callback(value)
         },
       )
-      this.RangeFloatSlider_1_callback(null)
+      this.RangeFloatSlider_1_callback(this.elements.RangeFloatSlider_1.get())
+      this.elements.RangeFloatSlider_1_low_text = new TextSpan("RangeFloatSlider_1_low_text", RangeFloatSlider_1_low)
+      this.elements.RangeFloatSlider_1_high_text = new TextSpan("RangeFloatSlider_1_high_text", RangeFloatSlider_1_high)
 
       // ----------------------------------------------------------------
       this.elements.lightDarkThemeElement = new LightDarkThemeSlider(

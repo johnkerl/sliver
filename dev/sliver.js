@@ -31,7 +31,7 @@ export class GenericElement {
 }
 
 // This is a standard slider, nominally for light-theme/dark-theme selector.
-export class Slider extends GenericElement {
+export class ToggleSlider extends GenericElement {
   constructor(
     sliderElementID,
     labelElementID,
@@ -80,7 +80,7 @@ export class Slider extends GenericElement {
 
 // Uses local storage to remember the state of the slider. Nominally for
 // light-theme/dark-theme selector.
-export class PersistentSlider extends Slider {
+export class PersistentToggleSlider extends ToggleSlider {
 
   constructor(
     sliderElementID,
@@ -121,10 +121,10 @@ export class PersistentSlider extends Slider {
   }
 }
 
-// Specialization of PersistentSlider for a light-theme/dark-theme slider.
+// Specialization of PersistentToggleSlider for a light-theme/dark-theme slider.
 // Just a keystroke-saver.
-export class LightDarkThemeSlider extends PersistentSlider {
-  // Lightly decorates PersistentSlider by adding labels
+export class LightDarkThemeSlider extends PersistentToggleSlider {
+  // Lightly decorates PersistentToggleSlider by adding labels
   constructor(sliderElementID, labelElementID, lightenCallback, darkenCallback) {
     super(
       sliderElementID,
@@ -940,11 +940,20 @@ export class RangeSlider extends GenericElement {
     callback,
   ) {
     super(elementID)
+
     this.underlying.min = minValue
     this.underlying.value = startValue
     this.underlying.max = maxValue
-    // TODO: return the value
-    this.underlying.addEventListener('input', (event) => callback(event))
+
+    this.callback = callback
+
+    // Return the range-slider value
+    this.underlying.addEventListener(
+      'input',
+      (event) => {
+        return this.callback(this.get())
+      }
+    )
   }
 
   get() {
@@ -968,20 +977,25 @@ export class RangeFloatSlider extends GenericElement {
     this.underlying.min = 0
     this.underlying.value = (startFloatValue - minFloatValue) / (maxFloatValue - minFloatValue) * numPoints
     this.underlying.max = numPoints
-    this.numPoints = numPoints
 
-    // Floating-point
+    // Floating-point: use underlying integers as scale into user-provided float bounds
+    this.numPoints = numPoints
     this.minFloatValue = minFloatValue
     this.maxFloatValue = maxFloatValue
     this.diff = maxFloatValue - minFloatValue
 
-    // TODO: return the value
-    this.underlying.addEventListener('input', (event) => callback(event))
+    this.callback = callback
+
+    // Return the range-slider value
+    this.underlying.addEventListener(
+      'input',
+      (event) => {
+        return this.callback(this.get())
+      }
+    )
   }
 
   get() {
-    console.log("")
-    console.log(this)
     return this.minFloatValue + this.underlying.value / this.numPoints * this.diff
   }
 }
