@@ -943,6 +943,7 @@ export class RangeSlider extends GenericElement {
     this.underlying.min = minValue
     this.underlying.value = startValue
     this.underlying.max = maxValue
+    // TODO: return the value
     this.underlying.addEventListener('input', (event) => callback(event))
   }
 
@@ -974,6 +975,7 @@ export class RangeFloatSlider extends GenericElement {
     this.maxFloatValue = maxFloatValue
     this.diff = maxFloatValue - minFloatValue
 
+    // TODO: return the value
     this.underlying.addEventListener('input', (event) => callback(event))
   }
 
