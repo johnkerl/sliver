@@ -375,8 +375,8 @@ export class OneButtonSwitcher {
 
   show1() {
     this.whichShown = 1
-    this.itemList1.forEach((item) => item.makeVisible())
     this.itemList2.forEach((item) => item.makeInvisible())
+    this.itemList1.forEach((item) => item.makeVisible())
     this.button.setTextContent(this.itemList1ShownButtonText)
   }
 
@@ -519,7 +519,11 @@ export class NButtonSwitcher extends NButtonSelector{
 
     super.onClick(event, selectedButtonID)
 
-    // Set visibilities of controlled items
+    // Set visibilities of controlled items.
+    //
+    // This assumes controlled items are mutually exclusive. For
+    // example, if there are three buttons A, B, and C, with buttons
+    // A and B controlling element X, element X won't be shown in both cases.
     Object.entries(this.itemLists).forEach(([buttonID, itemList]) => {
       if (buttonID == selectedButtonID) {
         itemList.forEach((item) => item.makeVisible())
@@ -959,6 +963,10 @@ export class RangeSlider extends GenericElement {
   get() {
     return this.underlying.value
   }
+
+  set(value) {
+    this.underlying.value = value
+  }
 }
 
 // This wraps a range input, but allows encapsulated remap to floating-point range.
@@ -997,6 +1005,10 @@ export class RangeFloatSlider extends GenericElement {
 
   get() {
     return this.minFloatValue + this.underlying.value / this.numPoints * this.diff
+  }
+
+  set(floatValue) {
+    this.underlying.value = (floatValue - this.minFloatValue) / this.diff * this.numPoints
   }
 }
 
