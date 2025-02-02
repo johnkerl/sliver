@@ -1,6 +1,6 @@
 TO DO:
 
-* escape-key option for buttons
+* rework where the url-persistence comes in. make it an option for all widgets.
 * table-populator
   o  more to-do items
 * try google fonts

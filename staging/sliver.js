@@ -942,6 +942,8 @@ export class RangeSlider extends GenericElement {
     startValue,
     maxValue,
     callback,
+    valueDisplayElementID, // optional: element to write the new value
+    valueDisplayFormatter, // optional
   ) {
     super(elementID)
 
@@ -951,10 +953,22 @@ export class RangeSlider extends GenericElement {
 
     this.callback = callback
 
+    if (valueDisplayElementID == null) {
+      this.valueDisplayElement = null
+    } else {
+      this.valueDisplayElement = new TextSpan(valueDisplayElementID, startValue)
+    }
+    if (valueDisplayFormatter == null) {
+      this.valueDisplayFormatter = (x) => x
+    } else {
+      this.valueDisplayFormatter = valueDisplayFormatter
+    }
+
     // Return the range-slider value
     this.underlying.addEventListener(
       'input',
       (event) => {
+        this.set(this.underlying.value)
         return this.callback(this.get())
       }
     )
@@ -966,6 +980,9 @@ export class RangeSlider extends GenericElement {
 
   set(value) {
     this.underlying.value = value
+    if (this.valueDisplayElement != null) {
+      this.valueDisplayElement.set(this.valueDisplayFormatter(this.get()))
+    }
   }
 }
 
@@ -978,6 +995,8 @@ export class RangeFloatSlider extends GenericElement {
     maxFloatValue,   // floating-point
     numPoints,       // since this underlying widget is integer-onLy
     callback,
+    valueDisplayElementID, // optional: element to write the new value
+    valueDisplayFormatter, // optional
   ) {
     super(elementID)
 
@@ -994,10 +1013,22 @@ export class RangeFloatSlider extends GenericElement {
 
     this.callback = callback
 
+    if (valueDisplayElementID == null) {
+      this.valueDisplayElement = null
+    } else {
+      this.valueDisplayElement = new TextSpan(valueDisplayElementID, startFloatValue)
+    }
+    if (valueDisplayFormatter == null) {
+      this.valueDisplayFormatter = (x) => x
+    } else {
+      this.valueDisplayFormatter = valueDisplayFormatter
+    }
+
     // Return the range-slider value
     this.underlying.addEventListener(
       'input',
       (event) => {
+        this.set(this.get())
         return this.callback(this.get())
       }
     )
@@ -1009,6 +1040,9 @@ export class RangeFloatSlider extends GenericElement {
 
   set(floatValue) {
     this.underlying.value = (floatValue - this.minFloatValue) / this.diff * this.numPoints
+    if (this.valueDisplayElement != null) {
+      this.valueDisplayElement.set(this.valueDisplayFormatter(this.get()))
+    }
   }
 }
 
