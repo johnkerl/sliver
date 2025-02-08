@@ -300,6 +300,10 @@ export class IntRangeInput extends GenericElement {
     this.underlying.value = this.defaultValue
   }
 
+  set(value) {
+    this.underlying.value = value
+  }
+
   get() {
     return Number(this.underlying.value)
   }
