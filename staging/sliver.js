@@ -570,6 +570,41 @@ export class PersistentNButtonSwitcher extends NButtonSwitcher {
   }
 }
 
+// Same as PersistentNButtonSwitcher but allows text like "?foo" in the URL
+// to specify which areas are visible. This makes togger-enabled pages bookmarkable.
+// If there are no query-strings in the URL, the local storage is consulted for
+// initial state, as in the parent class.
+export class URLAndPersistentNButtonSwitcher extends PersistentNButtonSwitcher {
+  constructor(
+    elementsConfig,
+    buttonSelectedStyle,
+    buttonDeselectedStyle,
+  ) {
+    super(elementsConfig, buttonSelectedStyle, buttonDeselectedStyle)
+
+    // Extract the urlShorthands column out of the elementsConfig.
+    let urlShorthands = {}
+    Object.entries(elementsConfig).forEach(([elementID, elementConfig]) => {
+      let urlShorthand = elementConfig["urlShorthand"]
+      if (urlShorthand != null) {
+        urlShorthands[urlShorthand] = elementID
+      }
+    })
+
+    const urlParams = new URLSearchParams(window.location.search);
+
+    for (let key of urlParams.keys()) {
+      const desiredButtonID = urlShorthands[key]
+      if (desiredButtonID != null) {
+        if (desiredButtonID in this.buttons) {
+          this.onClick(null, desiredButtonID)
+        }
+        break
+      }
+    }
+  }
+}
+
 // N buttons, controlling which elements are visible. Like NButtonSwitcher,
 // except that there are also expand-all and collapse-all buttons, and
 // there is the ability to show none of the options.
