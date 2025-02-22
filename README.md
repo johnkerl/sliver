@@ -8,7 +8,7 @@ See the [sample-apps directory](sample-apps).
 
 Hosted `sample-apps/app1`: [https://johnkerl.org/sliver/sample-apps/app1](https://johnkerl.org/sliver/sample-apps/app1/index.html)
 
-Used by the `jsbee` app: [https://johnkerl.org/jsbee](https://johnkerl.org/jsbee/index.html)
+Used by the `word-finder` app: [https://johnkerl.org/word-finder](https://johnkerl.org/word-finder/index.html)
 
 # Why
 
@@ -24,7 +24,7 @@ Last is packaging: while `npm` and `yarn` are powerful tools, for simple use-cas
 
 Given those concerns, for small-scale web development, one might simply use no framework at all, sticking with HTML, CSS, and ES6. An examples of this is [pangram-checker](https://github.com/johnkerl/pangram-checker).
 
-But sometimes one wants _some_ application state, _some_ encapsulation, _some_ component reuse. For [jsbee](https://github.com/johnkerl/jsbee) I wanted some reusable classes between my application and the browser API --- a mere thin sliver of logic, decorating the browser API rather than hiding it. Thus Sliver was born.
+But sometimes one wants _some_ application state, _some_ encapsulation, _some_ component reuse. For [word-finder](https://github.com/johnkerl/word-finder) I wanted some reusable classes between my application and the browser API --- a mere thin sliver of logic, decorating the browser API rather than hiding it. Thus Sliver was born.
 
 # Status
 
