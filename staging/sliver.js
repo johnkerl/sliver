@@ -28,6 +28,11 @@ export class GenericElement {
   focus() {
     this.underlying.focus()
   }
+
+  setColors(color, backgroundColor) {
+    this.underlying.style.color = color
+    this.underlying.style.backgroundColor = backgroundColor
+  }
 }
 
 // This is a standard slider, nominally for light-theme/dark-theme selector.
@@ -1086,6 +1091,49 @@ export class RangeFloatSlider extends GenericElement {
 }
 
 // ----------------------------------------------------------------
+export class HelpWidgets {
+  constructor(
+    modalBackgroundElementID,
+    modalContentElementID,
+    launcherButtonElementID,
+    closeButtonElementID,
+  ) {
+
+    this.elements = {}
+    this.elements.background  = new GenericElement(modalBackgroundElementID)
+    this.elements.content  = new GenericElement(modalContentElementID)
+
+    this.elements.launcherButton = new Button(
+      launcherButtonElementID,
+      null,
+      (event) => {
+        this.elements.background.makeVisible("block")
+        this.elements.background.underlying.style.display = "block"
+      },
+    )
+
+    this.elements.close_button = new Button(
+      closeButtonElementID,
+      null,
+      (event) => {
+        this.elements.background.makeInvisible()
+      },
+    )
+  }
+
+  // This is for the escape key / exit-out from the help modal
+  makeBackgroundInvisible(color, backgroundColor) {
+    this.elements.background.makeInvisible()
+  }
+
+  // This is for theming. It's a hack; I need to learn more about CSS theming.
+  setColors(color, backgroundColor) {
+    this.elements.content.setColors(color, backgroundColor)
+  }
+
+}
+
+// ----------------------------------------------------------------
 // FUNCTIONS
 
 // The app should have a div (or span, your choice) with the specified
@@ -1134,6 +1182,26 @@ export function setErrorWidget(containerElementID, textElementID) {
 export function isInteger(text) {
   // TODO: this accepts '3.4' and should not
   return !isNaN(parseInt(text))
+}
+
+export function isMobile() {
+  if (navigator.userAgent == null) {
+    return false
+  }
+
+  const patterns = [
+      /Android/i,
+      /iPhone/i,
+      /iPad/i,
+      /iPod/i,
+      /webOS/i,
+      /Windows Phone/i,
+      /BlackBerry/i,
+  ]
+
+  return patterns.some((pattern) => {
+      return navigator.userAgent.match(pattern);
+  })
 }
 
 // ----------------------------------------------------------------
