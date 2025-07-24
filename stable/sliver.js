@@ -314,6 +314,26 @@ export class IntRangeInput extends GenericElement {
   }
 }
 
+// With state retained in browser-local storage.
+export class PersistentIntRangeInput extends IntRangeInput {
+  constructor(elementID, defaultValue, minAllowable, maxAllowable, callback) {
+    super(elementID, defaultValue, minAllowable, maxAllowable, callback)
+
+    this.localStorageKey = _localStorageKeyBase() + ":" + elementID + ":state"
+
+    // Restore previous state upon construction
+    const previousValue = localStorage.getItem(this.localStorageKey)
+    if (previousValue != null) {
+      this.underlying.value = previousValue
+    }
+
+    this.underlying.addEventListener("change", function(event) {
+      const obj = this.parent // Map from browser-level up to class-level
+      localStorage.setItem(obj.localStorageKey, event.target.value)
+    })
+  }
+}
+
 // Dropdown element. At present, the value-list must be set within the calling HTML.
 export class Dropdown extends GenericElement {
   constructor(elementID, callback) {
@@ -1089,6 +1109,30 @@ export class RangeFloatSlider extends GenericElement {
     }
   }
 }
+
+// ----------------------------------------------------------------
+// export class RadioButtons {
+//   constructor(
+//     elementIDs,
+//   ) {
+//     this.elements = {}
+//
+//     elementIDs.forEach((elementID) => {
+//       this.elements[elementID] = new GenericElement(elementID)
+//     })
+//
+//     get() {
+//       Object.keys.forEach((elementID) => {
+//         if (this.elements[elementID].checked) {
+//           console.log("YEAH", elementID)
+//           return elementID
+//         }
+//       })
+//       console.log("NOPE")
+//       return null
+//     }
+//   }
+// }
 
 // ----------------------------------------------------------------
 export class HelpWidgets {
