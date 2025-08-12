@@ -332,6 +332,11 @@ export class PersistentIntRangeInput extends IntRangeInput {
       localStorage.setItem(obj.localStorageKey, event.target.value)
     })
   }
+
+  resetToDefault() {
+    super.resetToDefault()
+    localStorage.setItem(this.localStorageKey, this.underlying.value)
+  }
 }
 
 // Dropdown element. At present, the value-list must be set within the calling HTML.
