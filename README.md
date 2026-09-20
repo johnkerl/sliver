@@ -37,7 +37,7 @@ This was just a fun little holiday lark at the end of 2024.
 
 # Development notes
 
-There's a single `sliver.js` -- no more `stable`/`staging`/`dev` tiers.
+There's a single `sliver.js`.
 
 * Local testing:
   * Run `npx http-server ~/pub_http_internet -o -p 9999 &` on the laptop
