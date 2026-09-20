@@ -173,6 +173,69 @@ export class Button extends GenericElement {
   }
 }
 
+// A plain button which toggles between two callbacks on each click, remembering the resulting state
+// in local storage. Nominally for a light-theme/dark-theme toggle button.
+//
+// Unlike ToggleSlider, a <button> has no natively-checked state, so the caller supplies
+// getIsCheckedCallback to compute the current state (e.g. from a DOM attribute, possibly falling
+// back to an OS-level media-query default).
+//
+// Absent a saved local-storage value, neither callback is invoked at construction time, so whatever
+// default the page already has (e.g. via CSS prefers-color-scheme) is left alone until the user
+// clicks the button.
+export class PersistentToggleButton extends GenericElement {
+  constructor(
+    elementID,
+    text, // If null, HTML content is left as-is.
+    getIsCheckedCallback,
+    toUncheckedCallback,
+    toCheckedCallback,
+  ) {
+    super(elementID)
+
+    // Browser-model element by composition
+    this.underlying = _getElementById(elementID)
+    // This lets underlying-level callbacks invoke our methods
+    this.underlying.parent = this
+
+    if (text != null) { // Otherwise leave it as in the HTML.
+      this.underlying.textContent = text
+    }
+
+    this.getIsChecked        = getIsCheckedCallback
+    this.toUncheckedCallback = toUncheckedCallback
+    this.toCheckedCallback   = toCheckedCallback
+
+    this.localStorageKey = _localStorageKeyBase() + ":" + elementID + ":checked"
+
+    // Restore previous state upon construction, if any.
+    const previousValue = localStorage.getItem(this.localStorageKey)
+    if (previousValue == "true") {
+      this.toChecked(null)
+    } else if (previousValue == "false") {
+      this.toUnchecked(null)
+    }
+
+    this.underlying.addEventListener("click", function(event) {
+      const obj = this.parent // Map from browser-level up to class-level
+      if (obj.getIsChecked()) {
+        obj.toUnchecked(event)
+      } else {
+        obj.toChecked(event)
+      }
+    })
+  }
+
+  toUnchecked(e) {
+    localStorage.setItem(this.localStorageKey, "false")
+    this.toUncheckedCallback(e)
+  }
+  toChecked(e) {
+    localStorage.setItem(this.localStorageKey, "true")
+    this.toCheckedCallback(e)
+  }
+}
+
 // Single-line text input.
 export class TextInput extends GenericElement {
   // Single-line input element
