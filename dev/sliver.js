@@ -183,6 +183,10 @@ export class Button extends GenericElement {
 // Absent a saved local-storage value, neither callback is invoked at construction time, so whatever
 // default the page already has (e.g. via CSS prefers-color-scheme) is left alone until the user
 // clicks the button.
+//
+// By default the local-storage key is scoped to this page, like the other Persistent* widgets.
+// Pass localStorageKeyOverride for a preference that should follow the visitor across pages (e.g.
+// site-wide theme) instead of being reset per page.
 export class PersistentToggleButton extends GenericElement {
   constructor(
     elementID,
@@ -190,6 +194,7 @@ export class PersistentToggleButton extends GenericElement {
     getIsCheckedCallback,
     toUncheckedCallback,
     toCheckedCallback,
+    localStorageKeyOverride, // If null, the default page-scoped key is used.
   ) {
     super(elementID)
 
@@ -206,7 +211,9 @@ export class PersistentToggleButton extends GenericElement {
     this.toUncheckedCallback = toUncheckedCallback
     this.toCheckedCallback   = toCheckedCallback
 
-    this.localStorageKey = _localStorageKeyBase() + ":" + elementID + ":checked"
+    this.localStorageKey = localStorageKeyOverride != null
+      ? localStorageKeyOverride
+      : _localStorageKeyBase() + ":" + elementID + ":checked"
 
     // Restore previous state upon construction, if any.
     const previousValue = localStorage.getItem(this.localStorageKey)
