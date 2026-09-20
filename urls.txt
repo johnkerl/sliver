@@ -1,6 +1,4 @@
-} from "https://johnkerl.org/sliver/stable/sliver.js"
+} from "https://johnkerl.org/sliver/sliver.js"
 
-} from "https://johnkerl.org/sliver/staging/sliver.js"
-
-} from "http://127.0.0.1:9999/sliver/dev/sliver.js"
+} from "http://127.0.0.1:9999/sliver/sliver.js"
 // npx http-server ~/pub_http_internet -o -p 9999
